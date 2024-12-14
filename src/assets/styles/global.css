@@ -1,0 +1,298 @@
+
+:root {
+  --primary-gold: #D4AF37;
+  --primary-black: #000000;
+  --primary-white: #FFFFFF;
+  --secondary-maroon: #7A1212;
+  --success-green: #4CAF50;
+  --accent-blue: #3D3D8C;
+}
+
+/* Override Bootstrap Navbar styles */
+/* .navbar {
+  background-color: var(--secondary-maroon) !important; 
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: var(--primary-white) !important; 
+}
+
+.navbar-light .navbar-brand {
+  color: var(--primary-white) !important; 
+}
+
+.navbar-toggler-icon {
+  background-color: var(--primary-white); 
+}
+
+.navbar .btn-outline-light {
+  border-color: var(--primary-white);
+  color: var(--primary-white);
+}
+
+.navbar .btn-outline-light:hover {
+  background-color: var(--primary-white);
+  color: var(--primary-black);
+}
+
+.navbar .btn-light {
+  background-color: var(--primary-white);
+  color: var(--primary-black);
+}
+
+.navbar .btn-light:hover {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+} */
+
+.navbar {
+  background-color: var(--primary-black);
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-links a {
+  color: var(--primary-white);
+  text-decoration: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.nav-links a:hover {
+  background-color: var(--accent-blue);
+  border-radius: 5px;
+}
+
+.download-btn {
+  background-color: var(--primary-gold);
+  color: var(--primary-black);
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.download-btn:hover {
+  background-color: var(--secondary-maroon);
+  color: var(--primary-white);
+}
+
+.download-btn i {
+  margin-right: 8px;
+}
+/* Custom Navbar Background Color */
+/* Header.css */
+.custom-navbar {
+  background-color: #2c3e50; /* Dark background */
+  padding: 10px 0;
+}
+
+.custom-navbar .navbar-brand {
+  font-size: 1.8rem;
+  color: #D4AF37; /* Gold color */
+}
+
+.custom-navbar .nav-link {
+  color: #ffffff !important;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #D4AF37 !important; /* Highlight color on hover */
+}
+
+.custom-navbar .btn-outline-light {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+.custom-navbar .btn-outline-light:hover {
+  background-color: #ffffff;
+  color: #2c3e50;
+}
+ .text-light:hover {
+  background-color: #4f2424;
+}
+
+.custom-navbar .btn-light {
+  background-color: #D4AF37;
+  color: #2c3e50;
+  border: 2px solid #D4AF37;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Smooth transition */
+}
+
+.custom-navbar .btn-light:hover {
+  background-color: #2c3e50;
+  color: #D4AF37;
+  border-color: #D4AF37;
+}
+
+.custom-navbar .navbar-toggler {
+  border-color: #D4AF37; /* Golden color for toggle button */
+}
+
+.custom-navbar .navbar-toggler-icon {
+  background-color: #D4AF37;
+}
+
+
+/* Add spacing between Login and Register buttons */
+.custom-navbar .btn-light + .btn-outline-light {
+  margin-left: 10px;
+}
+
+
+/* Admit Card Styling */
+.admit-card {
+  position: relative;
+  width: 800px;
+  margin: 0 auto;
+}
+
+.admit-card .card-img {
+  width: 100%;
+}
+
+.qr {
+  position: absolute;
+  right: 48px;
+  bottom: 213px;
+}
+
+.admit-card-info {
+  position: absolute;
+  bottom: 202px;
+  left: 40px;
+  z-index: 9;
+}
+
+.admit-card-info h3 {
+  font-weight: 700;
+  font-size: 30px;
+  margin: 0;
+}
+
+/* Layout Styling */
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+header {
+  background-color: var(--success-green);
+  color: var(--primary-white);
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+aside {
+  width: 200px;
+  background-color: var(--secondary-gray);
+  padding: 15px;
+}
+
+main {
+  flex: 1;
+  padding: 15px;
+}
+
+footer {
+  background-color: var(--footer-gray);
+  color: var(--primary-white);
+  padding: 10px;
+  text-align: center;
+}
+
+Hero Section Custom Styles */
+.hero-section {
+  background-color: var(--primary-black); /* Use primary black for background */
+  color: var(--primary-white); /* Use primary white for text */
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.hero-section h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-white);
+}
+
+.hero-section p {
+  font-size: 1.25rem;
+  color: var(--secondary-maroon);
+}
+
+.hero-section img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+
+.hero-section .cta-button {
+  background-color: var(--primary-gold); /* Gold button for CTA */
+  color: var(--primary-black);
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.hero-section .cta-button:hover {
+  background-color: var(--secondary-maroon); /* Maroon on hover */
+  color: var(--primary-white);
+}
+
+/* Sponsor Section Custom Styles */
+.sponsor-section {
+  background-color: var(--secondary-gray); /* Light gray background */
+  color: var(--primary-black); /* Primary black text color */
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.sponsor-section h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: var(--primary-gold); /* Gold color for headings */
+}
+
+.sponsor-section h3 {
+  font-size: 1.5rem;
+  color: var(--secondary-maroon); /* Maroon color for the sponsor name */
+}
+
+.sponsor-section img {
+  max-width: 150px;
+  border-radius: 10px; /* Optional rounded corners for the sponsor logo */
+}
+/* Footer Custom Styles */
+footer {
+  background-color: var(--primary-black); /* Dark background to match your theme */
+  color: var(--primary-white); /* White text for good contrast */
+}
+
+footer p {
+  font-size: 1rem;
+  font-weight: normal;
+  margin: 0;
+  color: var(--primary-white); /* Ensures the text remains white */
+}
+
+footer a {
+  color: var(--primary-gold); /* Link color in gold for accent */
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline; /* Hover effect for links */
+}
