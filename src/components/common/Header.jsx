@@ -21,7 +21,7 @@ function Header() {
 
             {/* Download Brochure Link Styled as a Button */}
             <Link to="/download-page" className="btn btn-primary me-2 text-decoration-none">
-              <i className="fas fa-download me-1"></i> Download Your Brochure
+              <i className="fas fa-download me-1"></i> Download Your Card
             </Link>
           </Nav>
         </Navbar.Collapse>

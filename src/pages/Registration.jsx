@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
-import '../assets/styles/registration.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import "../assets/styles/registration.css";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../api/user";
 const Registration = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    name: 'cdshjds',
-    phone: '',
-    email: '',
-    city: '',
+    name: "",
+    phone: "",
+    email: "",
+    city: "",
   });
 
   const [errors, setErrors] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    city: '',
+    name: "",
+    phone: "",
+    email: "",
+    city: "",
   });
 
   const handleChange = (e) => {
@@ -30,19 +31,19 @@ const Registration = () => {
     const newErrors = {};
 
     if (!formData.name) {
-      newErrors.name = 'Name is required';
+      newErrors.name = "Name is required";
       isValid = false;
     }
     if (!formData.phone || !/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = 'Please enter a valid 10-digit phone number';
+      newErrors.phone = "Please enter a valid 10-digit phone number";
       isValid = false;
     }
     if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
+      newErrors.email = "Please enter a valid email address";
       isValid = false;
     }
     if (!formData.city) {
-      newErrors.city = 'City is required';
+      newErrors.city = "City is required";
       isValid = false;
     }
 
@@ -50,12 +51,16 @@ const Registration = () => {
     return isValid;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate('/user-info', { state: { user: formData } });
-    // if (validateForm()) {
-    //     navigate('/user-info', { user: formData });
-    // }
+    const response = await registerUser(formData);
+    if (response.data) {
+      navigate("/user-info", { state: { user: response.data } });
+      // if (validateForm()) {
+      //     navigate('/user-info', { user: formData });
+    }else{
+      console.log(response)
+    }
   };
 
   return (
@@ -75,7 +80,9 @@ const Registration = () => {
                     </label>
                     <input
                       type="text"
-                      className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        errors.name ? "is-invalid" : ""
+                      }`}
                       id="name"
                       name="name"
                       placeholder="Enter your name"
@@ -83,7 +90,9 @@ const Registration = () => {
                       onChange={handleChange}
                       required
                     />
-                    {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+                    {errors.name && (
+                      <div className="invalid-feedback">{errors.name}</div>
+                    )}
                   </div>
 
                   <div className="mb-3">
@@ -92,7 +101,9 @@ const Registration = () => {
                     </label>
                     <input
                       type="tel"
-                      className={`form-control ${errors.phone ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        errors.phone ? "is-invalid" : ""
+                      }`}
                       id="phone"
                       name="phone"
                       placeholder="Enter phone number"
@@ -100,7 +111,9 @@ const Registration = () => {
                       onChange={handleChange}
                       required
                     />
-                    {errors.phone && <div className="invalid-feedback">{errors.phone}</div>}
+                    {errors.phone && (
+                      <div className="invalid-feedback">{errors.phone}</div>
+                    )}
                   </div>
 
                   <div className="mb-3">
@@ -109,7 +122,9 @@ const Registration = () => {
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        errors.email ? "is-invalid" : ""
+                      }`}
                       id="email"
                       name="email"
                       placeholder="Enter your email"
@@ -117,7 +132,9 @@ const Registration = () => {
                       onChange={handleChange}
                       required
                     />
-                    {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+                    {errors.email && (
+                      <div className="invalid-feedback">{errors.email}</div>
+                    )}
                   </div>
 
                   <div className="mb-3">
@@ -126,7 +143,9 @@ const Registration = () => {
                     </label>
                     <input
                       type="text"
-                      className={`form-control ${errors.city ? 'is-invalid' : ''}`}
+                      className={`form-control ${
+                        errors.city ? "is-invalid" : ""
+                      }`}
                       id="city"
                       name="city"
                       placeholder="Enter your city"
@@ -134,13 +153,26 @@ const Registration = () => {
                       onChange={handleChange}
                       required
                     />
-                    {errors.city && <div className="invalid-feedback">{errors.city}</div>}
+                    {errors.city && (
+                      <div className="invalid-feedback">{errors.city}</div>
+                    )}
                   </div>
 
-                  <div className="text-center">
-                    <button type="submit" className="btn btn-primary w-100">
-                      Register
-                    </button>
+                  <div className="row">
+                    <div className="text-center col-sm-6">
+                      <button type="submit" className="btn btn-primary w-100">
+                        Register
+                      </button>
+                    </div>
+                    <div className="text-center col-sm-6">
+                      <button
+                        onClick={() => navigate("/")}
+                        type="cancel"
+                        className="btn btn-danger w-100"
+                      >
+                        Cancel
+                      </button>
+                    </div>
                   </div>
                 </form>
               </div>
