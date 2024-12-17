@@ -5,9 +5,11 @@ import LandingPage from './pages/LandingPage';
 import Register from './pages/Registration';
 import UserInfo from './pages/UserInfo';
 import DownloadPage from './pages/DownloadPage';
-
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 const App = () => {
-  return (
+  return (<>
+   {/* <ToastContainer /> */}
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />}/>
@@ -15,7 +17,8 @@ const App = () => {
         <Route path="/user-info" element={<UserInfo />}/>
         <Route path="/download-page" element={<DownloadPage />}/>
       </Routes>
-    </Router>
+    </Router></>
+   
   );
 };
 

@@ -2,22 +2,22 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 
-const UserInfo = () => {
-  const location = useLocation();
-  const { user } = location.state || {};
-  console.log("user", user)
+const UserInfo = ({ user}) => {
+  // const location = useLocation();
+  // const { user } = location.state || {};
+  // console.log("user", user)
  return (
     <div className="container mt-5">
     <div className="row justify-content-center">
       <div className="col-md-8">
         <div className="card">
-          <div className="card-header text-center bg-primary text-white">
+          <div className="card-header text-center bg-success text-white">
             <h3>User Information</h3>
           </div>
           <div className="card-body">
            
             <div className="mb-3">
-              <h5><strong>ID:</strong> {user?.id}</h5>
+              <h5><strong>Registration ID:</strong> {user?.id}</h5>
             </div>
             <div className="mb-3">
               <h5><strong>Name:</strong> {user?.name}</h5>

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "../assets/styles/registration.css";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../api/user";
+import LoadingSpinner from "../components/common/Loader";
+import { toast } from "react-toastify";
 const Registration = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -10,7 +12,7 @@ const Registration = () => {
     email: "",
     city: "",
   });
-
+  const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
@@ -38,8 +40,8 @@ const Registration = () => {
       newErrors.phone = "Please enter a valid 10-digit phone number";
       isValid = false;
     }
-    if (!formData.email || !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Please enter a valid email address";
+    if (!formData.email) {
+      newErrors.email = "Company is required";
       isValid = false;
     }
     if (!formData.city) {
@@ -53,16 +55,22 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await registerUser(formData);
-    if (response.data) {
-      navigate("/user-info", { state: { user: response.data } });
-      // if (validateForm()) {
-      //     navigate('/user-info', { user: formData });
-    }else{
-      console.log(response)
-    }
+     if (validateForm()) {
+      setLoading(true);
+      const response = await registerUser(formData);
+      if (response.data) {
+        navigate("/download-page", { state: { user: response.data } });
+        toast.success("User registered successfully");
+        setLoading(false);
+      } else {
+        setLoading(false);
+      }
+     }
   };
 
+  if (loading) {
+    return <LoadingSpinner loading={loading} />;
+  }
   return (
     <div className="registration-page">
       <div className="container mt-5">
@@ -102,7 +110,7 @@ const Registration = () => {
                     <input
                       type="tel"
                       className={`form-control ${
-                        errors.phone ? "is-invalid" : ""
+                        errors.phone && formData.phone.length !== 10  ? "is-invalid" : ""
                       }`}
                       id="phone"
                       name="phone"
@@ -111,17 +119,17 @@ const Registration = () => {
                       onChange={handleChange}
                       required
                     />
-                    {errors.phone && (
+                    {errors.phone && formData.phone.length !== 10 && (
                       <div className="invalid-feedback">{errors.phone}</div>
                     )}
                   </div>
 
                   <div className="mb-3">
                     <label htmlFor="email" className="form-label fw-bold">
-                      Email Address
+                      Company
                     </label>
                     <input
-                      type="email"
+                      type="text"
                       className={`form-control ${
                         errors.email ? "is-invalid" : ""
                       }`}

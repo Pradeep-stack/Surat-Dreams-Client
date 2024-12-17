@@ -2,20 +2,26 @@ import React, { useState, useRef } from "react";
 import html2canvas from "html2canvas";
 import cardImage from "../assets/images/card.jpg";
 import barCode from "../assets/images/qr.jpg";
-import {getUser} from "../api/user";
-
+import { getUser } from "../api/user";
+import UserInfo from "./UserInfo";
+import { useLocation } from "react-router-dom";
 const DownloadPage = () => {
   const [id, setId] = useState("");
   const [details, setDetails] = useState({});
+   const location = useLocation();
+  const { user } = location.state || {};
   const printRef = useRef(); // Ref for printable section
-
+const [loading, setLoading] = useState(false);
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     // Simulate generating dynamic data
     const response = await getUser(id);
-    console.log(response);
     setDetails(response.data);
+    if(response.data){
+      setLoading(false);
+    }
   };
 
   // Handle Print
@@ -76,12 +82,46 @@ const DownloadPage = () => {
     });
   };
 
+  if (user) {
+  return (
+    <div className="container mt-5">
+      <h2 className="text-center mb-4">Download Your Admit Card</h2>
+      <UserInfo user={user} />
+      {/* Card Preview */}
+      {user.id && (
+        <div>
+          <div className="text-center">
+            <p>Click below to download the card:</p>
+            <button onClick={handleDownload} className="btn btn-success me-2">
+              <i className="fas fa-download me-2"></i> Download Card
+            </button>
+          </div>
+
+          {/* Printable Card Section */}
+
+          <div className="mt-3" ref={printRef}>
+            <div className="admit-card">
+              <img src={cardImage} className="card-img" alt="Card" />
+              <div className="admit-card-info">
+                <h1>ID: {user?.id}</h1>
+                <h1>Name: {user?.name}</h1>
+                <h1>Comp: {user?.email}</h1>
+                <h1>City: {user?.city}</h1>
+              </div>
+              <img src={barCode} className="qr" alt="QR Code" />
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}else{
   return (
     <div className="container mt-5">
       <h2 className="text-center mb-4">Download Your Admit Card</h2>
       <form onSubmit={handleSubmit} className="mb-4">
         <div className="form-group">
-          <label htmlFor="imageId">Enter ID:</label>
+          <label htmlFor="imageId">Enter Registration ID:</label>
           <input
             type="text"
             id="imageId"
@@ -93,22 +133,19 @@ const DownloadPage = () => {
           />
         </div>
         <button type="submit" className="btn btn-primary mt-3">
-          Generate Card
+         {loading?"Genrating...":"Generate Card"} 
         </button>
       </form>
-
+     {details.id && <UserInfo user={details} />} 
       {/* Card Preview */}
       {details.id && (
         <div>
           <div className="text-center">
-            <p>Click below to download or print the card:</p>
+            <p>Click below to download the card:</p>
             <button onClick={handleDownload} className="btn btn-success me-2">
               <i className="fas fa-download me-2"></i> Download Card
             </button>
           </div>
-          {/* <button onClick={handlePrint} className="btn btn-secondary">
-            <i className="fas fa-print me-2"></i> Print Card
-          </button> */}
 
           {/* Printable Card Section */}
 
@@ -116,10 +153,10 @@ const DownloadPage = () => {
             <div className="admit-card">
               <img src={cardImage} className="card-img" alt="Card" />
               <div className="admit-card-info">
-                <h1>ID No.: {details.id}</h1>
-                <h1>Name: {details.name}</h1>
-                <h1>Comp: {details.company}</h1>
-                <h1>City: {details.city}</h1>
+                <h1>ID: {details?.id}</h1>
+                <h1>Name: {details?.name}</h1>
+                <h1>Comp: {details?.email}</h1>
+                <h1>City: {details?.city}</h1>
               </div>
               <img src={barCode} className="qr" alt="QR Code" />
             </div>
@@ -127,7 +164,8 @@ const DownloadPage = () => {
         </div>
       )}
     </div>
-  );
+  )
+  }
 };
 
 export default DownloadPage;
