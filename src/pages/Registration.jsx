@@ -172,6 +172,7 @@ const Registration = () => {
                         Register
                       </button>
                     </div>
+                    &nbsp; &nbsp; 
                     <div className="text-center col-sm-6">
                       <button
                         onClick={() => navigate("/")}
