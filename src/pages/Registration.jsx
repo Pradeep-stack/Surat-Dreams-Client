@@ -9,14 +9,14 @@ const Registration = () => {
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
-    email: "",
+    company: "",
     city: "",
   });
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
-    email: "",
+    company: "",
     city: "",
   });
 
@@ -40,8 +40,8 @@ const Registration = () => {
       newErrors.phone = "Please enter a valid 10-digit phone number";
       isValid = false;
     }
-    if (!formData.email) {
-      newErrors.email = "Company is required";
+    if (!formData.company) {
+      newErrors.company = "Company is required";
       isValid = false;
     }
     if (!formData.city) {
@@ -55,22 +55,26 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-     if (validateForm()) {
-      setLoading(true);
-      const response = await registerUser(formData);
-      if (response.data) {
-        navigate("/download-page", { state: { user: response.data } });
-        toast.success("User registered successfully");
-        setLoading(false);
-      } else {
+    if (validateForm()) {
+      setLoading(true); 
+      try {
+        const response = await registerUser(formData); 
+        if (response?.data) {
+          navigate("/download-page", { state: { user: response.data } });
+          toast.success("User registered successfully");
+        }
+         else {
+          console.log("Registration failed", response.response.data.message);
+          toast.error(response.response.data.message);
+        }
+      } catch (error) {
+        toast.error("An error occurred. Please try again.");
+      } finally {
         setLoading(false);
       }
-     }
+    }
   };
-
-  if (loading) {
-    return <LoadingSpinner loading={loading} />;
-  }
+  
   return (
     <div className="registration-page">
       <div className="container mt-5">
@@ -78,7 +82,7 @@ const Registration = () => {
           <div className="col-md-6">
             <div className="card shadow-lg">
               <div className="card-header text-center">
-                <h3>User Registration</h3>
+                <h3>Now Register</h3>
               </div>
               <div className="card-body">
                 <form onSubmit={handleSubmit}>
@@ -108,7 +112,7 @@ const Registration = () => {
                       Phone Number
                     </label>
                     <input
-                      type="tel"
+                      type="number"
                       className={`form-control ${
                         errors.phone && formData.phone.length !== 10  ? "is-invalid" : ""
                       }`}
@@ -118,6 +122,7 @@ const Registration = () => {
                       value={formData.phone}
                       onChange={handleChange}
                       required
+                      maxLength={10}
                     />
                     {errors.phone && formData.phone.length !== 10 && (
                       <div className="invalid-feedback">{errors.phone}</div>
@@ -131,17 +136,17 @@ const Registration = () => {
                     <input
                       type="text"
                       className={`form-control ${
-                        errors.email ? "is-invalid" : ""
+                        errors.company ? "is-invalid" : ""
                       }`}
-                      id="email"
-                      name="email"
-                      placeholder="Enter your email"
-                      value={formData.email}
+                      id="company"
+                      name="company"
+                      placeholder="Enter your Company"
+                      value={formData.company}
                       onChange={handleChange}
                       required
                     />
-                    {errors.email && (
-                      <div className="invalid-feedback">{errors.email}</div>
+                    {!formData.company && (
+                      <div className="invalid-feedback">{errors.company}</div>
                     )}
                   </div>
 
@@ -167,20 +172,12 @@ const Registration = () => {
                   </div>
 
                   <div className="row">
-                    <div className="text-center col-sm-6">
-                      <button type="submit" className="btn btn-primary w-100">
+                    <div className="text-center">{loading?<button  className="btn btn-secondary w-100">
+                        Registering...
+                      </button>:<button type="submit" className="btn btn-primary w-100">
                         Register
-                      </button>
-                    </div>
-                    &nbsp; &nbsp; 
-                    <div className="text-center col-sm-6">
-                      <button
-                        onClick={() => navigate("/")}
-                        type="cancel"
-                        className="btn btn-danger w-100"
-                      >
-                        Cancel
-                      </button>
+                      </button>}
+                      
                     </div>
                   </div>
                 </form>

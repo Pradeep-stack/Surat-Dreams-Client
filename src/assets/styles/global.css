@@ -166,7 +166,7 @@
 
 .admit-card-info {
   position: absolute;
-  bottom: 202px;
+  bottom: 215px;
   left: 40px;
   z-index: 9;
 }
@@ -295,4 +295,11 @@ footer a {
 
 footer a:hover {
   text-decoration: underline; /* Hover effect for links */
+}
+
+
+.user-info {
+  font-family: "Arial, sans-serif";
+  font-size: 24px;
+  font-weight: bold;
 }

@@ -5,21 +5,24 @@ import barCode from "../assets/images/qr.jpg";
 import { getUser } from "../api/user";
 import UserInfo from "./UserInfo";
 import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 const DownloadPage = () => {
   const [id, setId] = useState("");
   const [details, setDetails] = useState({});
-   const location = useLocation();
+  const location = useLocation();
   const { user } = location.state || {};
   const printRef = useRef(); // Ref for printable section
-const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate generating dynamic data
     const response = await getUser(id);
-    setDetails(response.data);
-    if(response.data){
+    if (response?.data) {
+      setDetails(response.data);
+      setLoading(false);
+    } else {
+      toast.error("User not found");
       setLoading(false);
     }
   };
@@ -83,88 +86,90 @@ const [loading, setLoading] = useState(false);
   };
 
   if (user) {
-  return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">Download Your Admit Card</h2>
-      <UserInfo user={user} />
-      {/* Card Preview */}
-      {user.id && (
-        <div>
-          <div className="text-center">
-            <p>Click below to download the card:</p>
-            <button onClick={handleDownload} className="btn btn-success me-2">
-              <i className="fas fa-download me-2"></i> Download Card
-            </button>
-          </div>
+    return (
+      <div className="container mt-5">
+        <h2 className="text-center mb-4">Download Your Admit Card</h2>
+        <UserInfo user={user} />
+        {/* Card Preview */}
+        {user.id && (
+          <div>
+            <div className="text-center">
+              <p>Click below to download the card:</p>
+              <button onClick={handleDownload} className="btn btn-success me-2">
+                <i className="fas fa-download me-2"></i> Download Card
+              </button>
+            </div>
 
-          {/* Printable Card Section */}
+            {/* Printable Card Section */}
 
-          <div className="mt-3" ref={printRef}>
-            <div className="admit-card">
-              <img src={cardImage} className="card-img" alt="Card" />
-              <div className="admit-card-info">
-                <h1>ID: {user?.id}</h1>
-                <h1>Name: {user?.name}</h1>
-                <h1>Comp: {user?.email}</h1>
-                <h1>City: {user?.city}</h1>
+            <div className="mt-3" ref={printRef}>
+              <div className="admit-card">
+                <img src={cardImage} className="card-img" alt="Card" />
+                <div className="admit-card-info">
+                  <p className="user-info">ID  : {user?.id}</p>
+                  <p className="user-info">Name: {user?.name}</p>
+                  <p className="user-info">Comp: {user?.company}</p>
+                  <p className="user-info">City: {user?.city}</p>
+                </div>
+                <img src={barCode} className="qr" alt="QR Code" />
               </div>
-              <img src={barCode} className="qr" alt="QR Code" />
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  )
-}else{
-  return (
-    <div className="container mt-5">
-      <h2 className="text-center mb-4">Download Your Admit Card</h2>
-      <form onSubmit={handleSubmit} className="mb-4">
-        <div className="form-group">
-          <label htmlFor="imageId">Enter Registration ID:</label>
-          <input
-            type="text"
-            id="imageId"
-            className="form-control"
-            placeholder="Enter image ID"
-            value={id}
-            onChange={(e) => setId(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" className="btn btn-primary mt-3">
-         {loading?"Genrating...":"Generate Card"} 
-        </button>
-      </form>
-     {details.id && <UserInfo user={details} />} 
-      {/* Card Preview */}
-      {details.id && (
-        <div>
-          <div className="text-center">
-            <p>Click below to download the card:</p>
-            <button onClick={handleDownload} className="btn btn-success me-2">
-              <i className="fas fa-download me-2"></i> Download Card
-            </button>
+        )}
+      </div>
+    );
+  } else {
+    return (
+      <div className="container mt-5">
+        <h2 className="text-center mb-4">Download Your Admit Card</h2>
+        <form onSubmit={handleSubmit} className="mb-4">
+          <div className="form-group">
+            <label htmlFor="imageId" className="fw-bold">
+              Enter Registred Phone Number:
+            </label>
+            <input
+              type="number"
+              id="imageId"
+              className="form-control mt-2"
+              placeholder="Enter Phone Number"
+              value={id}
+              onChange={(e) => setId(e.target.value)}
+              required
+            />
           </div>
+          <button type="submit" className="btn btn-primary mt-3">
+            {loading ? "Genrating..." : "Generate Card"}
+          </button>
+        </form>
+        {details.id && <UserInfo user={details} />}
+        {/* Card Preview */}
+        {details.id && (
+          <div>
+            <div className="text-center">
+              <p>Click below to download the card:</p>
+              <button onClick={handleDownload} className="btn btn-success me-2">
+                <i className="fas fa-download me-2"></i> Download Card
+              </button>
+            </div>
 
-          {/* Printable Card Section */}
+            {/* Printable Card Section */}
 
-          <div className="mt-3" ref={printRef}>
-            <div className="admit-card">
-              <img src={cardImage} className="card-img" alt="Card" />
-              <div className="admit-card-info">
-                <h1>ID: {details?.id}</h1>
-                <h1>Name: {details?.name}</h1>
-                <h1>Comp: {details?.email}</h1>
-                <h1>City: {details?.city}</h1>
+            <div className="mt-3" ref={printRef}>
+              <div className="admit-card">
+                <img src={cardImage} className="card-img" alt="Card" />
+                <div className="admit-card-info">
+                <p className="user-info">ID  : {user?.id}</p>
+                  <p className="user-info">Name: {user?.name}</p>
+                  <p className="user-info">Comp: {user?.company}</p>
+                  <p className="user-info">City: {user?.city}</p>
+                </div>
+                <img src={barCode} className="qr" alt="QR Code" />
               </div>
-              <img src={barCode} className="qr" alt="QR Code" />
             </div>
           </div>
-        </div>
-      )}
-    </div>
-  )
+        )}
+      </div>
+    );
   }
 };
 

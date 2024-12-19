@@ -9,11 +9,11 @@ import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 const App = () => {
   return (<>
-   {/* <ToastContainer /> */}
+   <ToastContainer />
     <Router>
       <Routes>
-        <Route path="/" element={<LandingPage />}/>
-        <Route path="/register" element={<Register />}/>
+        {/* <Route path="/" element={<LandingPage />}/> */}
+        <Route path="/" element={<Register />}/>
         <Route path="/user-info" element={<UserInfo />}/>
         <Route path="/download-page" element={<DownloadPage />}/>
       </Routes>
