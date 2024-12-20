@@ -8,13 +8,15 @@
   }
   /* Background gradient */
   .registration-page {
-    background: linear-gradient(to right, #8383b6, #471b1b);
+    background: url("../images/4903975.jpg") no-repeat center center fixed;
+    background-size: cover; 
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'Roboto', sans-serif;
   }
+  
   
   /* Card styling */
   .card {
