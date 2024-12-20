@@ -106,10 +106,52 @@ const DownloadPage = () => {
               <div className="admit-card">
                 <img src={cardImage} className="card-img" alt="Card" />
                 <div className="admit-card-info">
-                  <p className="user-info">ID  : {user?.id}</p>
+                <div className="row">
+                    <div className="col-md-2 mb-3">
+                      <h4>
+                        <strong> ID  &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-10 mb-3">
+                      <h4>
+                        <strong>{user?.id}</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-2 mb-3">
+                      <h4>
+                        <strong> Name &nbsp;:</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-10 mb-3">
+                      <h4>
+                        <strong>{user?.name}</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-2 mb-3">
+                      <h4>
+                        <strong> Comp &nbsp;:</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-10 mb-3">
+                      <h4>
+                        <strong>{user?.company}</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-2 mb-3">
+                      <h4>
+                        <strong> City &nbsp;&nbsp;&nbsp;&nbsp;:</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-10 mb-3">
+                      <h4>
+                        <strong>{user?.city}</strong>
+                      </h4>
+                    </div>
+                  </div>
+                  {/* <p className="user-info">ID : {user?.id}</p>
                   <p className="user-info">Name: {user?.name}</p>
                   <p className="user-info">Comp: {user?.company}</p>
-                  <p className="user-info">City: {user?.city}</p>
+                  <p className="user-info">City: {user?.city}</p> */}
                 </div>
                 <img src={barCode} className="qr" alt="QR Code" />
               </div>
@@ -158,10 +200,53 @@ const DownloadPage = () => {
               <div className="admit-card">
                 <img src={cardImage} className="card-img" alt="Card" />
                 <div className="admit-card-info">
-                <p className="user-info">ID  : {user?.id}</p>
-                  <p className="user-info">Name: {user?.name}</p>
-                  <p className="user-info">Comp: {user?.company}</p>
-                  <p className="user-info">City: {user?.city}</p>
+                  <div className="row">
+                    <div className="col-md-2 mb-3">
+                      <h4>
+                        <strong> ID &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-10 mb-3">
+                      <h4>
+                        <strong>{details?.id}</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-2 mb-3">
+                      <h4>
+                        <strong> Name &nbsp;:</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-10 mb-3">
+                      <h4>
+                        <strong>{details?.name}</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-2 mb-3">
+                      <h4>
+                        <strong> Comp &nbsp;:</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-10 mb-3">
+                      <h4>
+                        <strong>{details?.company}</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-2 mb-3">
+                      <h4>
+                        <strong> City &nbsp;&nbsp;&nbsp;&nbsp;:</strong>
+                      </h4>
+                    </div>
+                    <div className="col-md-10 mb-3">
+                      <h4>
+                        <strong>{details?.city}</strong>
+                      </h4>
+                    </div>
+                  </div>
+
+                  {/* <p className="user-info">ID  : {details?.id}</p>
+                  <p className="user-info">Name: {details?.name}</p>
+                  <p className="user-info">Comp: {details?.company}</p>
+                  <p className="user-info">City: {details?.city}</p> */}
                 </div>
                 <img src={barCode} className="qr" alt="QR Code" />
               </div>

@@ -46,7 +46,7 @@ const UserInfo = ({ user }) => {
               {/* Edit Button */}
               <div className=" d-flex flex-row justify-content-center gap-3">  <div className="text-center mt-4">
                 <button className="btn btn-warning">
-                  <Link to="/">Go Back To Homepage</Link>
+                  <Link to="/">Go Back To Register</Link>
                 </button>
               </div>
               <div className="text-center mt-4">
