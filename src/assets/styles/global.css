@@ -160,8 +160,16 @@
 
 .qr {
   position: absolute;
+  width: 128;
   right: 48px;
   bottom: 213px;
+}
+.profile {
+  position: absolute;
+  right: 48px;
+  width: 136px;
+  bottom: 367px;
+  height: 136px;
 }
 
 .admit-card-info {

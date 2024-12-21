@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "../assets/styles/registration.css";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../api/user";
+import { registerUser, uploadImage } from "../api/user";
 import LoadingSpinner from "../components/common/Loader";
 import { toast } from "react-toastify";
 const Registration = () => {
@@ -13,6 +13,7 @@ const Registration = () => {
     city: "",
   });
   const [loading, setLoading] = useState(false);
+  const [profilePicture, setProfilePicture] = useState(null);
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
@@ -28,6 +29,15 @@ const Registration = () => {
     }));
   };
 
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    console.log("file", file);
+    const formData = new FormData();
+    formData.append("image", file);
+    const response = await uploadImage(formData);
+    setProfilePicture(response?.Location);
+    console.log("response", response);
+  };
   const validateForm = () => {
     let isValid = true;
     const newErrors = {};
@@ -55,15 +65,17 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(!profilePicture) return toast.error("Please upload a profile picture");
     if (validateForm()) {
-      setLoading(true); 
+      setLoading(true);
+      let userData = { ...formData, profile_pic: profilePicture };
+      console.log("userData", userData);
       try {
-        const response = await registerUser(formData); 
+        const response = await registerUser(userData);
         if (response?.data) {
           navigate("/download-page", { state: { user: response.data } });
           toast.success("User registered successfully");
-        }
-         else {
+        } else {
           console.log("Registration failed", response.response.data.message);
           toast.error(response.response.data.message);
         }
@@ -74,7 +86,7 @@ const Registration = () => {
       }
     }
   };
-  
+
   return (
     <div className="registration-page">
       <div className="container mt-5">
@@ -112,9 +124,11 @@ const Registration = () => {
                       Phone Number
                     </label>
                     <input
-                      type="number"
+                      type="tel"
                       className={`form-control ${
-                        errors.phone && formData.phone.length !== 10  ? "is-invalid" : ""
+                        errors.phone && formData.phone.length !== 10
+                          ? "is-invalid"
+                          : ""
                       }`}
                       id="phone"
                       name="phone"
@@ -170,14 +184,31 @@ const Registration = () => {
                       <div className="invalid-feedback">{errors.city}</div>
                     )}
                   </div>
+                  <div className="mb-3">
+                    <label
+                      className="form-label fw-bold"
+                    >
+                      Profile Picture
+                    </label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      onChange={handleFileChange}
+                      // required
+                    />
+                  </div>
 
                   <div className="row">
-                    <div className="text-center">{loading?<button  className="btn btn-secondary w-100">
-                        Registering...
-                      </button>:<button type="submit" className="btn btn-primary w-100">
-                        Register
-                      </button>}
-                      
+                    <div className="text-center">
+                      {loading ? (
+                        <button className="btn btn-secondary w-100">
+                          Registering...
+                        </button>
+                      ) : (
+                        <button type="submit" className="btn btn-primary w-100">
+                          Register
+                        </button>
+                      )}
                     </div>
                   </div>
                 </form>

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { baseUrl } from "../config/index";
+import { baseUrl ,imgBaseUrl} from "../config/index";
+
 
 export const getUser = async (id) => {
   try {
@@ -22,6 +23,14 @@ export const getAllUsers = async () => {
 export const registerUser = async (user) => {
   try {
     const { data } = await axios.post(baseUrl + `/register`, user);
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
+export const uploadImage = async (formData) => {
+  try {
+    const { data } = await axios.post(imgBaseUrl + `/upload`, formData);
     return data;
   } catch (error) {
     return error;

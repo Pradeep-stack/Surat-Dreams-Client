@@ -27,51 +27,6 @@ const DownloadPage = () => {
     }
   };
 
-  // Handle Print
-  // const handlePrint = () => {
-  //   const contentToPrint = printRef.current.innerHTML;
-  //   const printWindow = window.open("", "", "width=800,height=600");
-  //   printWindow.document.write(`
-  //     <html>
-  //       <head>
-  //         <title>Print Admit Card</title>
-  //         <style>
-  //           body {
-  //             font-family: Arial, sans-serif;
-  //             margin: 20px;
-  //           }
-  //           .admit-card {
-  //             border: 2px solid #000;
-  //             padding: 20px;
-  //             display: flex;
-  //             align-items: center;
-  //             justify-content: space-between;
-  //             text-align: center;
-  //           }
-  //           .card-img {
-  //             width: 150px;
-  //             height: auto;
-  //           }
-  //           .qr {
-  //             width: 100px;
-  //             height: auto;
-  //           }
-  //           .admit-card-info h3 {
-  //             margin: 5px 0;
-  //             font-size: 18px;
-  //             font-weight: bold;
-  //           }
-  //         </style>
-  //       </head>
-  //       <body>
-  //         ${contentToPrint}
-  //       </body>
-  //     </html>
-  //   `);
-  //   printWindow.document.close();
-  //   printWindow.print();
-  //   printWindow.close();
-  // };
 
   // Handle Download
   const handleDownload = () => {
@@ -153,6 +108,7 @@ const DownloadPage = () => {
                   <p className="user-info">Comp: {user?.company}</p>
                   <p className="user-info">City: {user?.city}</p> */}
                 </div>
+                <img src={user?.profile_pic} className="profile" alt="Profile pic" />
                 <img src={barCode} className="qr" alt="QR Code" />
               </div>
             </div>
@@ -248,6 +204,7 @@ const DownloadPage = () => {
                   <p className="user-info">Comp: {details?.company}</p>
                   <p className="user-info">City: {details?.city}</p> */}
                 </div>
+                <img src={details?.profile_pic} className="profile" alt="Profile pic" />
                 <img src={barCode} className="qr" alt="QR Code" />
               </div>
             </div>

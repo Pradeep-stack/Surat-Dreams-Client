@@ -8,7 +8,7 @@
   }
   /* Background gradient */
   .registration-page {
-    background: url("../images/4903975.jpg") no-repeat center center fixed;
+    /* background: url("../images/4903975.jpg") no-repeat center center fixed; */
     background-size: cover; 
     min-height: 100vh;
     display: flex;
