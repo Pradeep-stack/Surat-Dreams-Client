@@ -31,13 +31,17 @@ const DownloadPage = () => {
   // Handle Download
   const handleDownload = () => {
     const element = printRef.current;
-    html2canvas(element).then((canvas) => {
+    html2canvas(element, {
+      useCORS: true,
+      allowTaint: false,
+    }).then((canvas) => {
       const image = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = image;
       link.download = `AdmitCard-${details.id}.png`;
       link.click();
     });
+    
   };
 
   if (user) {
@@ -108,7 +112,7 @@ const DownloadPage = () => {
                   <p className="user-info">Comp: {user?.company}</p>
                   <p className="user-info">City: {user?.city}</p> */}
                 </div>
-                <img src={user?.profile_pic} className="profile" alt="Profile pic" />
+                <img src={user?.profile_pic} className="profile" alt="Profile pic" onLoad={() => console.log('Profile pic loaded')}  />
                 <img src={barCode} className="qr" alt="QR Code" />
               </div>
             </div>
