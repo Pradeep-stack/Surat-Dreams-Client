@@ -38,7 +38,7 @@ const DownloadPage = () => {
       const image = canvas.toDataURL("image/png");
       const link = document.createElement("a");
       link.href = image;
-      link.download = `AdmitCard-${details.id}.png`;
+      link.download = `AdmitCard.png`;
       link.click();
     });
     
@@ -61,7 +61,7 @@ const DownloadPage = () => {
 
             {/* Printable Card Section */}
 
-            <div className="mt-3" ref={printRef}>
+            <div className="mt-3 " ref={printRef}>
               <div className="admit-card">
                 <img src={cardImage} className="card-img" alt="Card" />
                 <div className="admit-card-info">
