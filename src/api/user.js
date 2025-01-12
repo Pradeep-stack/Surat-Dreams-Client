@@ -1,5 +1,5 @@
 import axios from "axios";
-import { baseUrl ,imgBaseUrl} from "../config/index";
+import { baseUrl } from "../config/index";
 
 
 export const getUser = async (id) => {
@@ -30,7 +30,7 @@ export const registerUser = async (user) => {
 };
 export const uploadImage = async (formData) => {
   try {
-    const { data } = await axios.post(imgBaseUrl + `/upload`, formData);
+    const { data } = await axios.post( `https://indus-server.onrender.com/upload`, formData);
     return data;
   } catch (error) {
     return error;
