@@ -13,6 +13,7 @@ const Registration = () => {
     city: "",
   });
   const [loading, setLoading] = useState(false);
+  const [imgLoading, setImgLoading] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [errors, setErrors] = useState({
     name: "",
@@ -30,12 +31,16 @@ const Registration = () => {
   };
 
   const handleFileChange = async (e) => {
+    setImgLoading(true);
     const file = e.target.files[0];
     console.log("file", file);
     const formData = new FormData();
     formData.append("image", file);
     const response = await uploadImage(formData);
     setProfilePicture(response?.Location);
+    if(response?.Location) {
+      setImgLoading(false);
+    }
     console.log("response", response);
   };
   const validateForm = () => {
@@ -65,7 +70,7 @@ const Registration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if(!profilePicture) return toast.error("Please upload a profile picture");
+    if (!profilePicture) return toast.error("Please upload a profile picture");
     if (validateForm()) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
@@ -185,17 +190,29 @@ const Registration = () => {
                     )}
                   </div>
                   <div className="mb-3">
-                    <label
-                      className="form-label fw-bold"
-                    >
+                    <label className="form-label fw-bold">
                       Profile Picture
                     </label>
-                    <input
-                      type="file"
-                      className="form-control"
-                      onChange={handleFileChange}
-                      // required
-                    />
+                    <div className="d-flex justify-content-between align-items-center">
+                      <input
+                        type="file"
+                        className="form-control"
+                        onChange={handleFileChange}
+                        style={{ width: "90%" }} // Adjust the width as needed
+                      />
+                      <div
+                        className="green-tick"
+                        style={{
+                          display: "block",
+                          color: "green",
+                          marginLeft: "10px",
+                          
+                        }}
+                      >
+                     <span className="mb-3"> {profilePicture? "✔" : ""}</span>  
+                       <LoadingSpinner loading={imgLoading} />
+                      </div>
+                    </div>
                   </div>
 
                   <div className="row">

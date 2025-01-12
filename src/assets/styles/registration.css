@@ -82,4 +82,9 @@
       font-size: 20px;
     }
   }
-  
+  .green-tick {
+    display: none; /* Hidden by default */
+    color: green;
+    font-size: 24px;
+    margin-left: 10px;
+  }

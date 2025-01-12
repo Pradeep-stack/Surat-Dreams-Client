@@ -30,7 +30,7 @@ export const registerUser = async (user) => {
 };
 export const uploadImage = async (formData) => {
   try {
-    const { data } = await axios.post( `https://indus-server.onrender.com/upload`, formData);
+    const { data } = await axios.post( `https://api.indusdigicart.com/upload`, formData);
     return data;
   } catch (error) {
     return error;
