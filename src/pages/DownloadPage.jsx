@@ -29,21 +29,88 @@ const DownloadPage = () => {
 
 
   // Handle Download
+  // const handleDownload = () => {
+  //   const element = printRef.current;
+  //   html2canvas(element, {
+  //     useCORS: true,
+  //     allowTaint: false,
+  //   }).then((canvas) => {
+  //     const image = canvas.toDataURL("image/png");
+  //     const link = document.createElement("a");
+  //     link.href = image;
+  //     link.download = `AdmitCard.png`;
+  //     link.click();
+  //   });
+    
+  // };
+
   const handleDownload = () => {
     const element = printRef.current;
     html2canvas(element, {
       useCORS: true,
       allowTaint: false,
     }).then((canvas) => {
-      const image = canvas.toDataURL("image/png");
+      // Get the context of the canvas
+      const context = canvas.getContext("2d");
+      const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+  
+      let cropX = canvas.width;
+      let cropY = canvas.height;
+      let cropWidth = 0;
+      let cropHeight = 0;
+  
+      // Find the boundaries of the non-white content
+      for (let y = 0; y < canvas.height; y++) {
+        for (let x = 0; x < canvas.width; x++) {
+          const index = (y * canvas.width + x) * 4; // RGBA index
+          const [r, g, b, a] = [
+            imageData.data[index],
+            imageData.data[index + 1],
+            imageData.data[index + 2],
+            imageData.data[index + 3],
+          ];
+  
+          // Check if pixel is not white
+          if (!(r === 255 && g === 255 && b === 255 && a === 255)) {
+            cropX = Math.min(cropX, x);
+            cropY = Math.min(cropY, y);
+            cropWidth = Math.max(cropWidth, x);
+            cropHeight = Math.max(cropHeight, y);
+          }
+        }
+      }
+  
+      // Adjust crop dimensions
+      cropWidth -= cropX;
+      cropHeight -= cropY;
+  
+      // Create a new cropped canvas
+      const croppedCanvas = document.createElement("canvas");
+      croppedCanvas.width = cropWidth;
+      croppedCanvas.height = cropHeight;
+      const croppedContext = croppedCanvas.getContext("2d");
+  
+      // Draw the cropped image
+      croppedContext.drawImage(
+        canvas,
+        cropX,
+        cropY,
+        cropWidth,
+        cropHeight,
+        0,
+        0,
+        cropWidth,
+        cropHeight
+      );
+  
+      // Generate the image URL and trigger download
+      const croppedImage = croppedCanvas.toDataURL("image/png");
       const link = document.createElement("a");
-      link.href = image;
-      link.download = `AdmitCard.png`;
+      link.href = croppedImage;
+      link.download = "AdmitCard.png";
       link.click();
     });
-    
   };
-
   if (user) {
     return (
       <div className="container mt-5">
