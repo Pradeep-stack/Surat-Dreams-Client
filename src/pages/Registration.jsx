@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "../assets/styles/registration.css";
 import { useNavigate } from "react-router-dom";
 import { registerUser, uploadImage } from "../api/user";
 import LoadingSpinner from "../components/common/Loader";
 import { toast } from "react-toastify";
+import { userValidation } from "../utils/userValidation";
 const Registration = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -11,6 +12,9 @@ const Registration = () => {
     phone: "",
     company: "",
     city: "",
+    userType: "user",
+    email: "",
+    password: ""
   });
   const [loading, setLoading] = useState(false);
   const [imgLoading, setImgLoading] = useState(false);
@@ -43,35 +47,10 @@ const Registration = () => {
     }
     console.log("response", response);
   };
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = {};
-
-    if (!formData.name) {
-      newErrors.name = "Name is required";
-      isValid = false;
-    }
-    if (!formData.phone || !/^\d{10}$/.test(formData.phone)) {
-      newErrors.phone = "Please enter a valid 10-digit phone number";
-      isValid = false;
-    }
-    if (!formData.company) {
-      newErrors.company = "Company is required";
-      isValid = false;
-    }
-    if (!formData.city) {
-      newErrors.city = "City is required";
-      isValid = false;
-    }
-
-    setErrors(newErrors);
-    return isValid;
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!profilePicture) return toast.error("Please upload a profile picture");
-    if (validateForm()) {
+    if (userValidation( formData, setErrors)) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
       console.log("userData", userData);
@@ -85,7 +64,7 @@ const Registration = () => {
           toast.error(response.response.data.message);
         }
       } catch (error) {
-        toast.error("An error occurred. Please try again.");
+        toast.error("An error occurred. Please try again." + error.message);
       } finally {
         setLoading(false);
       }
@@ -99,7 +78,7 @@ const Registration = () => {
           <div className="col-md-6">
             <div className="card shadow-lg">
               <div className="card-header text-center">
-                <h3>Now Register</h3>
+                <h3>User Registration</h3>
               </div>
               <div className="card-body">
                 <form onSubmit={handleSubmit}>
