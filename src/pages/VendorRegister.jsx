@@ -50,7 +50,7 @@ const VendorRegistration = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!profilePicture) return toast.error("Please upload a profile picture");
+    if (!profilePicture ) return toast.error("Please upload a profile picture");
     if (vendorValidation( formData, setErrors)) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
@@ -59,6 +59,16 @@ const VendorRegistration = () => {
         const response = await registerUser(userData);
         if (response?.data) {
         //   navigate("/download-page", { state: { user: response.data } });
+         setFormData({
+            name: "",
+            phone: "",
+            company: "",
+            city: "",
+            userType: "admin",
+            email: "",
+            password: ""
+          })
+          setProfilePicture(null)
           toast.success("User registered successfully");
         } else {
           console.log("Registration failed", response.response.data.message);
