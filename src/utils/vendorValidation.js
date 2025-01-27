@@ -20,6 +20,10 @@ export const vendorValidation = ( formData , setErrors) => {
       newErrors.city = "City is required";
       isValid = false;
     }
+    if (!formData.email) {
+      newErrors.email = "EMail is required";
+      isValid = false;
+    }
 
     setErrors(newErrors);
     return isValid;

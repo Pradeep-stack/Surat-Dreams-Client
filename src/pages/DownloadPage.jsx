@@ -115,14 +115,14 @@ const DownloadPage = () => {
     return (
       <div className="container mt-5">
         <h2 className="text-center mb-4">Download Your Admit Card</h2>
-        <UserInfo user={user} />
+        {/* <UserInfo user={user} /> */}
         {/* Card Preview */}
         {user.id && (
           <div>
             <div className="text-center">
               <p>Click below to download the card:</p>
               <button onClick={handleDownload} className="btn btn-success me-2">
-                <i className="fas fa-download me-2"></i> Download Card
+                <i className="fas fa-download me-2"></i> Download
               </button>
             </div>
 
@@ -210,14 +210,14 @@ const DownloadPage = () => {
             {loading ? "Genrating..." : "Generate Card"}
           </button>
         </form>
-        {details.id && <UserInfo user={details} />}
+        {/* {details.id && <UserInfo user={details} />} */}
         {/* Card Preview */}
         {details.id && (
           <div>
             <div className="text-center">
               <p>Click below to download the card:</p>
               <button onClick={handleDownload} className="btn btn-success me-2">
-                <i className="fas fa-download me-2"></i> Download Card
+                <i className="fas fa-download me-2"></i> Download
               </button>
             </div>
 
