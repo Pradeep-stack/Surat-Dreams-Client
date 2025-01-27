@@ -5,6 +5,7 @@ import { registerUser, uploadImage } from "../api/user";
 import LoadingSpinner from "../components/common/Loader";
 import { toast } from "react-toastify";
 import { vendorValidation } from "../utils/vendorValidation";
+import ConfirmationModal from "../components/common/ConfirmationModal";
 const VendorRegistration = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -18,6 +19,7 @@ const VendorRegistration = () => {
   });
   const [loading, setLoading] = useState(false);
   const [imgLoading, setImgLoading] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [errors, setErrors] = useState({
     name: "",
@@ -50,7 +52,7 @@ const VendorRegistration = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!profilePicture ) return toast.error("Please upload a profile picture");
+    // if (!profilePicture ) return toast.error("Please upload a profile picture");
     if (vendorValidation( formData, setErrors)) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
@@ -59,6 +61,7 @@ const VendorRegistration = () => {
         const response = await registerUser(userData);
         if (response?.data) {
         //   navigate("/download-page", { state: { user: response.data } });
+        setModalShow(true)
          setFormData({
             name: "",
             phone: "",
@@ -68,7 +71,7 @@ const VendorRegistration = () => {
             email: "",
             password: ""
           })
-          setProfilePicture(null)
+          setProfilePicture(null)        
           toast.success("User registered successfully");
         } else {
           console.log("Registration failed", response.response.data.message);
@@ -86,6 +89,8 @@ const VendorRegistration = () => {
 
   return (
     <div className="registration-page">
+        <ConfirmationModal  show={modalShow}
+        onHide={() => setModalShow(false)}/>
       <div className="container mt-5">
         <div className="row justify-content-center">
           <div className="col-md-6">
@@ -202,7 +207,7 @@ const VendorRegistration = () => {
                       <div className="invalid-feedback">{errors.city}</div>
                     )}
                   </div>
-                  <div className="mb-3">
+                  {/* <div className="mb-3">
                     <label className="form-label fw-bold">
                       Profile Picture
                     </label>
@@ -226,7 +231,7 @@ const VendorRegistration = () => {
                        <LoadingSpinner loading={imgLoading} />
                       </div>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="row">
                     <div className="text-center">
