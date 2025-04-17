@@ -178,12 +178,12 @@ const DownloadPage = () => {
     const croppedImage = croppedCanvas.toDataURL("image/png");
     const link = document.createElement("a");
     link.href = croppedImage;
-    link.download = "EntryCard.png";
+    link.download = "EntryCard.png"+user.id;
     link.click();
     try {
       const blob = await (await fetch(croppedImage)).blob();
       const formData = new FormData();
-      formData.append("image", blob, "EntryCard.png");
+      formData.append("image", blob, "EntryCard.png"+user.id);
       const response = await uploadImage(formData);
       
       if (response?.Location) {
