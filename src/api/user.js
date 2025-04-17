@@ -1,7 +1,13 @@
 import axios from "axios";
-import { baseUrl } from "../config/index";
+import { baseUrl , imgBaseUrl, whatsuppUrl} from "../config/index";
 
 
+
+const api = axios.create({
+  headers: {
+    'Content-Type': 'application/json',
+  },
+});
 export const getUser = async (id) => {
   try {
     const { data } = await axios.get(baseUrl + `/get-user/${id}`);
@@ -28,11 +34,33 @@ export const registerUser = async (user) => {
     return error;
   }
 };
+
 export const uploadImage = async (formData) => {
   try {
-    const { data } = await axios.post( `https://api.indusdigicart.com/upload`, formData);
+    const { data } = await axios.post( `${imgBaseUrl}/upload`, formData);
     return data;
   } catch (error) {
     return error;
   }
 };
+
+export const whatsAppApiSend = async (userData) => {
+  const apiKey = "RlF2V052dTVIMEdqZm1wV2UwT0NjdDg4LXh2eFR5NXFGTkFsSGpoeGtBZzo="
+
+  try {
+    const { data } = await api.post(whatsuppUrl, userData, {
+      headers: {
+        Authorization: `Basic ${apiKey}`,
+      },
+    });
+    return { success: true, data };
+  } catch (error) {
+    return {
+      success: false,
+      error: error.response?.data?.message || error.message,
+      status: error.response?.status,
+      responseData: error.response?.data 
+    };
+  }
+};
+

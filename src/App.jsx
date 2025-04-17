@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 // import Layout from './components/layouts/Layout';
 // import LandingPage from './pages/LandingPage';
@@ -23,5 +23,6 @@ const App = () => {
    
   );
 };
+
 
 export default App;

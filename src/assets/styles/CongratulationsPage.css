@@ -1,0 +1,117 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+
+/* CongratulationsPage.css */
+.congratulations-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: white;
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .title h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 2rem;
+    animation: fadeIn 1s ease-in-out;
+  }
+  
+  .image-container {
+    position: relative;
+    width: 450px;
+    margin-top: 20px
+  }
+  
+  .congrats-image {
+    max-width: 100%;
+    height: auto;
+    opacity: 0;
+    transform: scale(0.5) rotate(-10deg);
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+  
+  .congrats-image.animate {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  
+  .stall-number-container {
+    animation: fadeIn 1s ease-in-out 0.5s both;
+  }
+  
+  .stall-number-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: black;
+    background-color: #eafcff;
+    padding: 10px 20px;
+    font-family: "Poppins", sans-serif !important;
+    margin: 10px 0px;
+    border-radius: 50px;
+  }
+  
+  .stall-number2 {
+    font-weight: bold;
+    color: white;
+    background-color: #2aabe2;
+    border-radius: 59px;
+    padding: 5px 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+  
+  .stall-number {
+    font-size: 4rem;
+    font-weight: bold;
+    color: white;
+    background-color: #2aabe2;
+    border-radius: 59px;
+    height: 90px;
+    width: 210px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+  }
+  
+  .stall-number.animate-number {
+    animation: pulse 1.5s infinite alternate;
+  }
+  
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    animation: fall 5s linear infinite;
+    z-index: 1;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  @keyframes scaleIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  
+  @keyframes fall {
+    0% {
+      top: -10%;
+      transform: translateX(0) rotate(0deg);
+    }
+    100% {
+      top: 100%;
+      transform: translateX(100px) rotate(360deg);
+    }
+  }
+  
+  @keyframes pulse {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+  }

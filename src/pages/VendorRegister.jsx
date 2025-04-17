@@ -1,7 +1,8 @@
 import { useState } from "react";
-import "../assets/styles/registration.css";
+import "../assets/styles/style.css";
 import { useNavigate } from "react-router-dom";
 import { registerUser, uploadImage } from "../api/user";
+import Logoimg from "../assets/images/logo.png";
 import LoadingSpinner from "../components/common/Loader";
 import { toast } from "react-toastify";
 import { vendorValidation } from "../utils/vendorValidation";
@@ -44,25 +45,30 @@ const VendorRegistration = () => {
     const formData = new FormData();
     formData.append("image", file);
     const response = await uploadImage(formData);
+    console.log("response===", response.message);
+    if (response?.message === "Network Error"){
+      setImgLoading(false);
+      return toast.error("Image Should be less than 1MB");
+    }
     setProfilePicture(response?.Location);
-    if(response?.Location) {
+    if (response?.Location) {
       setImgLoading(false);
     }
     console.log("response", response);
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!profilePicture ) return toast.error("Please upload a profile picture");
-    if (vendorValidation( formData, setErrors)) {
+    if (!profilePicture ) return toast.error("Please upload a profile picture");
+    if (vendorValidation(formData, setErrors)) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
       console.log("userData", userData);
       try {
         const response = await registerUser(userData);
         if (response?.data) {
-        //   navigate("/download-page", { state: { user: response.data } });
-        setModalShow(true)
-         setFormData({
+          //   navigate("/download-page", { state: { user: response.data } });
+          setModalShow(true)
+          setFormData({
             name: "",
             phone: "",
             company: "",
@@ -71,12 +77,12 @@ const VendorRegistration = () => {
             email: "",
             password: ""
           })
-          setProfilePicture(null)        
+          setProfilePicture(null)
           toast.success("User registered successfully");
         } else {
           console.log("Registration failed", response.response.data.message);
           toast.error(response.response.data.message);
-          toast.error("User registered Failed Phone number already exist"); 
+          toast.error("User registered Failed Phone number already exist");
         }
       } catch (error) {
         toast.error("An error occurred. Please try again." + error.message);
@@ -89,26 +95,29 @@ const VendorRegistration = () => {
 
   return (
     <div className="registration-page">
-        <ConfirmationModal  show={modalShow}
-        onHide={() => setModalShow(false)}/>
+      <ConfirmationModal show={modalShow}
+        onHide={() => setModalShow(false)} />
       <div className="container mt-5">
+
+        <div className="logo-box">
+          <img src={Logoimg} alt="" />
+        </div>
         <div className="row justify-content-center">
           <div className="col-md-6">
-            <div className="card shadow-lg">
-              <div className="card-header text-center">
-                <h3>Vendor Registration</h3>
+            <div className="reg-form-container mb-5">
+              <div className="reg-form-header text-center">
+                <p>Vendor Registration</p>
               </div>
               <div className="card-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-3">
+                <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
+                  <div>
                     <label htmlFor="name" className="form-label fw-bold">
                       Name
                     </label>
                     <input
                       type="text"
-                      className={`form-control ${
-                        errors.name ? "is-invalid" : ""
-                      }`}
+                      className={`form-control ${errors.name ? "is-invalid" : ""
+                        }`}
                       id="name"
                       name="name"
                       placeholder="Enter your name"
@@ -121,17 +130,16 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
-                  <div className="mb-3">
+                  <div >
                     <label htmlFor="phone" className="form-label fw-bold">
                       Phone Number
                     </label>
                     <input
                       type="tel"
-                      className={`form-control ${
-                        errors.phone && formData.phone.length !== 10
+                      className={`form-control ${errors.phone && formData.phone.length !== 10
                           ? "is-invalid"
                           : ""
-                      }`}
+                        }`}
                       id="phone"
                       name="phone"
                       placeholder="Enter phone number"
@@ -145,15 +153,14 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
-                  <div className="mb-3">
+                  <div >
                     <label htmlFor="email" className="form-label fw-bold">
                       Email
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${
-                        errors.email ? "is-invalid" : ""
-                      }`}
+                      className={`form-control ${errors.email ? "is-invalid" : ""
+                        }`}
                       id="company"
                       name="email"
                       placeholder="Enter your Email"
@@ -166,15 +173,14 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
-                  <div className="mb-3">
+                  <div>
                     <label htmlFor="email" className="form-label fw-bold">
                       Company
                     </label>
                     <input
                       type="text"
-                      className={`form-control ${
-                        errors.company ? "is-invalid" : ""
-                      }`}
+                      className={`form-control ${errors.company ? "is-invalid" : ""
+                        }`}
                       id="company"
                       name="company"
                       placeholder="Enter your Company"
@@ -187,15 +193,14 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
-                  <div className="mb-3">
+                  <div>
                     <label htmlFor="city" className="form-label fw-bold">
                       City
                     </label>
                     <input
                       type="text"
-                      className={`form-control ${
-                        errors.city ? "is-invalid" : ""
-                      }`}
+                      className={`form-control ${errors.city ? "is-invalid" : ""
+                        }`}
                       id="city"
                       name="city"
                       placeholder="Enter your city"
@@ -207,7 +212,7 @@ const VendorRegistration = () => {
                       <div className="invalid-feedback">{errors.city}</div>
                     )}
                   </div>
-                  {/* <div className="mb-3">
+                  <div className="mb-3">
                     <label className="form-label fw-bold">
                       Profile Picture
                     </label>
@@ -231,16 +236,16 @@ const VendorRegistration = () => {
                        <LoadingSpinner loading={imgLoading} />
                       </div>
                     </div>
-                  </div> */}
+                  </div>
 
                   <div className="row">
                     <div className="text-center">
                       {loading ? (
-                        <button className="btn btn-secondary w-100">
+                        <button className="user-info-btn2">
                           Registering...
                         </button>
                       ) : (
-                        <button type="submit" className="btn btn-primary w-100">
+                        <button type="submit" className="user-info-btn2">
                           Register
                         </button>
                       )}

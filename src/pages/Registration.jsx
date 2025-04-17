@@ -1,8 +1,9 @@
 import { useState } from "react";
-import "../assets/styles/registration.css";
+import "../assets/styles/style.css";
 import { useNavigate } from "react-router-dom";
 import { registerUser, uploadImage } from "../api/user";
 import LoadingSpinner from "../components/common/Loader";
+import Logoimg from "../assets/images/logo.png";
 import { toast } from "react-toastify";
 import { userValidation } from "../utils/userValidation";
 const Registration = () => {
@@ -14,7 +15,7 @@ const Registration = () => {
     city: "",
     userType: "user",
     email: "",
-    password: ""
+    password: "",
   });
   const [loading, setLoading] = useState(false);
   const [imgLoading, setImgLoading] = useState(false);
@@ -41,16 +42,21 @@ const Registration = () => {
     const formData = new FormData();
     formData.append("image", file);
     const response = await uploadImage(formData);
+    console.log("response===", response.message);
+    if (response?.message === "Network Error") {
+      setImgLoading(false);
+      return toast.error("Image Should be less than 1MB");
+    }
     setProfilePicture(response?.Location);
-    if(response?.Location) {
+    if (response?.Location) {
       setImgLoading(false);
     }
-    console.log("response", response);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!profilePicture) return toast.error("Please upload a profile picture");
-    if (userValidation( formData, setErrors)) {
+    // if (!profilePicture) return toast.error("Please upload a profile picture");
+    if (userValidation(formData, setErrors)) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
       console.log("userData", userData);
@@ -61,7 +67,7 @@ const Registration = () => {
           toast.success("User registered successfully");
         } else {
           console.log("Registration failed", response.response.data.message);
-          toast.error(response.response.data.message);
+          toast.error("Registration failed phone number already exists");
         }
       } catch (error) {
         toast.error("An error occurred. Please try again." + error.message);
@@ -74,15 +80,19 @@ const Registration = () => {
   return (
     <div className="registration-page">
       <div className="container mt-5">
+        <div className="logo-box">
+          <img src={Logoimg} alt="" />
+        </div>
+
         <div className="row justify-content-center">
           <div className="col-md-6">
-            <div className="card shadow-lg">
-              <div className="card-header text-center">
-                <h3>User Registration</h3>
+            <div className="reg-form-container mb-5">
+              <div className="reg-form-header text-center">
+                <p>Buyer Registration</p>
               </div>
               <div className="card-body">
-                <form onSubmit={handleSubmit}>
-                  <div className="mb-3">
+                <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
+                  <div>
                     <label htmlFor="name" className="form-label fw-bold">
                       Name
                     </label>
@@ -103,7 +113,7 @@ const Registration = () => {
                     )}
                   </div>
 
-                  <div className="mb-3">
+                  <div>
                     <label htmlFor="phone" className="form-label fw-bold">
                       Phone Number
                     </label>
@@ -127,7 +137,7 @@ const Registration = () => {
                     )}
                   </div>
 
-                  <div className="mb-3">
+                  <div>
                     <label htmlFor="email" className="form-label fw-bold">
                       Company
                     </label>
@@ -148,7 +158,7 @@ const Registration = () => {
                     )}
                   </div>
 
-                  <div className="mb-3">
+                  <div>
                     <label htmlFor="city" className="form-label fw-bold">
                       City
                     </label>
@@ -168,40 +178,42 @@ const Registration = () => {
                       <div className="invalid-feedback">{errors.city}</div>
                     )}
                   </div>
-                  <div className="mb-3">
-                    <label className="form-label fw-bold">
-                      Profile Picture
-                    </label>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <input
-                        type="file"
-                        className="form-control"
-                        onChange={handleFileChange}
-                        style={{ width: "90%" }} // Adjust the width as needed
-                      />
+                  <div>
+                    <div className="d-flex justify-content-between align-items-center w-100 position-relative">
+                      <label className="form-label fw-bold">
+                        Profile Picture
+                      </label>
                       <div
                         className="green-tick"
                         style={{
                           display: "block",
                           color: "green",
-                          marginLeft: "10px",
-                          
+                          marginTop: "25px",
                         }}
                       >
-                     <span className="mb-3"> {profilePicture? "✔" : ""}</span>  
-                       <LoadingSpinner loading={imgLoading} />
+                        <span> {profilePicture ? "✔" : ""}</span>
+                        <LoadingSpinner loading={imgLoading} />
                       </div>
+                    </div>
+
+                    <div className="d-flex justify-content-between align-items-center">
+                      <input
+                        type="file"
+                        className="form-control"
+                        onChange={handleFileChange}
+                        style={{ width: "100%" }} // Adjust the width as needed
+                      />
                     </div>
                   </div>
 
                   <div className="row">
-                    <div className="text-center">
+                    <div className="text-center mt-3">
                       {loading ? (
-                        <button className="btn btn-secondary w-100">
+                        <button className="user-info-btn2">
                           Registering...
                         </button>
                       ) : (
-                        <button type="submit" className="btn btn-primary w-100">
+                        <button type="submit" className="user-info-btn2">
                           Register
                         </button>
                       )}
