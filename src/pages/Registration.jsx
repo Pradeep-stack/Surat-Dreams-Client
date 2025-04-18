@@ -1,13 +1,14 @@
 import { useState } from "react";
 import "../assets/styles/style.css";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import { registerUser, uploadImage } from "../api/user";
 import LoadingSpinner from "../components/common/Loader";
 import Logoimg from "../assets/images/logo.png";
 import { toast } from "react-toastify";
 import { userValidation } from "../utils/userValidation";
+import { whatsAppApiSend } from "../api/user";
 const Registration = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -53,9 +54,29 @@ const Registration = () => {
     }
   };
 
+   const sendMessage = async (itme) => {
+        if (!itme) return;
+        try {
+          const whatsAppData = {
+            countryCode: "+91",
+            phoneNumber: itme.phone,
+            type: "Template",
+            template: {
+              name: "entry_pass_download_info",
+              languageCode: "en_US",
+              bodyValues: [itme.name, itme.id, "https://surat-dreams.vercel.app/download-page"],
+            },
+          };
+          await whatsAppApiSend(whatsAppData);
+        } catch (error) {
+          console.error("Error sending WhatsApp message:", error);
+          toast.error("Error sending WhatsApp message: " + error.message);
+        }
+      };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!profilePicture) return toast.error("Please upload a profile picture");
+    if (!profilePicture) return toast.error("Please upload a profile picture");
     if (userValidation(formData, setErrors)) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
@@ -63,7 +84,8 @@ const Registration = () => {
       try {
         const response = await registerUser(userData);
         if (response?.data) {
-          navigate("/download-page", { state: { user: response.data } });
+          sendMessage(response?.data);
+          // navigate("/download-page", { state: { user: response.data } });
           toast.success("User registered successfully");
         } else {
           console.log("Registration failed", response.response.data.message);

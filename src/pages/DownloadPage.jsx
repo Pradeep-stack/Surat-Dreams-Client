@@ -26,12 +26,21 @@ const DownloadPage = () => {
     const response = await getUser(id);
     if (response?.data) {
       setDetails(response.data);
+      console.log("response.data", response.data);
+      if(response.data.userType === "user"){
+        setTimeout(() => {
+          handleImageUpload(response.data);
+        }, 2000); // Delay for 2 seconds before calling handleImageUpload
+      }else{
+        setLoading(false);
+      }
       setLoading(false);
     } else {
       toast.error("User not found");
       setLoading(false);
     }
   };
+
 
   // Handle Download
   // const handleDownload = () => {
@@ -117,8 +126,7 @@ const DownloadPage = () => {
     });
   };
 
-  const handleImageUpload = async () => {
-    if (!user) return;
+  const handleImageUpload = async (prop) => {
     const element = printRef.current;
     const canvas = await html2canvas(element, {
       useCORS: true,
@@ -178,17 +186,17 @@ const DownloadPage = () => {
     const croppedImage = croppedCanvas.toDataURL("image/png");
     const link = document.createElement("a");
     link.href = croppedImage;
-    link.download = "EntryCard.png"+user.id;
+    link.download = "EntryCard.png"+prop.id;
     link.click();
     try {
       const blob = await (await fetch(croppedImage)).blob();
       const formData = new FormData();
-      formData.append("image", blob, "EntryCard.png"+user.id);
+      formData.append("image", blob, "EntryCard.png"+prop.id);
       const response = await uploadImage(formData);
       
       if (response?.Location) {
         // Assuming the response contains the URL of the uploaded image
-        sendMessage(user, response.Location);
+        sendMessage(prop, response.Location);
       } else {
         toast.error("Upload failed");
       }
@@ -206,10 +214,10 @@ const DownloadPage = () => {
           phoneNumber: itme.phone,
           type: "Template",
           template: {
-            name: "welcome_msg",
+            name: "entry_pass_with_image",
             languageCode: "en_US",
             headerValues: [imageUrl],
-            bodyValues: [itme.name],
+            bodyValues: [itme.name, itme.id],
           },
         };
         await whatsAppApiSend(whatsAppData);
@@ -219,12 +227,12 @@ const DownloadPage = () => {
       }
     };
 
-    useEffect(() => { 
-      if (user) {
-        handleImageUpload();
-      }
-    }, []); // Run this effect when the user prop changes
-
+    // useEffect(() => { 
+    //   if (details ) {
+    //     handleImageUpload();
+    //   }
+    // }, [details ]); // Run this effect when the user prop changes
+   
   if (user) {
     return (
       <div className="container mt-5">
