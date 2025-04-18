@@ -67,15 +67,16 @@
   }
   
   .stall-number {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: bold;
     color: white;
     background-color: #2aabe2;
     border-radius: 59px;
-    height: 90px;
-    width: 210px;
+    height: 70px;
+    width: 150px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     border: none;
+    margin-left: 20px;
   }
   
   .stall-number.animate-number {

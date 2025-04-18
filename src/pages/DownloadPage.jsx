@@ -321,7 +321,7 @@ const DownloadPage = () => {
 
   if (details && details.userType === "admin") {
     return (
-     <Congratulations />
+     <Congratulations details={details} />
     );
   }
 
