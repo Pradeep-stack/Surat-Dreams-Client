@@ -7,6 +7,8 @@ import Logoimg from "../assets/images/logo.png";
 import { toast } from "react-toastify";
 import { userValidation } from "../utils/userValidation";
 import { whatsAppApiSend } from "../api/user";
+import ConfirmationModal from "../components/common/ConfirmationModal";
+import { Link } from "react-router-dom";
 const Registration = () => {
   // const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -21,6 +23,7 @@ const Registration = () => {
   const [loading, setLoading] = useState(false);
   const [imgLoading, setImgLoading] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
@@ -76,15 +79,15 @@ const Registration = () => {
   
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!profilePicture) return toast.error("Please upload a profile picture");
+    // if (!profilePicture) return toast.error("Please upload a profile picture");
     if (userValidation(formData, setErrors)) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
-      console.log("userData", userData);
       try {
         const response = await registerUser(userData);
         if (response?.data) {
           sendMessage(response?.data);
+          setModalShow(true)
           // navigate("/download-page", { state: { user: response.data } });
           toast.success("User registered successfully");
         } else {
@@ -101,6 +104,8 @@ const Registration = () => {
 
   return (
     <div className="registration-page">
+       <ConfirmationModal show={modalShow}
+              onHide={() => setModalShow(false)} />
       <div className="container mt-5">
         <div className="logo-box">
           <img src={Logoimg} alt="" />
@@ -241,6 +246,12 @@ const Registration = () => {
                       )}
                     </div>
                   </div>
+                  <div className="text-center mt-3">
+                    <p>
+                      Already have registration?{" "}
+                      <Link to="/download-page">Download Your Card</Link>  
+                    </p>
+                  </div>  
                 </form>
               </div>
             </div>

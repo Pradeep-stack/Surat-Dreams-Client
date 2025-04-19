@@ -1,14 +1,15 @@
 import { useState } from "react";
 import "../assets/styles/style.css";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { registerUser, uploadImage } from "../api/user";
 import Logoimg from "../assets/images/logo.png";
 import LoadingSpinner from "../components/common/Loader";
 import { toast } from "react-toastify";
 import { vendorValidation } from "../utils/vendorValidation";
 import ConfirmationModal from "../components/common/ConfirmationModal";
+
 const VendorRegistration = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -62,7 +63,6 @@ const VendorRegistration = () => {
     if (vendorValidation(formData, setErrors)) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
-      console.log("userData", userData);
       try {
         const response = await registerUser(userData);
         if (response?.data) {
@@ -251,6 +251,12 @@ const VendorRegistration = () => {
                       )}
                     </div>
                   </div>
+                  <div className="text-center mt-3">
+                    <p>
+                      Already have registration?{" "}
+                      <Link to="/download-page">Know Your Stall Number</Link>  
+                    </p>
+                  </div>  
                 </form>
               </div>
             </div>

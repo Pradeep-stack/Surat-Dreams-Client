@@ -11,7 +11,7 @@ export default function ConfirmationModal(props) {
     >
       <Modal.Header
         style={{
-          backgroundColor: "green",
+          backgroundColor: "#4CAF50",
           color: "white",
           textAlign: "center",
           height: "70px",
@@ -32,7 +32,7 @@ export default function ConfirmationModal(props) {
           />
         </div>
         <br />
-        <div>
+        <div style={{ textAlign: "center", marginBottom: "35px" }}>
           <h4 className="d-flex justify-content-center align-items-center">
             Congratulations, you have successfully registered.
           </h4>
@@ -41,7 +41,7 @@ export default function ConfirmationModal(props) {
         <div className="d-flex justify-content-center">
           <Button
             style={{
-              backgroundColor: "green",
+              backgroundColor: "#a37814",
               color: "white",
               width: "30%",
               alignItems: "center",

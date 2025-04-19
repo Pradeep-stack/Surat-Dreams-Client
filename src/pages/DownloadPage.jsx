@@ -10,6 +10,7 @@ import Congratulations from "../components/common/Congratulations";
 import UserQRCard from "../components/UserQRCard";
 import { uploadImage } from "../api/user";
 import { whatsAppApiSend } from "../api/user";
+import Logoimg from "../assets/images/logo.png";
 // import { whatsAppApiSend, prepareWhatsAppPayload } from "../api/user";
 const DownloadPage = () => {
   const [id, setId] = useState("");
@@ -402,6 +403,10 @@ const DownloadPage = () => {
   return (
     <div className="registration-page2">
       <div className="container mt-5">
+       
+                <div className="logo-box">
+                  <img src={Logoimg} alt="" />
+                </div>
         <div className="box-container mb-5">
           <div className="reg-form-header text-center">
             <p>Download Your Entry Card</p>
