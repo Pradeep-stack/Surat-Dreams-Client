@@ -425,7 +425,7 @@ const DownloadPage = () => {
         </div>
         <div className="box-container mb-5">
           <div className="reg-form-header text-center">
-            <p>Download Your Entry Card</p>
+            <p>Download Your Entry Card / Know Your Sall Number</p>
           </div>
           <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
             <div className="form-group">
@@ -442,9 +442,12 @@ const DownloadPage = () => {
                 required
               />
             </div>
+            <div className="align-items-center d-flex justify-content-center">
             <button type="submit" className="user-info-btn mt-3">
-              {loading ? "Genrating..." : "Generate Card"}
+              {loading ? "Genrating..." : "Submit"}
             </button>
+            </div>
+           
             <div className="text-center mt-3">
               <p>Click here for registration : </p>
               <Link to="/">
