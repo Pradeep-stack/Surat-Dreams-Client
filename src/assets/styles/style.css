@@ -33,12 +33,13 @@ body {
 .registration-page2 {
   /* background: url("../images/4903975.jpg") no-repeat center center fixed; */
   background-size: cover;
-  min-height: 100vh;
+  min-height: 85vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   margin: auto;
+  width:80%
 }
 
 .logo-box{

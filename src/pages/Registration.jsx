@@ -252,6 +252,12 @@ const Registration = () => {
                       <Link to="/download-page">Download Your Card</Link>  
                     </p>
                   </div>  
+                  <div className="text-center mt-3">
+                    <p>
+                      For vendor registration{" "}
+                      <Link to="/vendor-registration">Click Here</Link>  
+                    </p>  
+                  </div>
                 </form>
               </div>
             </div>

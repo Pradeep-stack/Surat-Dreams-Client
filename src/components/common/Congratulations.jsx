@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import '../../assets/styles/CongratulationsPage.css';
 import CongImage from '../../assets/images/congratulations.png';
 import Logoimg from "../../assets/images/logo.png";
+import { Link } from 'react-router-dom';
 
 const CongratulationsPage = ({ details}) => {
     const [celebrate, setCelebrate] = useState(false);
@@ -66,9 +67,16 @@ const CongratulationsPage = ({ details}) => {
                 <div className="stall-number-label">YOUR STALL NUMBER IS</div>
                 {details?.stall_number ? 
                 <div className="stall-number animate-number">{details?.stall_number}</div>:
-                <div className="stall-number2">Your STALL NO is not available yet</div>}
-                 
-                 
+                <div className="stall-number2">Your STALL NO is not available yet</div>} 
+            </div>
+            <div>
+             
+            </div>
+            <div className="button-container mt-5">
+                <p>Search Another Stall</p>
+                <button className="btn btn-primary" onClick={() => window.location.reload()}>
+                    Search Again
+                </button>
             </div>
         </div>
     );

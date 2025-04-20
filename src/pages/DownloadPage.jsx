@@ -1,9 +1,9 @@
-import  { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import html2canvas from "html2canvas";
 import cardImage from "../assets/images/card.jpg";
 // import barCode from "../assets/images/qr.jpg";
 import { getUser } from "../api/user";
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../assets/styles/style.css";
 import Congratulations from "../components/common/Congratulations";
@@ -28,11 +28,11 @@ const DownloadPage = () => {
     if (response?.data) {
       setDetails(response.data);
       console.log("response.data", response.data);
-      if(response.data.userType === "user"){
+      if (response.data.userType === "user") {
         setTimeout(() => {
           handleImageUpload(response.data);
         }, 2000); // Delay for 2 seconds before calling handleImageUpload
-      }else{
+      } else {
         setLoading(false);
       }
       setLoading(false);
@@ -41,7 +41,6 @@ const DownloadPage = () => {
       setLoading(false);
     }
   };
-
 
   // Handle Download
   // const handleDownload = () => {
@@ -133,16 +132,16 @@ const DownloadPage = () => {
       useCORS: true,
       allowTaint: false,
     });
-  
+
     // Get the context of the canvas
     const context = canvas.getContext("2d");
     const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-  
+
     let cropX = canvas.width;
     let cropY = canvas.height;
     let cropWidth = 0;
     let cropHeight = 0;
-  
+
     // Find the boundaries of the non-white content
     for (let y = 0; y < canvas.height; y++) {
       for (let x = 0; x < canvas.width; x++) {
@@ -153,7 +152,7 @@ const DownloadPage = () => {
           imageData.data[index + 2],
           imageData.data[index + 3],
         ];
-  
+
         if (!(r === 255 && g === 255 && b === 255 && a === 255)) {
           cropX = Math.min(cropX, x);
           cropY = Math.min(cropY, y);
@@ -162,11 +161,11 @@ const DownloadPage = () => {
         }
       }
     }
-  
+
     // Adjust crop dimensions
     cropWidth -= cropX;
     cropHeight -= cropY;
-  
+
     // Create cropped canvas
     const croppedCanvas = document.createElement("canvas");
     croppedCanvas.width = cropWidth;
@@ -187,14 +186,14 @@ const DownloadPage = () => {
     const croppedImage = croppedCanvas.toDataURL("image/png");
     const link = document.createElement("a");
     link.href = croppedImage;
-    link.download = "EntryCard.png"+prop.id;
+    link.download = `EntryCard${prop.id}.png`;
     link.click();
     try {
       const blob = await (await fetch(croppedImage)).blob();
       const formData = new FormData();
-      formData.append("image", blob, "EntryCard.png"+prop.id);
+      formData.append("image", blob, `EntryCard${prop.id}.png`);
       const response = await uploadImage(formData);
-      
+
       if (response?.Location) {
         // Assuming the response contains the URL of the uploaded image
         sendMessage(prop, response.Location);
@@ -206,34 +205,34 @@ const DownloadPage = () => {
       toast.error("Failed to upload image");
     }
   };
-  
-   const sendMessage = async (itme, imageUrl) => {
-      if (!itme) return;
-      try {
-        const whatsAppData = {
-          countryCode: "+91",
-          phoneNumber: itme.phone,
-          type: "Template",
-          template: {
-            name: "entry_pass_with_image",
-            languageCode: "en_US",
-            headerValues: [imageUrl],
-            bodyValues: [itme.name, itme.id],
-          },
-        };
-        await whatsAppApiSend(whatsAppData);
-      } catch (error) {
-        console.error("Error sending WhatsApp message:", error);
-        toast.error("Error sending WhatsApp message: " + error.message);
-      }
-    };
 
-    // useEffect(() => { 
-    //   if (details ) {
-    //     handleImageUpload();
-    //   }
-    // }, [details ]); // Run this effect when the user prop changes
-   
+  const sendMessage = async (itme, imageUrl) => {
+    if (!itme) return;
+    try {
+      const whatsAppData = {
+        countryCode: "+91",
+        phoneNumber: itme.phone,
+        type: "Template",
+        template: {
+          name: "entry_pass_with_image",
+          languageCode: "en_US",
+          headerValues: [imageUrl],
+          bodyValues: [itme.name, itme.id],
+        },
+      };
+      await whatsAppApiSend(whatsAppData);
+    } catch (error) {
+      console.error("Error sending WhatsApp message:", error);
+      toast.error("Error sending WhatsApp message: " + error.message);
+    }
+  };
+
+  // useEffect(() => {
+  //   if (details ) {
+  //     handleImageUpload();
+  //   }
+  // }, [details ]); // Run this effect when the user prop changes
+
   if (user) {
     return (
       <div className="container mt-5">
@@ -242,11 +241,18 @@ const DownloadPage = () => {
         {/* Card Preview */}
         {user.id && (
           <div>
+            <div className="row">
             <div className="text-center">
               <p>Click below to download the card:</p>
               <button onClick={handleDownload} className="btn btn-success me-2">
                 <i className="fas fa-download me-2"></i> Download
               </button>
+              <button onClick={() => window.location.reload()} className="btn btn-success me-2">
+                <i className="fas fa-download me-2"></i> Search Again
+              </button>
+            </div>
+          
+           
             </div>
             {/* <div className="text-center">
               <p>Click below to download the card:</p>
@@ -264,7 +270,9 @@ const DownloadPage = () => {
                   <div className="row">
                     <div className="col-md-2 mb-3">
                       <h4>
-                        <strong>ID &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
+                        <strong>
+                          ID &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                        </strong>
                       </h4>
                     </div>
                     <div className="col-md-10 mb-3">
@@ -311,7 +319,10 @@ const DownloadPage = () => {
                   onLoad={() => console.log("Profile pic loaded")}
                 />
                 {/* <img src={barCode} className="qr" alt="QR Code" /> */}
-                <din className="qr"  > <UserQRCard user={user} /></din>
+                <din className="qr">
+                  {" "}
+                  <UserQRCard user={user} />
+                </din>
               </div>
             </div>
           </div>
@@ -321,9 +332,7 @@ const DownloadPage = () => {
   }
 
   if (details && details.userType === "admin") {
-    return (
-     <Congratulations details={details} />
-    );
+    return <Congratulations details={details} />;
   }
 
   if (details && details.userType === "user") {
@@ -336,6 +345,9 @@ const DownloadPage = () => {
               <button onClick={handleDownload} className="btn btn-success me-2">
                 <i className="fas fa-download me-2"></i> Download
               </button>
+              <button onClick={() => window.location.reload()} className="btn btn-success me-2">
+                <i className="fas fa-download me-2"></i> Search Again
+              </button>
             </div>
 
             <div className="mt-3" ref={printRef}>
@@ -345,7 +357,9 @@ const DownloadPage = () => {
                   <div className="row">
                     <div className="col-md-2 mb-3">
                       <h4>
-                        <strong>ID &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</strong>
+                        <strong>
+                          ID &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                        </strong>
                       </h4>
                     </div>
                     <div className="col-md-10 mb-3">
@@ -391,7 +405,10 @@ const DownloadPage = () => {
                   alt="Profile pic"
                 />
                 {/* <img src={barCode} className="qr" alt="QR Code" /> */}
-                <din className="qr"  > <UserQRCard user={details} /></din>
+                <din className="qr">
+                  {" "}
+                  <UserQRCard user={details} />
+                </din>
               </div>
             </div>
           </div>
@@ -399,14 +416,13 @@ const DownloadPage = () => {
       </div>
     );
   }
-  
+
   return (
     <div className="registration-page2">
-      <div className="container mt-5">
-       
-                <div className="logo-box">
-                  <img src={Logoimg} alt="" />
-                </div>
+      <div className="container ">
+        <div className="logo-box">
+          <img src={Logoimg} alt="" />
+        </div>
         <div className="box-container mb-5">
           <div className="reg-form-header text-center">
             <p>Download Your Entry Card</p>
@@ -429,6 +445,15 @@ const DownloadPage = () => {
             <button type="submit" className="user-info-btn mt-3">
               {loading ? "Genrating..." : "Generate Card"}
             </button>
+            <div className="text-center mt-3">
+              <p>Click here for registration : </p>
+              <Link to="/">
+                <i className="fas fa-user-plus me-2"></i> Buyer Registration
+              </Link>
+              <Link to="/vendor-registration" >
+                <i className="fas fa-user-plus me-2"></i> Vendor Registration
+              </Link>
+            </div>
           </form>
         </div>
       </div>
