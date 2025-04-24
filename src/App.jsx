@@ -8,6 +8,7 @@ import UserInfo from './pages/UserInfo';
 import DownloadPage from './pages/DownloadPage';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
+import VendorDownload from './pages/VendorDownload';
 const App = () => {
   return (<>
    <ToastContainer />
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/vendor-registration" element={<VendorRegistration />}/>
         <Route path="/user-info" element={<UserInfo />}/>
         <Route path="/download-page" element={<DownloadPage />}/>
+        <Route path="/vendor-download" element={<VendorDownload />}/>
       </Routes>
     </Router></>
    

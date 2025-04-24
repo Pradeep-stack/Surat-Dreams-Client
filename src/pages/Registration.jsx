@@ -254,7 +254,7 @@ const Registration = () => {
                   </div>  
                   <div className="text-center mt-3">
                     <p>
-                      For vendor registration{" "}
+                      For Exhibitor registration{" "}
                       <Link to="/vendor-registration">Click Here</Link>  
                     </p>  
                   </div>

@@ -12,7 +12,7 @@ import UserQRCard from "../components/UserQRCard";
 // import { whatsAppApiSend } from "../api/user";
 import Logoimg from "../assets/images/logo.png";
 // import { whatsAppApiSend, prepareWhatsAppPayload } from "../api/user";
-const DownloadPage = () => {
+const VendorDownload = () => {
   const [id, setId] = useState("");
   const [details, setDetails] = useState(null);
   const location = useLocation();
@@ -328,11 +328,11 @@ const DownloadPage = () => {
     );
   }
 
-  if (details && details.userType === "admin") {
+  if (details && details.userType === "exhibitor") {
     return <Congratulations details={details} />;
   }
 
-  if (details && details.userType === "user") {
+  if (details && details.userType === "admin") {
     return (
       <div className="registration-page2">
         {details.id && (
@@ -424,7 +424,7 @@ const DownloadPage = () => {
         </div>
         <div className="box-container mb-5">
           <div className="reg-form-header text-center">
-            <p>Download Your Entry Card / Know Your Sall Number</p>
+            <p> Know Your Sall Number / Entry Card</p>
           </div>
           <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
             <div className="form-group">
@@ -449,11 +449,8 @@ const DownloadPage = () => {
            
             <div className="text-center mt-3">
               <p>Click here for registration : </p>
-              <Link to="/">
-                <i className="fas fa-user-plus me-2"></i> Buyer Registration
-              </Link>
               <Link to="/vendor-registration" >
-                <i className="fas fa-user-plus me-2"></i> Vendor Registration
+                <i className="fas fa-user-plus me-2"></i> Exhibitor  Registration
               </Link>
             </div>
           </form>
@@ -463,4 +460,4 @@ const DownloadPage = () => {
   );
 };
 
-export default DownloadPage;
+export default VendorDownload;

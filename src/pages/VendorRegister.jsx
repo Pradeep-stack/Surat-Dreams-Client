@@ -59,7 +59,7 @@ const VendorRegistration = () => {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!profilePicture ) return toast.error("Please upload a profile picture");
+    // if (!profilePicture ) return toast.error("Please upload a profile picture");
     if (vendorValidation(formData, setErrors)) {
       setLoading(true);
       let userData = { ...formData, profile_pic: profilePicture };
@@ -106,7 +106,7 @@ const VendorRegistration = () => {
           <div className="col-md-6">
             <div className="reg-form-container mb-5">
               <div className="reg-form-header text-center">
-                <p>Vendor Registration</p>
+                <p>Exhibitor Registration</p>
               </div>
               <div className="card-body">
                 <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
@@ -254,7 +254,7 @@ const VendorRegistration = () => {
                   <div className="text-center mt-3">
                     <p>
                       Already have registration?{" "}
-                      <Link to="/download-page">Know Your Stall Number</Link>  
+                      <Link to="/vendor-download">Know Your Stall Number</Link>  
                     </p>
                   </div>  
                 </form>
