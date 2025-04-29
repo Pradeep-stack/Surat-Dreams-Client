@@ -14,10 +14,6 @@ export const userValidation = ( formData , setErrors) => {
       newErrors.company = "Company is required";
       isValid = false;
     }
-    if (!formData.city) {
-      newErrors.city = "City is required";
-      isValid = false;
-    }
 
     setErrors(newErrors);
     return isValid;
