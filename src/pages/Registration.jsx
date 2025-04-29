@@ -9,6 +9,8 @@ import { userValidation } from "../utils/userValidation";
 import { whatsAppApiSend } from "../api/user";
 import ConfirmationModal from "../components/common/ConfirmationModal";
 import { Link } from "react-router-dom";
+import { StateSelect, CitySelect } from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
 const Registration = () => {
   // const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -16,7 +18,6 @@ const Registration = () => {
     phone: "",
     company: "",
     city: "",
-    userType: "user",
     email: "",
     password: "",
   });
@@ -24,11 +25,16 @@ const Registration = () => {
   const [imgLoading, setImgLoading] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [countryId] = useState(101); // India
+  const [stateId, setStateId] = useState(0);
+  const [stateName, setStateName] = useState("");
+  const [cityId, setCityId] = useState(0);
+  const [cityName, setCityName] = useState("");
+  const [userType, setUserType] = useState("");
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
     company: "",
-    city: "",
   });
 
   const handleChange = (e) => {
@@ -57,37 +63,41 @@ const Registration = () => {
     }
   };
 
-   const sendMessage = async (itme) => {
-        if (!itme) return;
-        try {
-          const whatsAppData = {
-            countryCode: "+91",
-            phoneNumber: itme.phone,
-            type: "Template",
-            template: {
-              name: "entry_pass_download_info",
-              languageCode: "en_US",
-              bodyValues: [itme.name, itme.id, "https://surat-dreams.vercel.app/download-page"],
-            },
-          };
-          await whatsAppApiSend(whatsAppData);
-        } catch (error) {
-          console.error("Error sending WhatsApp message:", error);
-          toast.error("Error sending WhatsApp message: " + error.message);
-        }
+  const sendMessage = async (itme) => {
+    if (!itme) return;
+    try {
+      const whatsAppData = {
+        countryCode: "+91",
+        phoneNumber: itme.phone,
+        type: "Template",
+        template: {
+          name: "entry_pass_download_info",
+          languageCode: "en_US",
+          bodyValues: [
+            itme.name,
+            itme.id,
+            "https://surat-dreams.vercel.app/download-page",
+          ],
+        },
       };
-  
+      await whatsAppApiSend(whatsAppData);
+    } catch (error) {
+      console.error("Error sending WhatsApp message:", error);
+      toast.error("Error sending WhatsApp message: " + error.message);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     // if (!profilePicture) return toast.error("Please upload a profile picture");
     if (userValidation(formData, setErrors)) {
       setLoading(true);
-      let userData = { ...formData, profile_pic: profilePicture };
+      let userData = { ...formData, profile_pic: profilePicture,userType: userType, state: stateName, city: cityName };
       try {
         const response = await registerUser(userData);
         if (response?.data) {
           sendMessage(response?.data);
-          setModalShow(true)
+          setModalShow(true);
           // navigate("/download-page", { state: { user: response.data } });
           toast.success("User registered successfully");
         } else {
@@ -104,8 +114,7 @@ const Registration = () => {
 
   return (
     <div className="registration-page">
-       <ConfirmationModal show={modalShow}
-              onHide={() => setModalShow(false)} />
+      <ConfirmationModal show={modalShow} onHide={() => setModalShow(false)} />
       <div className="container mt-5">
         <div className="logo-box">
           <img src={Logoimg} alt="" />
@@ -184,27 +193,48 @@ const Registration = () => {
                       <div className="invalid-feedback">{errors.company}</div>
                     )}
                   </div>
-
                   <div>
-                    <label htmlFor="city" className="form-label fw-bold">
-                      City
-                    </label>
-                    <input
-                      type="text"
-                      className={`form-control ${
-                        errors.city ? "is-invalid" : ""
-                      }`}
-                      id="city"
-                      name="city"
-                      placeholder="Enter your city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      required
-                    />
-                    {errors.city && (
-                      <div className="invalid-feedback">{errors.city}</div>
-                    )}
+                    <label className="form-label fw-bold">Buyer Type</label>
+                    <select
+                      value={userType}
+                      onChange={(e) => setUserType(e.target.value)}
+                      style={{ marginTop: "8px" }}
+                    >
+                      <option value="">Select Buyer Type</option>
+                      <option value="user">Buyer</option>
+                      <option value="agent">Agent</option>
+                    </select>
                   </div>
+                  <div>
+                    <label className="form-label fw-bold">State</label>
+
+                    <StateSelect
+                      countryid={countryId}
+                      value={stateId}
+                      onChange={(e) => {
+                        setStateId(e.id);
+                        setStateName(e.name); // 👈 Save name also
+                        setCityId(0); // Reset city
+                        setCityName("");
+                      }}
+                      placeHolder="Select State"
+                    />
+                  </div>
+                  <div>
+                    <label className="form-label fw-bold">City</label>
+                    <CitySelect
+                      countryid={countryId}
+                      stateid={stateId}
+                      value={cityId}
+                      onChange={(e) => {
+                        setCityId(e.id);
+                        setCityName(e.name); // 👈 Save city name also
+                      }}
+                      placeHolder="Select City"
+                    />
+                  </div>
+                
+
                   <div>
                     <div className="d-flex justify-content-between align-items-center w-100 position-relative">
                       <label className="form-label fw-bold">
@@ -249,14 +279,14 @@ const Registration = () => {
                   <div className="text-center mt-3">
                     <p>
                       Already have registration?{" "}
-                      <Link to="/download-page">Download Your Card</Link>  
+                      <Link to="/download-page">Download Your Card</Link>
                     </p>
-                  </div>  
+                  </div>
                   <div className="text-center mt-3">
                     <p>
                       For Exhibitor registration{" "}
-                      <Link to="/vendor-registration">Click Here</Link>  
-                    </p>  
+                      <Link to="/vendor-registration">Click Here</Link>
+                    </p>
                   </div>
                 </form>
               </div>

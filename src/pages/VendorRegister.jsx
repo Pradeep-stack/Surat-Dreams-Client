@@ -1,13 +1,14 @@
 import { useState } from "react";
 import "../assets/styles/style.css";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { registerUser, uploadImage } from "../api/user";
 import Logoimg from "../assets/images/logo.png";
 import LoadingSpinner from "../components/common/Loader";
 import { toast } from "react-toastify";
 import { vendorValidation } from "../utils/vendorValidation";
 import ConfirmationModal from "../components/common/ConfirmationModal";
-
+import { StateSelect, CitySelect } from "react-country-state-city";
+import "react-country-state-city/dist/react-country-state-city.css";
 const VendorRegistration = () => {
   // const navigate = useNavigate();
   const [formData, setFormData] = useState({
@@ -23,11 +24,16 @@ const VendorRegistration = () => {
   const [imgLoading, setImgLoading] = useState(false);
   const [modalShow, setModalShow] = useState(false);
   const [profilePicture, setProfilePicture] = useState(null);
+  const [countryId] = useState(101); // India
+  const [stateId, setStateId] = useState(0);
+  const [stateName, setStateName] = useState("");
+  const [cityId, setCityId] = useState(0);
+  const [cityName, setCityName] = useState("");
+  const [userType, setUserType] = useState("");
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
     company: "",
-    city: "",
     email: "",
   });
 
@@ -62,7 +68,7 @@ const VendorRegistration = () => {
     // if (!profilePicture ) return toast.error("Please upload a profile picture");
     if (vendorValidation(formData, setErrors)) {
       setLoading(true);
-      let userData = { ...formData, profile_pic: profilePicture };
+      let userData = { ...formData, profile_pic: profilePicture,userType: userType, state: stateName, city: cityName };
       try {
         const response = await registerUser(userData);
         if (response?.data) {
@@ -72,8 +78,6 @@ const VendorRegistration = () => {
             name: "",
             phone: "",
             company: "",
-            city: "",
-            userType: "admin",
             email: "",
             password: ""
           })
@@ -193,25 +197,48 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
+                
                   <div>
-                    <label htmlFor="city" className="form-label fw-bold">
-                      City
-                    </label>
-                    <input
-                      type="text"
-                      className={`form-control ${errors.city ? "is-invalid" : ""
-                        }`}
-                      id="city"
-                      name="city"
-                      placeholder="Enter your city"
-                      value={formData.city}
-                      onChange={handleChange}
-                      required
-                    />
-                    {errors.city && (
-                      <div className="invalid-feedback">{errors.city}</div>
-                    )}
+                    <label className="form-label fw-bold">Exhibitor  Type</label>
+                    <select
+                      value={userType}
+                      onChange={(e) => setUserType(e.target.value)}
+                      style={{ marginTop: "8px" }}
+                    >
+                      <option value="">Select Exhibitor  Type</option>
+                      <option value="member">Member</option>
+                      <option value="exhibitor">Owner</option>
+                    </select>
                   </div>
+                  <div>
+                    <label className="form-label fw-bold">State</label>
+
+                    <StateSelect
+                      countryid={countryId}
+                      value={stateId}
+                      onChange={(e) => {
+                        setStateId(e.id);
+                        setStateName(e.name); // 👈 Save name also
+                        setCityId(0); // Reset city
+                        setCityName("");
+                      }}
+                      placeHolder="Select State"
+                    />
+                  </div>
+                  <div>
+                    <label className="form-label fw-bold">City</label>
+                    <CitySelect
+                      countryid={countryId}
+                      stateid={stateId}
+                      value={cityId}
+                      onChange={(e) => {
+                        setCityId(e.id);
+                        setCityName(e.name); // 👈 Save city name also
+                      }}
+                      placeHolder="Select City"
+                    />
+                  </div>
+                
                   <div className="mb-3">
                     <label className="form-label fw-bold">
                       Profile Picture

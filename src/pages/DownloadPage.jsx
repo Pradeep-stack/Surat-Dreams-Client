@@ -424,7 +424,7 @@ const DownloadPage = () => {
         </div>
         <div className="box-container mb-5">
           <div className="reg-form-header text-center">
-            <p>Download Your Entry Card / Know Your Sall Number</p>
+            <p>Download Your Entry Card</p>
           </div>
           <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
             <div className="form-group">
