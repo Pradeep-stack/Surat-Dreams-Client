@@ -93,7 +93,6 @@ const DownloadPage = () => {
         {details.id && (
           <div className="container mt-5">
             <div className="text-center">
-              <p>Click below to download the entry card:</p>
               <button 
                 onClick={() => handleDownload(details.badge_image_url)} 
                 className="btn btn-success me-2"
@@ -172,9 +171,9 @@ const DownloadPage = () => {
 
               <button
                 type="submit"
-                className="btn btn-primary me-2"
+                className="user-info-btn2"
                 disabled={loading}
-                style={{ paddingInline:"40px" }}
+                style={{width:"25%", paddingInline:"40px" }}
               >
                 {loading ? (
                   <>
