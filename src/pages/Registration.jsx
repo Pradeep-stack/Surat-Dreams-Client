@@ -96,7 +96,7 @@ const Registration = () => {
       try {
         const response = await registerUser(userData);
         if (response?.data) {
-          sendMessage(response?.data);
+          // sendMessage(response?.data);
           setModalShow(true);
           // navigate("/download-page", { state: { user: response.data } });
           toast.success("User registered successfully");
@@ -124,7 +124,7 @@ const Registration = () => {
           <div className="col-md-6">
             <div className="reg-form-container mb-5">
               <div className="reg-form-header text-center">
-                <p>Buyer Registration</p>
+                <p>Buyer/Agent Registration</p>
               </div>
               <div className="card-body">
                 <form onSubmit={handleSubmit} style={{ padding: "20px" }}>

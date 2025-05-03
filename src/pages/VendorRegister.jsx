@@ -110,7 +110,7 @@ const VendorRegistration = () => {
           <div className="col-md-6">
             <div className="reg-form-container mb-5">
               <div className="reg-form-header text-center">
-                <p>Exhibitor Registration</p>
+                <p>Exhibitor Owner/Staff Registration</p>
               </div>
               <div className="card-body">
                 <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
@@ -279,9 +279,9 @@ const VendorRegistration = () => {
                     </div>
                   </div>
                   <div className="text-center mt-3">
-                    <p>
+                  <p>
                       Already have registration?{" "}
-                      <Link to="/vendor-download">Know Your Stall Number</Link>  
+                      <Link to="/download-page">Download Your Card</Link>
                     </p>
                   </div>  
                 </form>
