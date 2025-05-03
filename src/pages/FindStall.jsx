@@ -1,0 +1,68 @@
+import { useState, useRef } from "react";
+
+import { getUser } from "../api/user";
+import { Link, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import "../assets/styles/style.css";
+import Congratulations from "../components/common/Congratulations";
+import Logoimg from "../assets/images/logo.png";
+const DownloadPage = () => {
+  const [id, setId] = useState("");
+  const [details, setDetails] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    const response = await getUser(id);
+    if (response?.data) {
+      setDetails(response.data);
+      setLoading(false);
+    } else {
+      toast.error("User not found");
+      setLoading(false);
+    }
+  };
+ 
+  if (details) {
+    return <Congratulations details={details} />;
+  }
+  return (
+    <div className="registration-page2">
+      <div className="container ">
+        <div className="logo-box">
+          <img src={Logoimg} alt="" />
+        </div>
+        <div className="box-container mb-5">
+          <div className="reg-form-header text-center">
+            <p>Find Your Stall</p>
+          </div>
+          <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
+            <div className="form-group">
+              <label htmlFor="imageId" className="fw-bold">
+                Enter Registred Phone Number:
+              </label>
+              <input
+                type="number"
+                id="imageId"
+                className="form-control mt-2"
+                placeholder="Enter Phone Number"
+                value={id}
+                onChange={(e) => setId(e.target.value)}
+                required
+              />
+            </div>
+            <div className="align-items-center d-flex justify-content-center">
+            <button type="submit" className="user-info-btn mt-3">
+              {loading ? "Genrating..." : "Submit"}
+            </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default DownloadPage;

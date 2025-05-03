@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import  { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../../assets/styles/CongratulationsPage.css';
 import CongImage from '../../assets/images/congratulations.png';
 import Logoimg from "../../assets/images/logo.png";
-import { Link } from 'react-router-dom';
 
 const CongratulationsPage = ({ details}) => {
     const [celebrate, setCelebrate] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
 
-    console.log("CongratulationsPage details", details);
 
     useEffect(() => {
         // Start animation sequence after a short delay

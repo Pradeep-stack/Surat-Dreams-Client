@@ -1,28 +1,28 @@
 import { useState } from "react";
-import "../assets/styles/style.css";
 import { Link } from "react-router-dom";
-import { registerUser, uploadImage } from "../api/user";
-import Logoimg from "../assets/images/logo.png";
-import LoadingSpinner from "../components/common/Loader";
 import { toast } from "react-toastify";
-import { vendorValidation } from "../utils/vendorValidation";
-import ConfirmationModal from "../components/common/ConfirmationModal";
 import { StateSelect, CitySelect } from "react-country-state-city";
 import "react-country-state-city/dist/react-country-state-city.css";
+import LoadingSpinner from "../components/common/Loader";
+import ConfirmationModal from "../components/common/ConfirmationModal";
+import { registerUser, uploadImage } from "../api/user";
+import { vendorValidation } from "../utils/vendorValidation";
+import Logoimg from "../assets/images/logo.png";
+import "../assets/styles/style.css";
+
 const VendorRegistration = () => {
-  // const navigate = useNavigate();
-  const [formData, setFormData] = useState({
+  // Initial state values
+  const initialState = {
     name: "",
     phone: "",
     company: "",
-    city: "",
-    userType: "admin",
     email: "",
-    password: ""
-  });
-  const [loading, setLoading] = useState(false);
-  const [imgLoading, setImgLoading] = useState(false);
-  const [modalShow, setModalShow] = useState(false);
+    password: "",
+    userType: "admin"
+  };
+
+  // Form state
+  const [formData, setFormData] = useState(initialState);
   const [profilePicture, setProfilePicture] = useState(null);
   const [countryId] = useState(101); // India
   const [stateId, setStateId] = useState(0);
@@ -30,6 +30,11 @@ const VendorRegistration = () => {
   const [cityId, setCityId] = useState(0);
   const [cityName, setCityName] = useState("");
   const [userType, setUserType] = useState("");
+  
+  // UI state
+  const [loading, setLoading] = useState(false);
+  const [imgLoading, setImgLoading] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
   const [errors, setErrors] = useState({
     name: "",
     phone: "",
@@ -37,94 +42,130 @@ const VendorRegistration = () => {
     email: "",
   });
 
+  // Reset all form state
+  const resetForm = () => {
+    setFormData(initialState);
+    setProfilePicture(null);
+    setUserType("");
+    setStateId(0);
+    setStateName("");
+    setCityId(0);
+    setCityName("");
+    setErrors({
+      name: "",
+      phone: "",
+      company: "",
+      email: "",
+    });
+  };
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData(prev => ({ ...prev, [name]: value }));
+    
+    // Clear error when user types
+    if (errors[name]) {
+      setErrors(prev => ({ ...prev, [name]: "" }));
+    }
   };
 
   const handleFileChange = async (e) => {
-    setImgLoading(true);
     const file = e.target.files[0];
-    console.log("file", file);
-    const formData = new FormData();
-    formData.append("image", file);
-    const response = await uploadImage(formData);
-    console.log("response===", response.message);
-    if (response?.message === "Network Error"){
-      setImgLoading(false);
-      return toast.error("Image Should be less than 1MB");
+    if (!file) return;
+    
+    // Validate file size (1MB limit)
+    if (file.size > 1024 * 1024) {
+      return toast.error("Image should be less than 1MB");
     }
-    setProfilePicture(response?.Location);
-    if (response?.Location) {
+
+    setImgLoading(true);
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+      const response = await uploadImage(formData);
+      
+      if (response?.Location) {
+        setProfilePicture(response.Location);
+        toast.success("Image uploaded successfully");
+      } else {
+        throw new Error("Upload failed");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      toast.error("Failed to upload image");
+    } finally {
       setImgLoading(false);
     }
-    console.log("response", response);
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (!profilePicture ) return toast.error("Please upload a profile picture");
-    if (vendorValidation(formData, setErrors)) {
-      setLoading(true);
-      let userData = { ...formData, profile_pic: profilePicture,userType: userType, state: stateName, city: cityName };
-      try {
-        const response = await registerUser(userData);
-        if (response?.data) {
-          //   navigate("/download-page", { state: { user: response.data } });
-          setModalShow(true)
-          setFormData({
-            name: "",
-            phone: "",
-            company: "",
-            email: "",
-            password: ""
-          })
-          setProfilePicture(null)
-          toast.success("User registered successfully");
-        } else {
-          console.log("Registration failed", response.response.data.message);
-          toast.error(response.response.data.message);
-          toast.error("User registered Failed Phone number already exist");
-        }
-      } catch (error) {
-        toast.error("An error occurred. Please try again." + error.message);
-      } finally {
-        setLoading(false);
-        // toast.success("User registered Failed Phone number already exist"); 
+    
+    // Validate form
+    if (!vendorValidation(formData, setErrors)) return;
+    
+    setLoading(true);
+    try {
+      const userData = { 
+        ...formData, 
+        profile_pic: profilePicture,
+        userType, 
+        state: stateName, 
+        city: cityName 
+      };
+      
+      const response = await registerUser(userData);
+      
+      if (response?.data) {
+        setModalShow(true);
+        toast.success("Registration successful!");
+        resetForm(); // Clear all form state after success
+      } else {
+        const errorMsg = response?.response?.data?.message || "Registration failed";
+        throw new Error(errorMsg);
       }
+    } catch (error) {
+      console.error("Registration error:", error);
+      toast.error(error.message.includes("phone number") 
+        ? "Phone number already exists" 
+        : "Registration failed. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="registration-page">
-      <ConfirmationModal show={modalShow}
-        onHide={() => setModalShow(false)} />
-      <div className="container mt-5">
-
-        <div className="logo-box">
-          <img src={Logoimg} alt="" />
+      <ConfirmationModal 
+        show={modalShow} 
+        onHide={() => setModalShow(false)} 
+      />
+      
+      <div className="container mt-4">
+        <div className="logo-box text-center mb-4">
+          <img src={Logoimg} alt="Company Logo" className="img-fluid" />
         </div>
+
         <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="reg-form-container mb-5">
-              <div className="reg-form-header text-center">
-                <p>Exhibitor Owner/Staff Registration</p>
+          <div className="col-md-8">
+            <div className="card shadow-sm mb-5">
+            <div className="reg-form-header text-center py-2">
+                <h4 className="mb-0">Exhibitor Owner/Staff Registration</h4>
               </div>
-              <div className="card-body">
-                <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
-                  <div>
+              
+              <div className="card-body p-4">
+                <form onSubmit={handleSubmit}>
+                  {/* Name Field */}
+                  <div className="mb-3">
                     <label htmlFor="name" className="form-label fw-bold">
-                      Name
+                      Full Name*
                     </label>
                     <input
                       type="text"
-                      className={`form-control ${errors.name ? "is-invalid" : ""
-                        }`}
+                      className={`form-control ${errors.name && "is-invalid"}`}
                       id="name"
                       name="name"
-                      placeholder="Enter your name"
+                      placeholder="Enter your full name"
                       value={formData.name}
                       onChange={handleChange}
                       required
@@ -134,156 +175,163 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
-                  <div >
+                  {/* Phone Field */}
+                  <div className="mb-3">
                     <label htmlFor="phone" className="form-label fw-bold">
-                      Phone Number
+                      Phone Number*
                     </label>
                     <input
                       type="tel"
-                      className={`form-control ${errors.phone && formData.phone.length !== 10
-                          ? "is-invalid"
-                          : ""
-                        }`}
+                      className={`form-control ${errors.phone && "is-invalid"}`}
                       id="phone"
                       name="phone"
-                      placeholder="Enter phone number"
+                      placeholder="Enter 10-digit phone number"
                       value={formData.phone}
                       onChange={handleChange}
                       required
                       maxLength={10}
+                      pattern="[0-9]{10}"
                     />
-                    {errors.phone && formData.phone.length !== 10 && (
+                    {errors.phone && (
                       <div className="invalid-feedback">{errors.phone}</div>
                     )}
                   </div>
 
-                  <div >
+                  {/* Email Field */}
+                  <div className="mb-3">
                     <label htmlFor="email" className="form-label fw-bold">
-                      Email
+                      Email*
                     </label>
                     <input
                       type="email"
-                      className={`form-control ${errors.email ? "is-invalid" : ""
-                        }`}
-                      id="company"
+                      className={`form-control ${errors.email && "is-invalid"}`}
+                      id="email"
                       name="email"
-                      placeholder="Enter your Email"
+                      placeholder="Enter your email"
                       value={formData.email}
                       onChange={handleChange}
                       required
                     />
-                    {!formData.email && (
+                    {errors.email && (
                       <div className="invalid-feedback">{errors.email}</div>
                     )}
                   </div>
 
-                  <div>
-                    <label htmlFor="email" className="form-label fw-bold">
-                      Company
+                  {/* Company Field */}
+                  <div className="mb-3">
+                    <label htmlFor="company" className="form-label fw-bold">
+                      Company Name*
                     </label>
                     <input
                       type="text"
-                      className={`form-control ${errors.company ? "is-invalid" : ""
-                        }`}
+                      className={`form-control ${errors.company && "is-invalid"}`}
                       id="company"
                       name="company"
-                      placeholder="Enter your Company"
+                      placeholder="Enter your company name"
                       value={formData.company}
                       onChange={handleChange}
                       required
                     />
-                    {!formData.company && (
+                    {errors.company && (
                       <div className="invalid-feedback">{errors.company}</div>
                     )}
                   </div>
 
-                
-                  <div>
-                    <label className="form-label fw-bold">Exhibitor  Type</label>
+                  {/* User Type */}
+                  <div className="mb-3">
+                    <label className="form-label fw-bold">
+                      Exhibitor Type*
+                    </label>
                     <select
+                      className="form-select"
                       value={userType}
                       onChange={(e) => setUserType(e.target.value)}
-                      style={{ marginTop: "8px" }}
+                      required
                     >
-                      <option value="">Select Exhibitor  Type</option>
+                      <option value="">Select Exhibitor Type</option>
                       <option value="member">Member</option>
                       <option value="exhibitor">Owner</option>
                     </select>
                   </div>
-                  <div>
-                    <label className="form-label fw-bold">State</label>
 
-                    <StateSelect
-                      countryid={countryId}
-                      value={stateId}
-                      onChange={(e) => {
-                        setStateId(e.id);
-                        setStateName(e.name); // 👈 Save name also
-                        setCityId(0); // Reset city
-                        setCityName("");
-                      }}
-                      placeHolder="Select State"
-                    />
-                  </div>
-                  <div>
-                    <label className="form-label fw-bold">City</label>
-                    <CitySelect
-                      countryid={countryId}
-                      stateid={stateId}
-                      value={cityId}
-                      onChange={(e) => {
-                        setCityId(e.id);
-                        setCityName(e.name); // 👈 Save city name also
-                      }}
-                      placeHolder="Select City"
-                    />
-                  </div>
-                
-                  <div className="mb-3">
-                    <label className="form-label fw-bold">
-                      Profile Picture
-                    </label>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <input
-                        type="file"
-                        className="form-control"
-                        onChange={handleFileChange}
-                        style={{ width: "90%" }} // Adjust the width as needed
-                      />
-                      <div
-                        className="green-tick"
-                        style={{
-                          display: "block",
-                          color: "green",
-                          marginLeft: "10px",
-                          
+                  {/* Location Fields */}
+                  <div className="row g-3 mb-3">
+                    <div className="col-md-6">
+                      <label className="form-label fw-bold">State*</label>
+                      <StateSelect
+                        countryid={countryId}
+                        value={stateId}
+                        onChange={(e) => {
+                          setStateId(e.id);
+                          setStateName(e.name);
+                          setCityId(0);
+                          setCityName("");
                         }}
-                      >
-                     <span className="mb-3"> {profilePicture? "✔" : ""}</span>  
-                       <LoadingSpinner loading={imgLoading} />
-                      </div>
+                        placeHolder="Select State"
+                        className="form-control"
+                      />
+                    </div>
+                    <div className="col-md-6">
+                      <label className="form-label fw-bold">City*</label>
+                      <CitySelect
+                        countryid={countryId}
+                        stateid={stateId}
+                        value={cityId}
+                        onChange={(e) => {
+                          setCityId(e.id);
+                          setCityName(e.name);
+                        }}
+                        placeHolder="Select City"
+                        className="form-control"
+                        disabled={!stateId}
+                      />
                     </div>
                   </div>
 
-                  <div className="row">
-                    <div className="text-center">
-                      {loading ? (
-                        <button className="user-info-btn2">
-                          Registering...
-                        </button>
-                      ) : (
-                        <button type="submit" className="user-info-btn2">
-                          Register
-                        </button>
-                      )}
+                  {/* Profile Picture */}
+                  <div className="mb-4">
+                    <label className="form-label fw-bold">
+                      Profile Picture {profilePicture && <span className="text-success">✓</span>}
+                      {imgLoading && <LoadingSpinner size="sm" className="ms-2" />}
+                    </label>
+                    <input
+                      type="file"
+                      className="form-control"
+                      accept="image/*"
+                      onChange={handleFileChange}
+                    />
+                    <div className="form-text">
+                      Maximum file size: 1MB (JPEG/PNG)
                     </div>
                   </div>
-                  <div className="text-center mt-3">
-                  <p>
-                      Already have registration?{" "}
-                      <Link to="/download-page">Download Your Card</Link>
+
+                  {/* Submit Button */}
+                  <div className="d-grid mb-3">
+                    <button 
+                      type="submit" 
+                      className="user-info-btn2"
+                      disabled={loading}
+                    >
+                      {loading ? (
+                        <>
+                          <span className="spinner-border spinner-border-sm me-2"></span>
+                          Registering...
+                        </>
+                      ) : (
+                        "Register Now"
+                      )}
+                    </button>
+                  </div>
+
+                  {/* Links */}
+                  <div className="text-center">
+                    <p className="mb-0">
+                      Already registered?{" "}
+                      <Link to="/download-page" className="text-primary">
+                        Download Your Card
+                      </Link>
                     </p>
-                  </div>  
+                  </div>
                 </form>
               </div>
             </div>

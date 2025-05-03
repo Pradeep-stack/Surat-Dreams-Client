@@ -9,6 +9,7 @@ import DownloadPage from './pages/DownloadPage';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from "react-toastify";
 import VendorDownload from './pages/VendorDownload';
+import FindStall from './pages/FindStall';
 const App = () => {
   return (<>
    <ToastContainer />
@@ -17,6 +18,7 @@ const App = () => {
         {/* <Route path="/" element={<LandingPage />}/> */}
         <Route path="/" element={<Register />}/>
         <Route path="/vendor-registration" element={<VendorRegistration />}/>
+        <Route path="/find-stall" element={<FindStall />}/>
         <Route path="/user-info" element={<UserInfo />}/>
         <Route path="/download-page" element={<DownloadPage />}/>
         <Route path="/vendor-download" element={<VendorDownload />}/>
