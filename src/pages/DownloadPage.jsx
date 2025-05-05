@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import "../assets/styles/style.css";
 import Logoimg from "../assets/images/logo.png";
 import { imgBaseUrl } from "../config";
+import { whatsAppApiSend } from "../api/user";
 
 const DownloadPage = () => {
   const [id, setId] = useState("");
@@ -23,6 +24,7 @@ const DownloadPage = () => {
       const response = await getUser(id);
       if (response?.data) {
         setDetails(response.data);
+        sendMessage(response.data, response.data.badge_image_url);
       } else {
         toast.error("User not found");
       }
@@ -62,6 +64,26 @@ const DownloadPage = () => {
     }
   };
 
+   const sendMessage = async (itme, imageUrl) => {
+    if (!itme) return;
+    try {
+      const whatsAppData = {
+        countryCode: "+91",
+        phoneNumber: itme.phone,
+        type: "Template",
+        template: {
+          name: "entry_pass_with_image",
+          languageCode: "en_US",
+          headerValues: [imageUrl],
+          bodyValues: [itme.name, itme.id],
+        },
+      };
+      await whatsAppApiSend(whatsAppData);
+    } catch (error) {
+      console.error("Error sending WhatsApp message:", error);
+      toast.error("Error sending WhatsApp message: " + error.message);
+    }
+  };
   const handlePrint = () => {
     const printWindow = window.open("", "_blank");
     printWindow.document.write(`
