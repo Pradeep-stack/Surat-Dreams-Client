@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import "../assets/styles/style.css";
 import Congratulations from "../components/common/Congratulations";
 import Logoimg from "../assets/images/logo.png";
+import { updateUser } from "../api/user";
 const DownloadPage = () => {
   const [id, setId] = useState("");
   const [details, setDetails] = useState(null);
@@ -18,10 +19,25 @@ const DownloadPage = () => {
     const response = await getUser(id);
     if (response?.data) {
       setDetails(response.data);
+      updateUserData( response.data.phone);
       setLoading(false);
     } else {
       toast.error("User not found");
       setLoading(false);
+    }
+  };
+
+  // upat data 
+
+  const updateUserData = async ( id) => {
+    try { 
+      const data = {
+        isWatched: true,
+      };
+      await updateUser(data, id);
+      toast.success("User data updated successfully");
+    } catch (error) {
+      toast.error("Failed to update user data", error.message);
     }
   };
  

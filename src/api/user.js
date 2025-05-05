@@ -34,7 +34,14 @@ export const registerUser = async (user) => {
     return error;
   }
 };
-
+export const updateUser = async (user, phone) => {
+  try {
+    const { data } = await axios.put(baseUrl + `/update-user/${phone}`, user);
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
 export const uploadImage = async (formData) => {
   try {
     const { data } = await axios.post( `${imgBaseUrl}/upload`, formData);
