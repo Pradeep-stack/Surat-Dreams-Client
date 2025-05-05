@@ -35,7 +35,7 @@ const DownloadPage = () => {
         isWatched: true,
       };
       await updateUser(data, id);
-      toast.success("User data updated successfully");
+      // toast.success("User data updated successfully");
     } catch (error) {
       toast.error("Failed to update user data", error.message);
     }
