@@ -1,8 +1,9 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Varela+Round&display=swap");
+   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 
 /* CongratulationsPage.css */
-.congratulations-container {
+/* .congratulations-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -115,4 +116,139 @@
   @keyframes pulse {
     from { transform: scale(1); }
     to { transform: scale(1.05); }
+  } */ 
+  @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+  .congrats-container {
+    background: url('../images/9195.jpg') no-repeat center/cover #200d41;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Bebas Neue', sans-serif;
+    position: relative;
+    flex-direction: column;
+  }
+  
+  .image-center {
+    text-align: center;
+    width: 100%;
+    margin: 30px 0 0;
+  }
+  
+  .image-center img {
+    max-width: 350px;
+  }
+  
+  .jackpot {
+    display: flex;
+    gap: 10px;
+    z-index: 2;
+    border-radius: 30px;
+    padding: 15px;
+    border: 10px solid #fff;
+    background: #ffc71d;
+    box-shadow: 0 0 30px #000;
+  }
+  
+  .another-link {
+    margin: 20px 0;
+  }
+  
+  .another-link a {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 1.2rem;
+  }
+  
+  .stall-no {
+    color: #fff;
+    font-size: 47px;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .digit-wrapper {
+    overflow: hidden;
+    height: 130px;
+    width: 70px;
+    color: #e12000;
+    font-size: 120px;
+    text-align: center;
+    font-weight: 700;
+    position: relative;
+    background: #fff;
+    border-radius: 15px;
+  }
+  
+  /* .digits {
+    position: absolute;
+    top: 0;
+    transition: top 2s ease-in-out;
+    width: 100%;
+  } */
+  
+  /* .digits div {
+    height: 130px;
+    line-height: 130px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } */
+  
+  /* Confetti styles - updated for React */
+  .confetti {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    animation: fly 3s ease-out forwards;
+    z-index: 100;
+  }
+  
+  .confetti.star {
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  
+  .confetti.circle {
+    border-radius: 50%;
+  }
+  
+  .confetti.square {
+    border-radius: 2px;
+  }
+  
+  .confetti.ribbon {
+    width: 4px;
+    height: 20px;
+    border-radius: 2px;
+  }
+  .digit-wrapper {
+    overflow: hidden;
+    height: 140px;
+    width: 80px;
+    position: relative;
+}
+
+.digits {
+  position: absolute;
+  width: 100%;
+  transition: top 3s ease-in-out; /* Extended duration */
+}
+
+.digits div {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+  @keyframes fly {
+    0% {
+      transform: translate(0, 0) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--x), var(--y)) rotate(720deg) scale(0.5);
+      opacity: 0;
+    }
   }

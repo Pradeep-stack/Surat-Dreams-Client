@@ -1,88 +1,123 @@
-import  { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import '../../assets/styles/CongratulationsPage.css';
-import CongImage from '../../assets/images/congratulations.png';
-import Logoimg from "../../assets/images/logo.png";
+import CongImage from '../../assets/images/cong.png';
 
-const CongratulationsPage = ({ details}) => {
-    const [celebrate, setCelebrate] = useState(false);
-    const [imageLoaded, setImageLoaded] = useState(false);
-
+const CongratulationsPage = ({ details }) => {
+    const [targetNumber, setTargetNumber] = useState("000");
+    const [animationDuration] = useState(3); // Extended duration in seconds
 
     useEffect(() => {
-        // Start animation sequence after a short delay
-        const timer = setTimeout(() => {
-            setCelebrate(true);
-            setImageLoaded(true);
-        }, 500);
+        const stallNum = details?.stall_number?.toString() || "000";
+        setTargetNumber(stallNum.padStart(3, '0').slice(0, 3));
+    }, [details.stall_number]);
 
-        return () => clearTimeout(timer);
-    }, []);
+    useEffect(() => {
+        const buildDigits = () => {
+            const jackpot = document.getElementById('jackpot');
+            if (!jackpot) return;
 
-    // Create confetti elements
-    const renderConfetti = () => {
-        if (!celebrate) return null;
+            jackpot.innerHTML = '';
 
-        const confetti = [];
-        const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+            for (let i = 0; i < targetNumber.length; i++) {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'digit-wrapper';
+                const digits = document.createElement('div');
+                digits.className = 'digits';
+                digits.style.transition = `top ${animationDuration}s ease-in-out`; // Apply extended duration
 
-        for (let i = 0; i < 100; i++) {
-            const style = {
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 2}s`,
-                backgroundColor: colors[Math.floor(Math.random() * colors.length)],
-                transform: `rotate(${Math.random() * 360}deg)`,
-                width: `${Math.random() * 10 + 5}px`,
-                height: `${Math.random() * 10 + 5}px`,
-            };
+                for (let r = 0; r < 2; r++) {
+                    for (let j = 0; j <= 9; j++) {
+                        const d = document.createElement('div');
+                        d.textContent = j;
+                        digits.appendChild(d);
+                    }
+                }
 
-            confetti.push(
-                <div key={i} className="confetti" style={style} />
-            );
+                wrapper.appendChild(digits);
+                jackpot.appendChild(wrapper);
+            }
+
+            const digitWrappers = document.querySelectorAll('.digit-wrapper .digits');
+            digitWrappers.forEach((digit, index) => {
+                const finalDigit = parseInt(targetNumber[index]);
+                const scrollOffset = (10 + finalDigit) * 140;
+                digit.style.top = `-${scrollOffset}px`;
+            });
+        };
+
+        buildDigits();
+
+        const confettiTimer = setTimeout(() => {
+            launchConfetti(80);
+        }, animationDuration * 1000); // Match confetti timing with animation
+
+        return () => {
+            clearTimeout(confettiTimer);
+            document.querySelectorAll('.confetti').forEach(el => el.remove());
+        };
+    }, [targetNumber, animationDuration]);
+
+
+    const launchConfetti = (count) => {
+        const shapes = ['circle', 'square', 'star', 'ribbon'];
+        const colors = ['#ffcc00', '#ff4dd2', '#66ff66', '#00ccff', '#ff6666', '#ffffff', '#9933ff'];
+
+        for (let i = 0; i < count; i++) {
+            const confetti = document.createElement('div');
+            const shape = shapes[Math.floor(Math.random() * shapes.length)];
+            const color = colors[Math.floor(Math.random() * colors.length)];
+
+            confetti.className = `confetti ${shape}`;
+            confetti.style.background = color;
+
+            const startX = window.innerWidth / 2;
+            const startY = window.innerHeight / 2;
+
+            confetti.style.left = `${startX}px`;
+            confetti.style.top = `${startY}px`;
+
+            const dx = (Math.random() - 0.5) * 600 + 'px';
+            const dy = (Math.random() - 0.5) * 400 + 'px';
+            confetti.style.setProperty('--x', dx);
+            confetti.style.setProperty('--y', dy);
+
+            document.body.appendChild(confetti);
+
+            setTimeout(() => {
+                if (confetti.parentNode) {
+                    confetti.remove();
+                }
+            }, 3000);
         }
-
-        return confetti;
     };
 
     return (
-        <div className="congratulations-container">
-            {celebrate && renderConfetti()}
-
-            <div className="logo-box">
-                <img src={Logoimg} alt="" />
-            </div>
-
-            <div className="image-container">
-                <img
-                    src={CongImage}
-                    alt="Congratulations"
-                    className={`congrats-image ${imageLoaded ? 'animate' : ''}`}
-                    onLoad={() => setImageLoaded(true)}
-                />
-            </div>
-
-            <div className="stall-number-container">
-                <div className="stall-number-label">YOUR STALL NUMBER IS</div>
-                {details?.stall_number ? 
-                <div className="stall-number animate-number">{details?.stall_number}</div>:
-                <div className="stall-number2">Your STALL NO is not available yet</div>} 
-            </div>
-            <div>
-             
-            </div>
-            <div className="button-container mt-5">
-                <p>Search Another Stall</p>
-                <button className="btn btn-primary" onClick={() => window.location.reload()}>
-                    Search Again
-                </button>
+        <div className="bodyy">
+            <div className="congrats-container">
+                <div className="image-center">
+                    <img src={CongImage} alt="Congratulations" />
+                </div>
+                <div className="stall-no">YOUR STALL NO. IS</div>
+                <div className="jackpot" id="jackpot"></div>
+                <div className="another-link" onClick={() => window.location.reload()}>
+                    <a href="">SEE ANOTHER</a>
+                </div>
             </div>
         </div>
     );
 };
+
 CongratulationsPage.propTypes = {
     details: PropTypes.shape({
         stall_number: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-    }),
+    }).isRequired,
+};
+
+CongratulationsPage.defaultProps = {
+    details: {
+        stall_number: "000"
+    }
 };
 
 export default CongratulationsPage;
