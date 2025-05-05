@@ -117,7 +117,7 @@
     from { transform: scale(1); }
     to { transform: scale(1.05); }
   } */ 
-  @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+  /* @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
 
   .congrats-container {
     background: url('../images/9195.jpg') no-repeat center/cover #200d41;
@@ -179,7 +179,7 @@
     position: relative;
     background: #fff;
     border-radius: 15px;
-  }
+  } */
   
   /* .digits {
     position: absolute;
@@ -197,7 +197,7 @@
   } */
   
   /* Confetti styles - updated for React */
-  .confetti {
+  /* .confetti {
     position: fixed;
     width: 10px;
     height: 10px;
@@ -234,7 +234,7 @@
   position: absolute;
   width: 100%;
   transition: top 3s ease-in-out; /* Extended duration */
-}
+/* }
 
 .digits div {
     height: 140px;
@@ -250,5 +250,246 @@
     100% {
       transform: translate(var(--x), var(--y)) rotate(720deg) scale(0.5);
       opacity: 0;
+    }
+  } */
+
+  @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap");
+
+  /* Base Styles */
+  .bodyy {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    min-height: 100vh;
+    background: #200d41;
+  }
+  
+  /* Main Container */
+  .congrats-container {
+    background: url('../images/9195.jpg') no-repeat center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Bebas Neue', sans-serif;
+    position: relative;
+    flex-direction: column;
+    padding: 20px;
+    box-sizing: border-box;
+    text-align: center;
+  }
+  
+  /* Image Styles */
+  .image-center {
+    text-align: center;
+    width: 100%;
+    margin: 30px 0 0;
+  }
+  
+  .image-center img {
+    max-width: min(350px, 90%);
+    height: auto;
+  }
+  
+  /* Number Display Styles */
+  .stall-no {
+    color: #fff;
+    font-size: 47px;
+    margin: 10px 0;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  
+  .jackpot {
+    display: flex;
+    gap: 10px;
+    z-index: 2;
+    border-radius: 30px;
+    padding: 15px;
+    border: 10px solid #fff;
+    background: #ffc71d;
+    box-shadow: 0 0 30px #000;
+    margin: 20px 0;
+    perspective: 500px;
+  }
+  
+  /* Digit Animation Styles */
+  .digit-wrapper {
+    overflow: hidden;
+    height: 140px;
+    width: 80px;
+    color: #e12000;
+    font-size: 120px;
+    text-align: center;
+    font-weight: 700;
+    position: relative;
+    background: #fff;
+    border-radius: 15px;
+    transform-style: preserve-3d;
+  }
+  
+  .digits {
+    position: absolute;
+    width: 100%;
+    transition: transform 3s cubic-bezier(0.25, 0.1, 0.25, 1);
+    will-change: transform;
+    transform: translateY(0);
+  }
+  
+  .digits div {
+    height: 140px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 140px;
+    backface-visibility: hidden;
+  }
+  
+  /* Link Styles */
+  .another-link {
+    margin: 20px 0;
+    cursor: pointer;
+  }
+  
+  .another-link a {
+    color: #fff;
+    text-decoration: underline;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: opacity 0.3s;
+  }
+  
+  .another-link a:hover {
+    opacity: 0.8;
+  }
+  
+  /* Confetti Styles */
+  .confetti-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 100;
+    overflow: hidden;
+  }
+  
+  .confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    animation: fly 3s ease-out forwards;
+  }
+  
+  .confetti.star {
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+  }
+  
+  .confetti.circle {
+    border-radius: 50%;
+  }
+  
+  .confetti.square {
+    border-radius: 2px;
+  }
+  
+  .confetti.ribbon {
+    width: 4px;
+    height: 20px;
+    border-radius: 2px;
+  }
+  
+  .confetti.triangle {
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid currentColor;
+    background: transparent !important;
+  }
+  
+  /* Animation Keyframes */
+  @keyframes fly {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--x), var(--y)) rotate(var(--rotation, 720deg)) scale(0.5);
+      opacity: 0;
+    }
+  }
+  
+  /* Glow Effect (optional) */
+  .digit-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 1s ease-out;
+    pointer-events: none;
+  }
+  
+  .jackpot.animate-glow .digit-wrapper::after {
+    opacity: 0.6;
+    animation: pulse-glow 1.5s infinite alternate;
+  }
+  
+  @keyframes pulse-glow {
+    from { opacity: 0.3; }
+    to { opacity: 0.7; }
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 768px) {
+    .digit-wrapper {
+      height: 100px;
+      width: 60px;
+      font-size: 90px;
+    }
+    
+    .digits div {
+      height: 100px;
+      line-height: 100px;
+    }
+    
+    .stall-no {
+      font-size: 36px;
+    }
+    
+    .jackpot {
+      padding: 10px;
+      border-width: 6px;
+    }
+    
+    .image-center img {
+      max-width: 280px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .digit-wrapper {
+      height: 80px;
+      width: 50px;
+      font-size: 70px;
+    }
+    
+    .digits div {
+      height: 80px;
+      line-height: 80px;
+    }
+    
+    .stall-no {
+      font-size: 28px;
+    }
+    
+    .jackpot {
+      gap: 6px;
+      padding: 8px;
     }
   }
