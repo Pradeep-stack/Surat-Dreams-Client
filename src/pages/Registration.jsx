@@ -251,7 +251,7 @@ const Registration = () => {
                       required
                     >
                       <option value="">Select Registration Type</option>
-                      <option value="user">Buyer</option>
+                      <option value="buyer">Buyer</option>
                       <option value="agent">Agent</option>
                     </select>
                   </div>
