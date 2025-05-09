@@ -1,7 +1,6 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import { getUser } from "../api/user";
-import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
 import "../assets/styles/style.css";
 import Congratulations from "../components/common/Congratulations";
@@ -11,26 +10,28 @@ const DownloadPage = () => {
   const [id, setId] = useState("");
   const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const [userNotFound, setUserNotFound] = useState(false);
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setUserNotFound(false);
     const response = await getUser(id);
     if (response?.data) {
       setDetails(response.data);
-      updateUserData( response.data.phone);
+      updateUserData(response.data.phone);
       setLoading(false);
     } else {
+      setUserNotFound(true);
       toast.error("User not found");
       setLoading(false);
     }
   };
 
-  // upat data 
+  // upat data
 
-  const updateUserData = async ( id) => {
-    try { 
+  const updateUserData = async (id) => {
+    try {
       const data = {
         isWatched: true,
       };
@@ -40,7 +41,7 @@ const DownloadPage = () => {
       toast.error("Failed to update user data", error.message);
     }
   };
- 
+
   if (details) {
     return <Congratulations details={details} />;
   }
@@ -69,10 +70,16 @@ const DownloadPage = () => {
                 required
               />
             </div>
+            {userNotFound && (
+              <div className="text-danger  mt-2 fw-bold">
+                Exhibitor not found. Please check the phone number.
+              </div>
+            )}
+
             <div className="align-items-center d-flex justify-content-center">
-            <button type="submit" className="user-info-btn mt-3">
-              {loading ? "Genrating..." : "Submit"}
-            </button>
+              <button type="submit" className="user-info-btn mt-3">
+                {loading ? "Genrating..." : "Submit"}
+              </button>
             </div>
           </form>
         </div>
