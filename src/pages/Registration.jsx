@@ -147,10 +147,8 @@ const Registration = () => {
         throw new Error(errorMsg);
       }
     } catch (error) {
-      console.error("Registration error:", error);
-      toast.error(error.message.includes("phone number") 
-        ? "Phone number already exists" 
-        : "Registration failed. Please try again.");
+     console.error("Registration error:", error);
+     toast.error("Phone number already exists .!");
     } finally {
       setLoading(false);
     }
