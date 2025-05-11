@@ -248,7 +248,7 @@ const VendorRegistration = () => {
                     >
                       <option value="">Select Exhibitor Type</option>
                       <option value="member">Member</option>
-                      <option value="exhibitor">Owner</option>
+                      <option value="staff">Staff</option>
                     </select>
                   </div>
 
