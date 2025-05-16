@@ -1,4 +1,4 @@
-import React from "react";
+// Header.jsx
 import { ProgressBar } from "react-loader-spinner";
 import "./style.css";
 const LoadingSpinner = ({ loading, wrapperStyle }) => {

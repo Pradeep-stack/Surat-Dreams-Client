@@ -144,7 +144,7 @@ const CongratulationsPage = ({ details }) => {
         jackpotRef.current.innerHTML = '';
 
         // Create digit elements
-        targetNumber.split('').forEach((digit, index) => {
+        targetNumber.split('').forEach((digit) => {
             const wrapper = document.createElement('div');
             wrapper.className = 'digit-wrapper';
             
