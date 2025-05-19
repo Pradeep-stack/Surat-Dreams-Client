@@ -30,6 +30,7 @@ const DownloadPage = () => {
         await sendWhatsAppMessage(response.data, generatedOtp);
         setLoading(false);
         // Show Congratulations first, then verification
+        toast.success("OTP sent to your WhatsApp number");
         setIsVerified(false);
         setVerificationStep(true);
       } else {
