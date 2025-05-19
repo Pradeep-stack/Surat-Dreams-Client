@@ -20,7 +20,7 @@ const DownloadPage = () => {
     e.preventDefault();
     setLoading(true);
     setUserNotFound(false);
-    
+
     try {
       const response = await getUser(id);
       if (response?.data) {
@@ -50,13 +50,9 @@ const DownloadPage = () => {
         phoneNumber: userData.phone,
         type: "Template",
         template: {
-          name: "entry_pass_download_info",
+          name: "exhibitor_info",
           languageCode: "en_US",
-          bodyValues: [
-            userData.name,
-            userData.id,
-            `Your OTP is ${otp}`,
-          ],
+          bodyValues: [otp],
         },
       };
       await whatsAppApiSend(whatsAppData);
@@ -79,7 +75,7 @@ const DownloadPage = () => {
     }
   };
 
-  const updateUserData = async (id ) => {
+  const updateUserData = async (id) => {
     try {
       const data = {
         isWatched: true,
@@ -125,15 +121,12 @@ const DownloadPage = () => {
                 />
               </div>
               <div className="align-items-center d-flex justify-content-center mt-3">
-                <button 
-                  onClick={handleVerifyOtp}
-                  className="user-info-btn"
-                >
+                <button onClick={handleVerifyOtp} className="user-info-btn">
                   Verify OTP
                 </button>
               </div>
               <div className="text-center mt-3">
-                <button 
+                <button
                   className="btn btn-link"
                   onClick={() => {
                     setVerificationStep(false);
@@ -182,9 +175,9 @@ const DownloadPage = () => {
               </div>
             )}
             <div className="align-items-center d-flex justify-content-center">
-              <button 
-                type="submit" 
-                className="user-info-btn mt-3" 
+              <button
+                type="submit"
+                className="user-info-btn mt-3"
                 disabled={loading}
               >
                 {loading ? "Processing..." : "Submit"}
