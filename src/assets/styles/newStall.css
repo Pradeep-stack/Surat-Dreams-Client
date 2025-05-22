@@ -1,0 +1,444 @@
+* {
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'trajan_probold';
+    src: url('../fonts/trajanpro-bold-webfont.woff2') format('woff2'),
+        url('../fonts/trajanpro-bold-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+@font-face {
+    font-family: 'trajan_proregular';
+    src: url('../fonts/trajanpro-regular-webfont.woff2') format('woff2'),
+        url('../fonts/trajanpro-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+.montserrat-font {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+body {
+    background: url('../images/background-page.jpg') no-repeat center/cover #200d41;
+    /* display: flex; */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Montserrat", sans-serif;
+    position: relative;
+    flex-direction: column;
+}
+
+.image-center {
+    text-align: center;
+    width: 100%;
+}
+.image-center-1 {
+    margin-top: 125px;
+    text-align: center;
+    width: 100%;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
+
+.image-center img {
+    max-width: 90%;
+}
+
+.jackpot {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 2;
+    /* box-shadow: 0px 0px 30px #000; */
+}
+
+.another-link {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.another-link a {
+    color: #fff;
+    text-decoration: underline;
+    margin-top: 20px;
+}
+
+.stall-no-1 {
+    margin-top: 120px;
+    font-family: 'trajan_proregular';
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 1.8;
+}
+.stall-no {
+    font-family: 'trajan_proregular';
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 1.8;
+}
+
+.digit-wrapper {
+    overflow: hidden;
+    height: 156px;
+    width: 120px;
+    color: #fff;
+    font-size: 120px;
+    text-align: center;
+    font-weight: 700;
+    position: relative;
+    background: url(../images/number.png) no-repeat center;
+    background-size: contain;
+    padding: 5px;
+}
+
+.digit-wrapper::before {
+    margin-top: 0px;
+    content: "";
+    background-size: auto;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 119px;
+    height: 156px;
+    z-index: 5;
+    border: 6px solid #414141;
+    border-radius: 10px;
+}
+
+.digits {
+    position: absolute;
+    top: 0;
+    transition: transform 2s ease-in-out; /* <-- Changed this line */
+    width: 110px;
+}
+
+
+.digits div {
+    height: 156px;
+    line-height: 146px;
+}
+
+
+.confetti {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    opacity: 0;
+    /* animation: fly 3s ease-out forwards; */
+}
+
+.star {
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.square {
+    border-radius: 2px;
+}
+
+.ribbon {
+    width: 4px;
+    height: 20px;
+    border-radius: 2px;
+}
+
+.heading {
+    font-size: 80px;
+    font-weight: 600;
+    font-family: fabrizio inferior;
+    font-style: italic;
+    background: linear-gradient(to right, #FFD700, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+
+}
+
+.subtitle {
+    font-family: 'trajan_proregular';
+    color: #FFF;
+    padding-top: 40PX;
+    text-align: center;
+    font-size: 20px;
+
+}
+
+.event {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'trajan_proregular';
+    color: #FFF;
+    /* border: 2px solid goldenrod;
+    padding: 8px 30px; */
+    margin-top: 20px;
+    font-size: 14px;
+    /* border-radius: 50px; */
+    text-align: center;
+}
+
+.event-text {
+    border: 2px solid goldenrod;
+    padding: 8px 30px;
+    border-radius: 50px;
+}
+.text {
+    text-align: center;
+    font-family: 'trajan_proregular';
+    padding-top: 40px;
+    color: #fff;
+    line-height: 1.8;
+}
+
+.header {
+    width: 100%;
+    padding: 10px 20px;
+    max-width: 1500px;
+    margin-bottom: 50px;
+}
+
+.logo1 {
+    float: left;
+}
+
+.logo1 img {
+    width: 450px;
+    max-width: 90%;
+}
+
+.logo2 {
+    float: right;
+    text-align: right;
+}
+
+.logo2 img {
+    width: 300px;
+    max-width: 90%;
+}
+
+.ribbons {
+  background-image: url(../images/ribbon.png);
+  position: absolute;
+  left: 50px;
+  right: 50px;
+  top: 0;
+  bottom: 0;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  z-index: -2;
+}
+
+.ribbons.show {
+  opacity: 1;
+  transform: scale(1.05);
+  animation: fly 6s ease forwards;
+}
+
+@keyframes fly {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.1);
+    opacity: 0;
+  }
+}
+
+
+.search-form {
+    margin-top: 50px;
+    text-align: center;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+}
+.otp-form {
+    margin-top: 50px;
+    text-align: center;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 100%;
+}
+
+.search-form .field {
+    background: #171717;
+    color: #bbb;
+    border: 1px solid gold;
+    border-radius: 50px;
+    height: 50px;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+.otp-form .field {
+    background: #171717;
+    color: #bbb;
+    border: 1px solid gold;
+    border-radius: 50px;
+    height: 50px;
+    width: 100%;
+    padding: 10px 20px;
+    font-size: 20px;
+    font-family: "Montserrat", sans-serif;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.search-form .field:focus {
+    border: 2px solid gold;
+    outline: none;
+}
+.otp-form .field:focus {
+    border: 2px solid gold;
+    outline: none;
+}
+
+.search-form .form-button {
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    background: url(../images/button.png);
+    background-size: auto;
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    height: 65px;
+    width: 240px;
+    padding: 10px 20px 15px;
+    font-size: 16px;
+    background-size: 100% 100%;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.otp-form .form-button {
+    cursor: pointer;
+    font-family: "Montserrat", sans-serif;
+    background: url(../images/button.png);
+    background-size: auto;
+    color: #000;
+    border: none;
+    border-radius: 50px;
+    height: 65px;
+    width: 240px;
+    padding: 10px 20px 15px;
+    font-size: 16px;
+    background-size: 100% 100%;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+
+@media (max-width:992px) {
+    .logo1 img {
+        width: 350px;
+    }
+    .logo2 img {
+        width: 200px;
+    }
+}
+@media (max-width:600px){
+    .logo1, .logo2 {
+  float: none;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  margin-bottom: 20px;
+}
+}
+
+@media (max-width:479px){
+    .digit-wrapper {
+  width: 100px;
+  font-size: 90px;
+  background-size: 100% 100%;
+}
+.digit-wrapper::before {
+  width: 90px;
+}
+.digits {
+  width: 90px;
+}
+}
+
+
+
+  /* Animation Keyframes */
+  @keyframes fly {
+    0% {
+      transform: translate(0, 0) rotate(0deg) scale(1);
+      opacity: 1;
+    }
+    100% {
+      transform: translate(var(--x), var(--y)) rotate(var(--rotation, 720deg)) scale(0.5);
+      opacity: 0;
+    }
+  }
+  
+  /* Glow Effect (optional) */
+  .digit-wrapper::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 1s ease-out;
+    pointer-events: none;
+  }
+  
+  .jackpot.animate-glow .digit-wrapper::after {
+    opacity: 0.6;
+    animation: pulse-glow 1.5s infinite alternate;
+  }
+  
+  @keyframes pulse-glow {
+    from { opacity: 0.3; }
+    to { opacity: 0.7; }
+  }
+  
+  /* Responsive Styles */
+  

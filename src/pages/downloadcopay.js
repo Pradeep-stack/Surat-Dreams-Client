@@ -337,9 +337,9 @@ const DownloadPage = () => {
   //   );
   // }
 
-  if (details && details.userType === "owner") {
-    return <Congratulations details={details} />;
-  }
+  // if (details && details.userType === "owner") {
+  //   return <Congratulations details={details} />;
+  // }
 
   if (details && details.userType !== "owner") {
     return (

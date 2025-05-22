@@ -328,9 +328,9 @@ const VendorDownload = () => {
     );
   }
 
-  if (details && details.userType === "exhibitor") {
-    return <Congratulations details={details} />;
-  }
+  // if (details && details.userType === "exhibitor") {
+  //   return <Congratulations details={details} />;
+  // }
 
   if (details && details.userType === "admin") {
     return (

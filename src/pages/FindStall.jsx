@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { getUser } from "../api/user";
 import { toast } from "react-toastify";
-import "../assets/styles/style.css";
+import "../assets/styles/newStall.css";
 import Congratulations from "../components/common/Congratulations";
-import Logoimg from "../assets/images/logo.png";
 import { updateUser, whatsAppApiSend } from "../api/user";
+import ieLogo from "../assets/images/ie-logo.png";
+import sdLogo from "../assets/images/sd-logo.png";
+import lucky from "../assets/images/lucky.png";
 
 const DownloadPage = () => {
   const [id, setId] = useState("");
-  const [details, setDetails] = useState(null);
+  const [details, setDetails] = useState();
   const [loading, setLoading] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
   const [verificationStep, setVerificationStep] = useState(false);
@@ -62,17 +64,22 @@ const DownloadPage = () => {
     }
   };
 
-  const handleVerifyOtp = async () => {
+  const handleVerifyOtp = async (e) => {
+    e.preventDefault();
+    setLoading(true);
     if (otp === generatedOtp) {
       try {
         await updateUserData(details.phone);
         setIsVerified(true);
         setVerificationStep(false);
+        setLoading(false);
       } catch (error) {
         toast.error("Verification failed. Please try again.");
+        setLoading(false);
       }
     } else {
       toast.error("Invalid OTP. Please try again.");
+      setLoading(false);
     }
   };
 
@@ -95,100 +102,102 @@ const DownloadPage = () => {
   }
 
   // Show verification form if in verification step
-  if (verificationStep) {
-    return (
-      <div className="registration-page2">
-        <div className="container">
-          <div className="logo-box">
-            <img src={Logoimg} alt="" />
-          </div>
-          <div className="box-container mb-5">
-            <div className="reg-form-header text-center">
-              <p>Verify OTP</p>
-            </div>
-            <div style={{ padding: "20px" }}>
-              <div className="form-group">
-                <label htmlFor="otp" className="fw-bold">
-                  Enter OTP sent to your WhatsApp:
-                </label>
-                <input
-                  type="number"
-                  id="otp"
-                  className="form-control mt-2"
-                  placeholder="Enter OTP"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  required
-                />
-              </div>
-              <div className="align-items-center d-flex justify-content-center mt-3">
-                <button onClick={handleVerifyOtp} className="user-info-btn">
-                  Verify OTP
-                </button>
-              </div>
-              <div className="text-center mt-3">
-                <button
-                  className="btn btn-link"
-                  onClick={() => {
-                    setVerificationStep(false);
-                    setDetails(null);
-                  }}
-                >
-                  Back to Phone Number
-                </button>
-              </div>
-            </div>
-          </div>
+
+   if (verificationStep) {
+  return (
+    <div>
+      <div className="header">
+        <div className="logo1">
+          <img src={sdLogo} alt="sd logo" />
+        </div>
+        <div className="logo2">
+          <img src={ieLogo} alt="ie logo" />
         </div>
       </div>
-    );
-  }
 
-  // Default view - phone number input
-  return (
-    <div className="registration-page2">
-      <div className="container">
-        <div className="logo-box">
-          <img src={Logoimg} alt="" />
-        </div>
-        <div className="box-container mb-5">
-          <div className="reg-form-header text-center">
-            <p>Find Your Stall</p>
-          </div>
-          <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
-            <div className="form-group">
-              <label htmlFor="imageId" className="fw-bold">
-                Enter Registered Phone Number:
-              </label>
-              <input
-                type="number"
-                id="imageId"
-                className="form-control mt-2"
-                placeholder="Enter Phone Number"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-                required
-              />
-            </div>
-            {userNotFound && (
-              <div className="text-danger mt-2 fw-bold">
-                Exhibitor not found. Please check the phone number.
-              </div>
-            )}
-            <div className="align-items-center d-flex justify-content-center">
-              <button
-                type="submit"
-                className="user-info-btn mt-3"
-                disabled={loading}
-              >
-                {loading ? "Processing..." : "Submit"}
-              </button>
-            </div>
-          </form>
-        </div>
+      <div className="stall-no-1">Verify your OTP to proceed</div>
+
+      <form className="search-form" onSubmit={handleVerifyOtp}>
+        <input
+          type="number"
+          className="field"
+          placeholder="Enter OTP"
+          value={otp}
+          onChange={(e) => setOtp(e.target.value)}
+          required
+        />
+        <button className="form-button" type="submit">
+            {loading ? "Verifying..." : "Verify OTP "}
+        </button>
+      </form>
+
+      <div className="text text-center mt-3">
+        <button
+          className="btn btn-link"
+          onClick={() => {
+            setVerificationStep(false);
+            setDetails(null);
+          }}
+        >
+          Back to Phone Number
+        </button>
       </div>
     </div>
   );
+}
+
+
+  // Default view - phone number input
+  return (
+  <div>
+    <div className="header">
+      <div className="logo1">
+        <img src={sdLogo} alt="sd logo" />
+      </div>
+      <div className="logo2">
+        <img src={ieLogo} alt="ie logo" />
+      </div>
+    </div>
+
+    <div className="stall-no-1">Get your stall no. in the</div>
+    <div className="image-center">
+      <img src={lucky} width="700px" alt="Lucky Draw" />
+    </div>
+    <div className="stall-no">Add some thrill to your exhibition journey!</div>
+
+    <form className="search-form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        className="field"
+        placeholder="ENTER YOUR MOBILE NUMBER"
+        value={id}
+        onChange={(e) => setId(e.target.value)}
+        required
+      />
+      <button className="form-button" type="submit" disabled={loading}>
+        {loading ? "Processing..." : "Click here"}
+      </button>
+    </form>
+
+    {userNotFound && (
+      <div className="text text-center text-danger mt-2 fw-bold">
+        Exhibitor not found. Please check the phone number.
+      </div>
+    )}
+
+    <div className="text text-center">
+      Get a stall allotted purely by luck — no preferences, just fair chances
+      for all.
+      <br />
+      Get ready to land your spot in style!
+    </div>
+    <div className="text text-center mt-20 mb-20">
+      12 - 13 Aug 2025 | India Expo Mart | Greater Noida
+    </div>
+  </div>
+);
+
 };
 
 export default DownloadPage;
+
