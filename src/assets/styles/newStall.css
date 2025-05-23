@@ -42,6 +42,7 @@ body {
     text-align: center;
     width: 100%;
 }
+
 .image-center-1 {
     margin-top: 125px;
     text-align: center;
@@ -93,6 +94,7 @@ body {
     text-transform: uppercase;
     line-height: 1.8;
 }
+
 .stall-no {
     font-family: 'trajan_proregular';
     color: #FFF;
@@ -133,7 +135,8 @@ body {
 .digits {
     position: absolute;
     top: 0;
-    transition: transform 2s ease-in-out; /* <-- Changed this line */
+    transition: transform 2s ease-in-out;
+    /* <-- Changed this line */
     width: 110px;
 }
 
@@ -211,6 +214,7 @@ body {
     padding: 8px 30px;
     border-radius: 50px;
 }
+
 .text {
     text-align: center;
     font-family: 'trajan_proregular';
@@ -246,43 +250,40 @@ body {
 }
 
 .ribbons {
-  background-image: url(../images/ribbon.png);
-  position: absolute;
-  left: 50px;
-  right: 50px;
-  top: 0;
-  bottom: 0;
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 0.5s ease, transform 0.5s ease;
-  z-index: -2;
-}
-
-.ribbons.show {
-  opacity: 1;
-  transform: scale(1.05);
-  animation: fly 6s ease forwards;
+    background-image: url(../images/ribbon.png);
+    position: absolute;
+    left: 50px;
+    right: 50px;
+    top: 0;
+    bottom: 0;
+    background-size: contain;
+    z-index: -2;
+    background-position: center;
+    animation: fly 6s ease forwards;
 }
 
 @keyframes fly {
-  0% {
-    transform: scale(0.5);
-    opacity: 0;
-  }
-  50% {
-    transform: scale(1.05);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.1);
-    opacity: 0;
-  }
+    0% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+    }
+
+    30% {
+        transform: translate(0, 0) scale(0);
+        opacity: 0;
+    }
+
+    50% {
+        transform: translate(0px, 0px) scale(0.9);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translate(0px, 0px) scale(1.05);
+        transition: all linear;
+        opacity: 0;
+    }
 }
-
-
 .search-form {
     margin-top: 50px;
     text-align: center;
@@ -291,6 +292,7 @@ body {
     margin-right: auto;
     max-width: 100%;
 }
+
 .otp-form {
     margin-top: 50px;
     text-align: center;
@@ -314,6 +316,7 @@ body {
     margin-bottom: 20px;
     font-weight: bold;
 }
+
 .otp-form .field {
     background: #171717;
     color: #bbb;
@@ -332,6 +335,7 @@ body {
     border: 2px solid gold;
     outline: none;
 }
+
 .otp-form .field:focus {
     border: 2px solid gold;
     outline: none;
@@ -353,6 +357,7 @@ body {
     text-transform: uppercase;
     font-weight: 700;
 }
+
 .otp-form .form-button {
     cursor: pointer;
     font-family: "Montserrat", sans-serif;
@@ -374,71 +379,82 @@ body {
     .logo1 img {
         width: 350px;
     }
+
     .logo2 img {
         width: 200px;
     }
 }
-@media (max-width:600px){
-    .logo1, .logo2 {
-  float: none;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  margin-bottom: 20px;
-}
+
+@media (max-width:600px) {
+
+    .logo1,
+    .logo2 {
+        float: none;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        margin-bottom: 20px;
+    }
 }
 
-@media (max-width:479px){
+@media (max-width:479px) {
     .digit-wrapper {
-  width: 100px;
-  font-size: 90px;
-  background-size: 100% 100%;
-}
-.digit-wrapper::before {
-  width: 90px;
-}
-.digits {
-  width: 90px;
-}
+        width: 100px;
+        font-size: 90px;
+        background-size: 100% 100%;
+    }
+
+    .digit-wrapper::before {
+        width: 90px;
+    }
+
+    .digits {
+        width: 90px;
+    }
 }
 
 
 
-  /* Animation Keyframes */
-  @keyframes fly {
+/* Animation Keyframes */
+/* @keyframes fly {
     0% {
-      transform: translate(0, 0) rotate(0deg) scale(1);
-      opacity: 1;
+        transform: translate(0, 0) rotate(0deg) scale(1);
+        opacity: 1;
     }
+
     100% {
-      transform: translate(var(--x), var(--y)) rotate(var(--rotation, 720deg)) scale(0.5);
-      opacity: 0;
+        transform: translate(var(--x), var(--y)) rotate(var(--rotation, 720deg)) scale(0.5);
+        opacity: 0;
     }
-  }
-  
-  /* Glow Effect (optional) */
-  .digit-wrapper::after {
+} */
+
+/* Glow Effect (optional) */
+.digit-wrapper::after {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 70%);
+    background: radial-gradient(circle at center, rgba(255, 255, 255, 0.8) 0%, transparent 70%);
     opacity: 0;
     transition: opacity 1s ease-out;
     pointer-events: none;
-  }
-  
-  .jackpot.animate-glow .digit-wrapper::after {
+}
+
+.jackpot.animate-glow .digit-wrapper::after {
     opacity: 0.6;
     animation: pulse-glow 1.5s infinite alternate;
-  }
-  
-  @keyframes pulse-glow {
-    from { opacity: 0.3; }
-    to { opacity: 0.7; }
-  }
-  
-  /* Responsive Styles */
-  
+}
+
+@keyframes pulse-glow {
+    from {
+        opacity: 0.3;
+    }
+
+    to {
+        opacity: 0.7;
+    }
+}
+
+/* Responsive Styles */

@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import "../../assets/styles/newStall.css";
-import CongImage from "../../assets/images/cong.svg";
+import CongImage from "../../assets/images/cong.png";
 import Logo1 from "../../assets/images/sd-logo.png";
 import Logo2 from "../../assets/images/ie-logo.png";
 
@@ -60,7 +60,8 @@ const CongratulationsPage = ({ details }) => {
 
 
   return (
-    <div className="container">
+    <>
+     <div className="container">
       <div className="header">
         <div className="logo1">
           <img src={Logo1} alt="Logo1" />
@@ -99,8 +100,11 @@ const CongratulationsPage = ({ details }) => {
         <a href="#">See Another</a>
       </div>
 
-      <div className={`ribbons ${showRibbon ? "show" : ""}`}></div>
+      
     </div>
+    <div className={`ribbons ${showRibbon ? "show" : ""}`}></div>
+    </>
+   
   );
 };
 

@@ -10,7 +10,7 @@ import lucky from "../assets/images/lucky.png";
 
 const DownloadPage = () => {
   const [id, setId] = useState("");
-  const [details, setDetails] = useState();
+  const [details, setDetails] = useState(null);
   const [loading, setLoading] = useState(false);
   const [userNotFound, setUserNotFound] = useState(false);
   const [verificationStep, setVerificationStep] = useState(false);
