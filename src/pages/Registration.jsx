@@ -253,7 +253,7 @@ const Registration = () => {
             {/* Location Fields */}
 
             {/* <label className="form-label fw-bold">State*</label> */}
-            <div className="custom-state-select">
+            <div className="custom-state-select mb-3">
               <StateSelect
                 countryid={countryId}
                 value={stateId}
@@ -266,8 +266,21 @@ const Registration = () => {
                 placeHolder="Select State"
               />
             </div>
-
-            <div className="row g-3 mb-3">
+            <div className="custom-state-select mb-3">
+              <CitySelect
+                countryid={countryId}
+                stateid={stateId}
+                value={cityId}
+                onChange={(e) => {
+                  setCityId(e.id);
+                  setCityName(e.name);
+                }}
+                placeHolder="Select City"
+                className="form-control"
+                disabled={!stateId}
+              />
+            </div>
+            {/* <div className="row g-3 mb-3">
               <div className="col-md-6">
                 <label className="form-label fw-bold"></label>
                 <StateSelect
@@ -298,7 +311,7 @@ const Registration = () => {
                   disabled={!stateId}
                 />
               </div>
-            </div>
+            </div> */}
 
             {/* Profile Picture */}
             <div>
@@ -321,7 +334,12 @@ const Registration = () => {
 
             {/* Submit Button */}
 
-            <button type="submit" className="form-button" disabled={loading} style={{marginTop: "-25px"}}>
+            <button
+              type="submit"
+              className="form-button"
+              disabled={loading}
+              style={{ marginTop: "-25px" }}
+            >
               {loading ? (
                 <>
                   <span className="spinner-border spinner-border-sm me-2"></span>
@@ -339,8 +357,15 @@ const Registration = () => {
             style={{ width: "max-content", marginLeft: "-90px" }}
           >
             Already registered?{" "}
-            <Link to="/download-page" style={{ color: "#e8be62" }}> Download Your Entry Card</Link> |{" "}
-            <Link to="vendor-registration" style={{ color: "#e8be62" }}> Exhibitor registration</Link>
+            <Link to="/download-page" style={{ color: "#e8be62" }}>
+              {" "}
+              Download Your Entry Card
+            </Link>{" "}
+            |{" "}
+            <Link to="vendor-registration" style={{ color: "#e8be62" }}>
+              {" "}
+              Exhibitor registration
+            </Link>
           </div>
           <div className="text text-center mt-20 mb-20">
             {" "}

@@ -9,6 +9,9 @@ import { registerUser, uploadImage } from "../api/user";
 import { vendorValidation } from "../utils/vendorValidation";
 import Logoimg from "../assets/images/logo.png";
 import "../assets/styles/style.css";
+import sdLogo from "../assets/images/sd-logo.png";
+import ieLogo from "../assets/images/ie-logo.png";
+import registrationImg from "../assets/images/registration.png";
 
 const VendorRegistration = () => {
   // Initial state values
@@ -18,7 +21,7 @@ const VendorRegistration = () => {
     company: "",
     email: "",
     password: "",
-    userType: "admin"
+    userType: "admin",
   };
 
   // Form state
@@ -30,7 +33,7 @@ const VendorRegistration = () => {
   const [cityId, setCityId] = useState(0);
   const [cityName, setCityName] = useState("");
   const [userType, setUserType] = useState("");
-  
+
   // UI state
   const [loading, setLoading] = useState(false);
   const [imgLoading, setImgLoading] = useState(false);
@@ -61,18 +64,18 @@ const VendorRegistration = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-    
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
     // Clear error when user types
     if (errors[name]) {
-      setErrors(prev => ({ ...prev, [name]: "" }));
+      setErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    
+
     // Validate file size (1MB limit)
     if (file.size > 1024 * 1024) {
       return toast.error("Image should be less than 1MB");
@@ -83,7 +86,7 @@ const VendorRegistration = () => {
       const formData = new FormData();
       formData.append("image", file);
       const response = await uploadImage(formData);
-      
+
       if (response?.Location) {
         setProfilePicture(response.Location);
         toast.success("Image uploaded successfully");
@@ -100,33 +103,34 @@ const VendorRegistration = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     // Validate form
     if (!vendorValidation(formData, setErrors)) return;
-    
+
     setLoading(true);
     try {
-      const userData = { 
-        ...formData, 
+      const userData = {
+        ...formData,
         profile_pic: profilePicture,
-        userType, 
-        state: stateName, 
-        city: cityName 
+        userType,
+        state: stateName,
+        city: cityName,
       };
-      
+
       const response = await registerUser(userData);
-      
+
       if (response?.data) {
         setModalShow(true);
         toast.success("Registration successful!");
         resetForm(); // Clear all form state after success
       } else {
-        const errorMsg = response?.response?.data?.message || "Registration failed";
+        const errorMsg =
+          response?.response?.data?.message || "Registration failed";
         throw new Error(errorMsg);
       }
     } catch (error) {
       console.error("Registration error:", error);
-     toast.error("Phone number already exists .!");
+      toast.error("Phone number already exists .!");
     } finally {
       setLoading(false);
     }
@@ -134,12 +138,9 @@ const VendorRegistration = () => {
 
   return (
     <div className="registration-page">
-      <ConfirmationModal 
-        show={modalShow} 
-        onHide={() => setModalShow(false)} 
-      />
-      
-      <div className="container mt-4">
+      <ConfirmationModal show={modalShow} onHide={() => setModalShow(false)} />
+
+      {/* <div className="container mt-4">
         <div className="logo-box text-center mb-4">
           <img src={Logoimg} alt="Company Logo" className="img-fluid" />
         </div>
@@ -153,7 +154,7 @@ const VendorRegistration = () => {
               
               <div className="card-body p-4">
                 <form onSubmit={handleSubmit}>
-                  {/* Name Field */}
+                
                   <div className="mb-3">
                     <label htmlFor="name" className="form-label fw-bold">
                       Full Name*
@@ -173,7 +174,7 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
-                  {/* Phone Field */}
+               
                   <div className="mb-3">
                     <label htmlFor="phone" className="form-label fw-bold">
                       Phone Number*
@@ -195,7 +196,7 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
-                  {/* Email Field */}
+               
                   <div className="mb-3">
                     <label htmlFor="email" className="form-label fw-bold">
                       Email*
@@ -215,7 +216,7 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
-                  {/* Company Field */}
+              
                   <div className="mb-3">
                     <label htmlFor="company" className="form-label fw-bold">
                       Company Name*
@@ -235,7 +236,7 @@ const VendorRegistration = () => {
                     )}
                   </div>
 
-                  {/* User Type */}
+              
                   <div className="mb-3">
                     <label className="form-label fw-bold">
                       Exhibitor Type*
@@ -252,7 +253,7 @@ const VendorRegistration = () => {
                     </select>
                   </div>
 
-                  {/* Location Fields */}
+                
                   <div className="row g-3 mb-3">
                     <div className="col-md-6">
                       <label className="form-label fw-bold">State*</label>
@@ -286,7 +287,7 @@ const VendorRegistration = () => {
                     </div>
                   </div>
 
-                  {/* Profile Picture */}
+              
                   <div className="mb-4">
                     <label className="form-label fw-bold">
                       Profile Picture {profilePicture && <span className="text-success">✓</span>}
@@ -303,7 +304,7 @@ const VendorRegistration = () => {
                     </div>
                   </div>
 
-                  {/* Submit Button */}
+                
                   <div className="d-grid mb-3">
                     <button 
                       type="submit" 
@@ -321,7 +322,7 @@ const VendorRegistration = () => {
                     </button>
                   </div>
 
-                  {/* Links */}
+            
                   <div className="text-center">
                     <p className="mb-0">
                       Already registered?{" "}
@@ -333,6 +334,206 @@ const VendorRegistration = () => {
                 </form>
               </div>
             </div>
+          </div>
+        </div>
+      </div> */}
+      <div className="container mt-4">
+        <div className="header">
+          <div className="logo1">
+            <img src={sdLogo} />
+          </div>
+          <div className="logo2">
+            <img src={ieLogo} />
+          </div>
+        </div>
+
+        <div
+          className="stall-no"
+          style={{ fontSize: "28px", marginTop: "100px" }}
+        >
+          Exhibitor Owner / Staff Registration
+        </div>
+
+        <div className="image-center">
+          <img src={registrationImg} width="700px" alt="Entry Card" />
+        </div>
+
+        <div className="stall-no">
+          Please enter your details below to Register.
+        </div>
+
+        <div className="search-form">
+          <form onSubmit={handleSubmit}>
+            {/* Name */}
+            <div className="field">
+              <input
+                type="text"
+                className={`field-input ${errors.name && "is-invalid"}`}
+                name="name"
+                placeholder="Enter Full Name"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+              {errors.name && (
+                <div className="invalid-feedback">{errors.name}</div>
+              )}
+            </div>
+
+            {/* Phone */}
+            <div className="field">
+              <input
+                type="text"
+                className={`field-input ${errors.phone && "is-invalid"}`}
+                name="phone"
+                placeholder="Enter Mobile Number"
+                value={formData.phone}
+                onChange={handleChange}
+                required
+                maxLength={10}
+                pattern="[0-9]{10}"
+              />
+              {errors.phone && (
+                <div className="invalid-feedback">{errors.phone}</div>
+              )}
+            </div>
+
+            {/* Email */}
+            <div className="field">
+              <input
+                type="email"
+                className={`field-input ${errors.email && "is-invalid"}`}
+                name="email"
+                placeholder="Enter Email Address"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+              {errors.email && (
+                <div className="invalid-feedback">{errors.email}</div>
+              )}
+            </div>
+
+            {/* Company */}
+            <div className="field">
+              <input
+                type="text"
+                className={`field-input ${errors.company && "is-invalid"}`}
+                name="company"
+                placeholder="Enter Company Name"
+                value={formData.company}
+                onChange={handleChange}
+                required
+              />
+              {errors.company && (
+                <div className="invalid-feedback">{errors.company}</div>
+              )}
+            </div>
+
+            {/* Staff Type */}
+            {/* <div className="field"> */}
+            <select
+              className="field"
+              name="staffType"
+              value={formData.staffType}
+              onChange={handleChange}
+              required
+            >
+              <option value="" disabled hidden>
+                Select User Type
+              </option>
+              <option value="owner">Owner</option>
+              <option value="staff">Staff</option>
+            </select>
+            {errors.staffType && (
+              <div className="invalid-feedback">{errors.staffType}</div>
+            )}
+            {/* </div> */}
+
+            {/* Location */}
+            <div className="custom-state-select mb-3">
+              <StateSelect
+                countryid={countryId}
+                value={stateId}
+                onChange={(e) => {
+                  setStateId(e.id);
+                  setStateName(e.name);
+                  setCityId(0);
+                  setCityName("");
+                }}
+                placeHolder="Select State"
+                className="form-control"
+              />
+              {errors.state && (
+                <div className="invalid-feedback">{errors.state}</div>
+              )}
+            </div>
+            <div className="custom-state-select mb-3">
+              <CitySelect
+                countryid={countryId}
+                stateid={stateId}
+                value={cityId}
+                onChange={(e) => {
+                  setCityId(e.id);
+                  setCityName(e.name);
+                }}
+                placeHolder="Select City"
+                className="form-control"
+                disabled={!stateId}
+              />
+              {errors.city && (
+                <div className="invalid-feedback">{errors.city}</div>
+              )}
+            </div>
+
+            {/* Profile Picture */}
+            <div>
+              <input
+                type="file"
+                className="field"
+                accept="image/*"
+                onChange={handleFileChange}
+              />
+              <p style={{ color: "white" }}>
+                Maximum file size: 1MB (JPEG/PNG)
+              </p>
+              <br />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              className="form-button"
+              disabled={loading}
+              style={{ marginTop: "-25px" }}
+            >
+              {loading ? (
+                <>
+                  <span className="spinner-border spinner-border-sm me-2"></span>
+                  Registering...
+                </>
+              ) : (
+                "Register Now"
+              )}
+            </button>
+          </form>
+
+          {/* Links */}
+          <div
+            className="text text-center"
+            style={{ width: "max-content", marginLeft: "-90px" }}
+          >
+            Already registered?{" "}
+            <Link to="/download-page" style={{ color: "#e8be62" }}>
+              Download Your Entry Card
+            </Link>{" "}
+            |{" "}
+            <Link to="/" style={{ color: "#e8be62" }}>
+              Buyer & Agent Registration
+            </Link>
+          </div>
+          <div className="text text-center mt-20 mb-20">
+            12 - 13 Aug 2025 | India Expo Mart | Greater Noida
           </div>
         </div>
       </div>
