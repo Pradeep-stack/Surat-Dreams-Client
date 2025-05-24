@@ -184,10 +184,10 @@ const Registration = () => {
 
         <div className="search-form">
           <form onSubmit={handleSubmit}>
-            <div className="field">
+            {/* <div className="field"> */}
               <input
                 type="text"
-                className={`field-input ${errors.name && "is-invalid"}`}
+        className={`field`}
                 id="name"
                 name="name"
                 placeholder="Enter Your Full Name"
@@ -198,13 +198,13 @@ const Registration = () => {
               {errors.name && (
                 <div className="invalid-feedback">{errors.name}</div>
               )}
-            </div>
+            {/* </div> */}
 
             {/* Phone Field */}
-            <div className="field">
+            {/* <div className="field"> */}
               <input
                 type="text"
-                className={`field-input ${errors.phone && "is-invalid"}`}
+                className={`field`}
                 id="phone"
                 name="phone"
                 placeholder="Enter Your Mobile Number"
@@ -217,13 +217,13 @@ const Registration = () => {
               {errors.phone && (
                 <div className="invalid-feedback">{errors.phone}</div>
               )}
-            </div>
+            {/* </div> */}
 
             {/* Company Field */}
-            <div className="field">
+            {/* <div className="field"> */}
               <input
                 type="text"
-                className={`field-input ${errors.company && "is-invalid"}`}
+              className={`field`}
                 id="company"
                 name="company"
                 placeholder="Enter your company name"
@@ -234,7 +234,7 @@ const Registration = () => {
               {errors.company && (
                 <div className="invalid-feedback">{errors.company}</div>
               )}
-            </div>
+            {/* </div> */}
 
             {/* User Type */}
             <select

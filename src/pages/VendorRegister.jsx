@@ -365,10 +365,10 @@ const VendorRegistration = () => {
         <div className="search-form">
           <form onSubmit={handleSubmit}>
             {/* Name */}
-            <div className="field">
+            {/* <div className="field"> */}
               <input
                 type="text"
-                className={`field-input ${errors.name && "is-invalid"}`}
+                className={`field`}
                 name="name"
                 placeholder="Enter Full Name"
                 value={formData.name}
@@ -378,13 +378,13 @@ const VendorRegistration = () => {
               {errors.name && (
                 <div className="invalid-feedback">{errors.name}</div>
               )}
-            </div>
+            {/* </div> */}
 
             {/* Phone */}
-            <div className="field">
+            {/* <div className="field"> */}
               <input
                 type="text"
-                className={`field-input ${errors.phone && "is-invalid"}`}
+               className={`field`}
                 name="phone"
                 placeholder="Enter Mobile Number"
                 value={formData.phone}
@@ -396,13 +396,13 @@ const VendorRegistration = () => {
               {errors.phone && (
                 <div className="invalid-feedback">{errors.phone}</div>
               )}
-            </div>
+            {/* </div> */}
 
             {/* Email */}
-            <div className="field">
+            {/* <div className="field"> */}
               <input
                 type="email"
-                className={`field-input ${errors.email && "is-invalid"}`}
+                className={`field`}
                 name="email"
                 placeholder="Enter Email Address"
                 value={formData.email}
@@ -412,13 +412,13 @@ const VendorRegistration = () => {
               {errors.email && (
                 <div className="invalid-feedback">{errors.email}</div>
               )}
-            </div>
+            {/* </div> */}
 
             {/* Company */}
-            <div className="field">
+            {/* <div className="field"> */}
               <input
                 type="text"
-                className={`field-input ${errors.company && "is-invalid"}`}
+             className={`field`}
                 name="company"
                 placeholder="Enter Company Name"
                 value={formData.company}
@@ -428,7 +428,7 @@ const VendorRegistration = () => {
               {errors.company && (
                 <div className="invalid-feedback">{errors.company}</div>
               )}
-            </div>
+            {/* </div> */}
 
             {/* Staff Type */}
             {/* <div className="field"> */}
