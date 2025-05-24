@@ -457,4 +457,28 @@ body {
     }
 }
 
-/* Responsive Styles */
+.search-form input {
+  border: none;
+  background: transparent;
+  outline: none;
+  color: white;
+  width: 100%;
+  font-size: 16px;
+  padding: 8px 12px;
+}
+.custom-state-select select {
+  background-color: #1c1c1c;
+  color: #fff;
+  border-radius: 40px;
+  border: 2px solid #ffd700;
+  padding: 14px 20px;
+  font-weight: bold;
+  text-align: center;
+  appearance: none;
+}
+
+.custom-state-select select:focus {
+  outline: none;
+  border-color: #ffd700;
+  box-shadow: 0 0 0 1px #ffd700;
+}

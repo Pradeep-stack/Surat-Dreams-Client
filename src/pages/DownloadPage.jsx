@@ -6,7 +6,9 @@ import "../assets/styles/style.css";
 import Logoimg from "../assets/images/logo.png";
 import { imgBaseUrl } from "../config";
 import { whatsAppApiSend } from "../api/user";
-
+import sdLogo from "../assets/images/sd-logo.png";
+import ieLogo from "../assets/images/ie-logo.png";
+import entryCard from "../assets/images/entry-card.png";
 const DownloadPage = () => {
   const [id, setId] = useState("");
   const [details, setDetails] = useState(null);
@@ -46,9 +48,9 @@ const DownloadPage = () => {
       const response = await fetch(
         `${imgBaseUrl}/secure-download?url=${encodeURIComponent(badgeUrl)}`
       );
-      
+
       if (!response.ok) throw new Error("Failed to get download URL");
-      
+
       const { url } = await response.json();
 
       // 2. Trigger download
@@ -64,7 +66,7 @@ const DownloadPage = () => {
     }
   };
 
-   const sendMessage = async (itme, imageUrl) => {
+  const sendMessage = async (itme, imageUrl) => {
     if (!itme) return;
     try {
       const whatsAppData = {
@@ -109,14 +111,15 @@ const DownloadPage = () => {
     }, 500);
   };
 
+
   if (details) {
     return (
       <div className="registration-page2">
         {details.id && (
           <div className="container mt-5">
             <div className="text-center">
-              <button 
-                onClick={() => handleDownload(details.badge_image_url)} 
+              <button
+                onClick={() => handleDownload(details.badge_image_url)}
                 className="btn btn-success me-2"
               >
                 <i className="fas fa-download me-2"></i> Download
@@ -127,8 +130,8 @@ const DownloadPage = () => {
               >
                 <i className="fas fa-print me-2"></i> Print
               </button> */}
-              <button 
-                onClick={() => setDetails(null)} 
+              <button
+                onClick={() => setDetails(null)}
                 className="btn btn-secondary"
               >
                 <i className="fas fa-search me-2"></i> Search Again
@@ -160,68 +163,86 @@ const DownloadPage = () => {
   }
 
   return (
-    <div className="registration-page2">
-      <div className="container">
-        <div className="logo-box">
-          <img src={Logoimg} alt="Company Logo" className="img-fluid" />
-        </div>
-        <div className="box-container mb-5">
-          <div className="reg-form-header text-center">
-            <h2>Download Your Entry Card</h2>
+    <>
+      <div className="mt-5">
+        <div className="header">
+          <div className="logo1">
+            <img src={sdLogo} />
           </div>
-          <form onSubmit={handleSubmit} style={{ padding: "20px" }}>
-            <div className="form-group mb-3">
-              <label htmlFor="imageId" className="fw-bold mb-2">
-                Enter Registered Phone Number:
-              </label>
-              <input
-                type="tel"
-                id="imageId"
-                className="form-control"
-                placeholder="Enter 10-digit Phone Number"
-                value={id}
-                onChange={(e) => setId(e.target.value)}
-                required
-                pattern="[0-9]{10}"
-                maxLength="10"
-              />
-            </div>
-            
-            {error && <div className="alert alert-danger">{error}</div>}
-            
-            <div className="text-center mt-4" style={{width: "100%"}}>
-
-              <button
-                type="submit"
-                className="user-info-btn2"
-                disabled={loading}
-                style={{width:"25%", paddingInline:"40px" }}
-              >
-                {loading ? (
-                  <>
-                    <span className="spinner-border spinner-border-sm me-2"></span>
-                    Generating...
-                  </>
-                ) : (
-                  "Submit"
-                )}
-              </button>
-            </div>
-
-            <div className="text-center mt-4">
-              <div className="d-flex flex-wrap justify-content-center gap-3">
-                <Link to="/" className="btn btn-outline-primary">
-                  <i className="fas fa-user-plus me-2"></i> Buyer/Agent Registration
-                </Link>
-                <Link to="/vendor-registration" className="btn btn-outline-primary">
-                  <i className="fas fa-user-plus me-2"></i> Exhibitor Registration
-                </Link>
-              </div>
-            </div>
-          </form>
+          <div className="logo2">
+            <img src={ieLogo} />
+          </div>
         </div>
+        <div
+          className="image-center"
+          style={{  marginTop: "90px" }}
+        >
+          <img src={entryCard} width="700px" alt="Entry Card" />
+        </div>
+        <div className="stall-no">
+          Please enter your details below to download your Entry Card.
+        </div>
+
+        <div className="search-form">
+          <input
+            type="text"
+            className="field"
+            placeholder="ENTER YOUR MOBILE NUMBER"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+            required
+            pattern="[0-9]{10}"
+            maxLength="10"
+          />
+          <button className="form-button" onClick={handleSubmit}>
+           {loading ? "Loading...":"Click here"} 
+          </button>
+        </div>
+        {error && <div className="alert alert-danger">{error}</div>}
+
+        <div className="text text-center">
+          Still can’t find your admit card?{" "}
+          <a href="mailto:info@suratdreams.com" style={{ color: "#e8be62" }}> Contact support</a> for help.
+        </div>
+        <div className="text text-center mt-20 mb-20">
+          {" "}
+          12 - 13 Aug 2025 | India Expo Mart | Greater Noida
+        </div>
+        {/* <form  style={{ padding: "20px" }}>
+        <div className="form-group mb-3">
+          <label htmlFor="imageId" className="fw-bold mb-2">
+            Enter Registered Phone Number:
+          </label>
+          <input
+            type="tel"
+            id="imageId"
+            className="form-control"
+            placeholder="Enter 10-digit Phone Number"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+            required
+            pattern="[0-9]{10}"
+            maxLength="10"
+          />
+        </div>
+
+        {error && <div className="alert alert-danger">{error}</div>}
+
+    
+
+        <div className="text-center mt-4">
+          <div className="d-flex flex-wrap justify-content-center gap-3">
+            <Link to="/" className="btn btn-outline-primary">
+              <i className="fas fa-user-plus me-2"></i> Buyer/Agent Registration
+            </Link>
+            <Link to="/vendor-registration" className="btn btn-outline-primary">
+              <i className="fas fa-user-plus me-2"></i> Exhibitor Registration
+            </Link>
+          </div>
+        </div>
+      </form> */}
       </div>
-    </div>
+    </>
   );
 };
 
