@@ -482,3 +482,25 @@ body {
   border-color: #ffd700;
   box-shadow: 0 0 0 1px #ffd700;
 }
+.stdropdown-container {
+  text-align: center !important;
+  border: 2px solid #ab920c !important;
+  border-radius: 35px !important;
+  color: #fff !important;
+background: #171717;
+}
+
+.search-form input {
+  color: #fff !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+text-align: center;
+}
+.stdropdown-tools{background: #ab920c !important;
+  border-radius: 5px !important;}
+
+.stdropdown-menu {
+  border: 2px solid #ab920c !important;
+  border-radius: 20px !important;
+  background-color: #171717 !important;
+}

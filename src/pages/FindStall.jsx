@@ -138,6 +138,7 @@ const DownloadPage = () => {
             setVerificationStep(false);
             setDetails(null);
           }}
+          style={{ color: "#e8be62" }}
         >
           Back to Phone Number
         </button>
