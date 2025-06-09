@@ -375,6 +375,10 @@ body {
     font-weight: 700;
 }
 
+img, svg {
+  vertical-align: middle;
+  max-width: 100%;
+}
 @media (max-width:992px) {
     .logo1 img {
         width: 350px;
@@ -405,7 +409,7 @@ body {
     }
 
     .digit-wrapper::before {
-        width: 90px;
+       width: 100px;
     }
 
     .digits {
