@@ -58,6 +58,7 @@ const CongratulationsPage = ({ details }) => {
   return () => clearTimeout(ribbonDelay);
 }, [targetNumber]);
 
+console.log("CongratulationsPage rendered with targetNumber:", details);
 
   return (
     <>
@@ -75,11 +76,14 @@ const CongratulationsPage = ({ details }) => {
         <img src={CongImage} alt="Congratulations" width="600px" />
       </div>
 
+
+      <h2 className="stall-no mt-20 mb-20">{details?.company}</h2>
+      <div className="stall-no mt-20 mb-20">Your Stall Size is :{details?.stall_size} sqft</div>
       <div className="stall-no mt-20 mb-20">Your Stall No. is</div>
       <div className="jackpot" ref={jackpotRef}></div>
 
       <div className="stall-no mt-20">
-        {`WE'RE EXCITED TO HAVE YOU ONBOARD FOR THE WOMEN'S ETHNIC WEAR EXPO 2025-DEHLI EDITION!`}
+        {`WE'RE EXCITED TO HAVE YOU ONBOARD FOR THE WOMEN'S ETHNIC WEAR EXPO 2025-DELHI EDITION!`}
         <br />
         GET READY TO SHOWCASE YOUR COLLECTION, CONNECT WITH TOP BUYERS, AND GROW YOUR BUSINESS.
       </div>
