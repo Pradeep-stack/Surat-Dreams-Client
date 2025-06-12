@@ -16,99 +16,99 @@ const CongratulationsPage = ({ details }) => {
     setTargetNumber(stallNum.padStart(3, "0").slice(0, 3));
   }, [details?.stall_number]);
 
- useEffect(() => {
-  if (!jackpotRef.current) return;
+  useEffect(() => {
+    if (!jackpotRef.current) return;
 
-  jackpotRef.current.innerHTML = "";
+    jackpotRef.current.innerHTML = "";
 
-  targetNumber.split("").forEach((digit) => {
-    const wrapper = document.createElement("div");
-    wrapper.className = "digit-wrapper";
+    targetNumber.split("").forEach((digit) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "digit-wrapper";
 
-    const digits = document.createElement("div");
-    digits.className = "digits";
+      const digits = document.createElement("div");
+      digits.className = "digits";
 
-    for (let r = 0; r < 3; r++) {
-      for (let j = 0; j <= 9; j++) {
-        const d = document.createElement("div");
-        d.textContent = j;
-        digits.appendChild(d);
+      for (let r = 0; r < 3; r++) {
+        for (let j = 0; j <= 9; j++) {
+          const d = document.createElement("div");
+          d.textContent = j;
+          digits.appendChild(d);
+        }
       }
-    }
 
-    wrapper.appendChild(digits);
-    jackpotRef.current.appendChild(wrapper);
+      wrapper.appendChild(digits);
+      jackpotRef.current.appendChild(wrapper);
 
-    const finalDigit = parseInt(digit);
-    const digitHeight = 156;
-    const scrollOffset = (10 + finalDigit) * digitHeight;
+      const finalDigit = parseInt(digit);
+      const digitHeight = 156;
+      const scrollOffset = (10 + finalDigit) * digitHeight;
 
-    // Trigger scroll animation
-    setTimeout(() => {
-      digits.style.transform = `translateY(-${scrollOffset}px)`;
-    }, 50);
-  });
+      // Trigger scroll animation
+      setTimeout(() => {
+        digits.style.transform = `translateY(-${scrollOffset}px)`;
+      }, 50);
+    });
 
-  // 🟡 Wait until number scroll animation finishes (e.g., 3s)
-  const ribbonDelay = setTimeout(() => {
-    setShowRibbon(true); 
-    setTimeout(() => setShowRibbon(false), 6000); // Hide after 6s
-  }, animationDuration *1);
+    // 🟡 Wait until number scroll animation finishes (e.g., 3s)
+    const ribbonDelay = setTimeout(() => {
+      setShowRibbon(true);
+      setTimeout(() => setShowRibbon(false), 6000); // Hide after 6s
+    }, animationDuration * 1);
 
-  return () => clearTimeout(ribbonDelay);
-}, [targetNumber]);
+    return () => clearTimeout(ribbonDelay);
+  }, [targetNumber]);
 
-console.log("CongratulationsPage rendered with targetNumber:", details);
+  console.log("CongratulationsPage rendered with targetNumber:", details);
 
   return (
     <>
-     <div className="container">
-      <div className="header">
-        <div className="logo1">
-          <img src={Logo1} alt="Logo1" />
+      <div className="container">
+        <div className="header">
+          <div className="logo1">
+            <img src={Logo1} alt="Logo1" />
+          </div>
+          <div className="logo2">
+            <img src={Logo2} alt="Logo2" />
+          </div>
         </div>
-        <div className="logo2">
-          <img src={Logo2} alt="Logo2" />
+
+        <div className="image-center-1">
+          <img src={CongImage} alt="Congratulations" width="600px" />
         </div>
-      </div>
 
-      <div className="image-center-1">
-        <img src={CongImage} alt="Congratulations" width="600px" />
-      </div>
+        <h2 className="com-details mt-10 mb-10">{details?.company}</h2>
+        <div className="com-details mt-10 mb-10">
+          Your Stall Size is : {details?.stall_size} sqft
+        </div>
+        <div className="stall-no mt-10 mb-20">Your Stall No. is</div>
+        <div className="jackpot" ref={jackpotRef}></div>
 
-
-      <h2 className="com-details mt-10 mb-10">{details?.company}</h2>
-      <div className="com-details mt-10 mb-10">Your Stall Size is : {details?.stall_size} sqft</div>
-      <div className="stall-no mt-10 mb-20">Your Stall No. is</div>
-      <div className="jackpot" ref={jackpotRef}></div>
-
-      <div className="stall-no mt-20">
-        {`WE'RE EXCITED TO HAVE YOU ONBOARD FOR THE WOMEN'S ETHNIC WEAR EXPO 2025-DELHI EDITION!`}
-        <br />
-        GET READY TO SHOWCASE YOUR COLLECTION, CONNECT WITH TOP BUYERS, AND GROW YOUR BUSINESS.
-      </div>
-
-      <div className="event">
-        <div className="event-text">
-          EVENT DATES: AUGUST 12th & 13th, 2025
+        <div className="stall-no mt-20">
+          {`We're excited to have you onboard for the "International Ethnic Expo" organized by "SURAT DREAMS". `}
           <br />
-          VENUE: INDIA EXPO MART, GREATER NOIDA
+          Get ready to showcase your collection, connect with top buyers, and
+          grow your business.
+        </div>
+
+        <div className="event">
+          <div className="event-text">
+            Event dates: August 11th, 12th, and 13th, 2025
+            <br />
+            Venue: India Expo Mart, Greater Noida
+          </div>
+        </div>
+
+        <div className="text">
+          Stay tuned for exhibition guidelines, exhibitor passes, and next
+          steps!
+        </div>
+
+        <div className="another-link" onClick={() => window.location.reload()}>
+          <a href="#">See Another</a>
         </div>
       </div>
-
-      <div className="text">
-        STAY TUNED FOR SETUP GUIDELINES, EXHIBITOR PASSES, AND NEXT STEPS!
-      </div>
-
-      <div className="another-link" onClick={() => window.location.reload()}>
-        <a href="#">See Another</a>
-      </div>
-
-      
-    </div>
-    <div className={`ribbons ${showRibbon ? "show" : ""}`}></div>
+      <div className={`ribbons ${showRibbon ? "show" : ""}`}></div>
     </>
-   
   );
 };
 
