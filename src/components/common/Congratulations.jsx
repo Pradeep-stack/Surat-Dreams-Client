@@ -77,9 +77,9 @@ console.log("CongratulationsPage rendered with targetNumber:", details);
       </div>
 
 
-      <h2 className="stall-no mt-20 mb-20">{details?.company}</h2>
-      <div className="stall-no mt-20 mb-20">Your Stall Size is :{details?.stall_size} sqft</div>
-      <div className="stall-no mt-20 mb-20">Your Stall No. is</div>
+      <h2 className="com-details mt-10 mb-10">{details?.company}</h2>
+      <div className="com-details mt-10 mb-10">Your Stall Size is : {details?.stall_size} sqft</div>
+      <div className="stall-no mt-10 mb-20">Your Stall No. is</div>
       <div className="jackpot" ref={jackpotRef}></div>
 
       <div className="stall-no mt-20">

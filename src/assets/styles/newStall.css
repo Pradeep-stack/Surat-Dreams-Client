@@ -103,6 +103,24 @@ body {
     text-transform: uppercase;
     line-height: 1.8;
 }
+.com-details {
+    font-family: 'trajan_proregular';
+    color: #FFF;
+    text-align: center;
+    font-size:30px;
+    font-weight:700;
+    text-transform: uppercase;
+    line-height: 1.8;
+}
+.stall-no {
+    font-family: 'trajan_proregular';
+    color: #FFF;
+    text-align: center;
+    font-size: 16px;
+    text-transform: uppercase;
+    line-height: 1.8;
+}
+
 
 .digit-wrapper {
     overflow: hidden;
