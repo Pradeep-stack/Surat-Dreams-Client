@@ -25,6 +25,14 @@ export const getAllUsers = async () => {
     return error;
   }
 };
+export const getWebsite = async () => {
+  try {
+    const { data } = await axios.get(baseUrl + `/get-website`);
+    return data;
+  } catch (error) {
+    return error;
+  }
+};
 
 export const registerUser = async (user) => {
   try {
