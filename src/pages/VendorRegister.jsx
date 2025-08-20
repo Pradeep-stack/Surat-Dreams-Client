@@ -533,7 +533,7 @@ const VendorRegistration = () => {
             </Link>
           </div>
           <div className="text text-center mt-20 mb-20">
-            12 - 13 Aug 2025 | India Expo Mart | Greater Noida
+            on 1st & 2nd September 2025 | SHREE GANGA VALLEY | BITHOOR ROAD, KANPUR
           </div>
         </div>
       </div>

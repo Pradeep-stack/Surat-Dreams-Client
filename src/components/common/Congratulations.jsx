@@ -4,6 +4,7 @@ import "../../assets/styles/newStall.css";
 import CongImage from "../../assets/images/cong.png";
 import Logo1 from "../../assets/images/sd-logo.png";
 import Logo2 from "../../assets/images/ie-logo.png";
+import Logo3 from "../../assets/images/logo3.png";
 
 const CongratulationsPage = ({ details }) => {
   const [targetNumber, setTargetNumber] = useState("000");
@@ -65,10 +66,10 @@ const CongratulationsPage = ({ details }) => {
       <div className="container">
         <div className="header">
           <div className="logo1">
-            <img src={Logo1} alt="Logo1" />
+            <img src={Logo1} alt="Logo1" style={{width:"100px"}} />
           </div>
           <div className="logo2">
-            <img src={Logo2} alt="Logo2" />
+            <img src={Logo2} alt="Logo2" style={{width:"100px"}} />
           </div>
         </div>
 
@@ -92,9 +93,9 @@ const CongratulationsPage = ({ details }) => {
 
         <div className="event">
           <div className="event-text">
-            Event dates: August 11th, 12th, and 13th, 2025
+            Event dates: on 1st & 2nd September 2025
             <br />
-            Venue: India Expo Mart, Greater Noida
+            Venue: SHREE GANGA VALLEY, BITHOOR ROAD, KANPUR
           </div>
         </div>
 

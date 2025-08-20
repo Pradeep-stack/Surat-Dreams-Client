@@ -6,6 +6,7 @@ import Congratulations from "../components/common/Congratulations";
 import { updateUser, whatsAppApiSend } from "../api/user";
 import ieLogo from "../assets/images/ie-logo.png";
 import sdLogo from "../assets/images/sd-logo.png";
+import logo3 from "../assets/images/logo3.png";
 import lucky from "../assets/images/lucky.png";
 
 const DownloadPage = () => {
@@ -172,10 +173,10 @@ const DownloadPage = () => {
           {" "}
           <div className="header">
             <div className="logo1">
-              <img src={sdLogo} alt="sd logo" />
+              <img src={sdLogo} alt="sd logo"  style={{width:"100px"}} />
             </div>
             <div className="logo2">
-              <img src={ieLogo} alt="ie logo" />
+              <img src={ieLogo} alt="ie logo" style={{width:"100px"}} />
             </div>
           </div>
           <div className="stall-no-1">Get your stall no. in the</div>
@@ -210,7 +211,7 @@ const DownloadPage = () => {
             Get ready to land your spot in style!
           </div>
           <div className="text text-center mt-20 mb-20">
-            12 - 13 Aug 2025 | India Expo Mart | Greater Noida
+            on 1st & 2nd September 2025 | SHREE GANGA VALLEY | BITHOOR ROAD, KANPUR
           </div>{" "}
         </div>
       ) : (
@@ -219,10 +220,13 @@ const DownloadPage = () => {
             {" "}
             <div className="header">
               <div className="logo1">
-                <img src={sdLogo} alt="sd logo" />
+                <img src={sdLogo} alt="sd logo" style={{width:"100px"}}/>
               </div>
+              {/* <div >
+                <img src={logo3} alt="sd logo" style={{width:"100px"}}/>
+              </div> */}
               <div className="logo2">
-                <img src={ieLogo} alt="ie logo" />
+                <img src={ieLogo} alt="ie logo" style={{width:"100px"}}/>
               </div>
             </div>
             <div className="stall-no-1">Get your stall no. in the</div>
@@ -235,7 +239,7 @@ const DownloadPage = () => {
               <p>Please check back later or contact support for updates.</p>
             </div>
             <div className="text text-center mt-20 mb-20">
-              12 - 13 Aug 2025 | India Expo Mart | Greater Noida
+              on 1st & 2nd September 2025 | SHREE GANGA VALLEY | BITHOOR ROAD, KANPUR
             </div>{" "}
           </div>
         </>
