@@ -167,10 +167,10 @@ const DownloadPage = () => {
       <div className="mt-5">
         <div className="header">
           <div className="logo1">
-            <img src={sdLogo} />
+            <img src={sdLogo} style={{width:"100px"}}/>
           </div>
           <div className="logo2">
-            <img src={ieLogo} />
+            <img src={ieLogo}  style={{width:"100px"}}/>
           </div>
         </div>
         <div
