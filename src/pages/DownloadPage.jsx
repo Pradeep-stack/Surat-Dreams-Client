@@ -171,7 +171,7 @@ const DownloadPage = () => {
             <img src={sdLogo} style={{width:"100px"}}/>
           </div>
           <div className="logo3">
-            <img src={logo3} style={{width:"100px"}}/>
+            <img src={logo3} style={{width:"150px"}}/>
           </div>
           <div className="logo2">
             <img src={ieLogo}  style={{width:"100px"}}/>

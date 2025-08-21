@@ -129,7 +129,7 @@ const DownloadPage = () => {
             <img src={sdLogo} alt="sd logo" style={{width:"100px"}}/>
           </div>
           <div className="logo3">
-            <img src={logo3} alt="sd logo" style={{width:"100px"}}/>
+            <img src={logo3} alt="sd logo" style={{width:"150px"}}/>
           </div>
           <div className="logo2">
             <img src={ieLogo} alt="ie logo" style={{width:"100px"}} />
@@ -179,7 +179,7 @@ const DownloadPage = () => {
               <img src={sdLogo} alt="sd logo"  style={{width:"100px"}} />
             </div>
             <div className="logo3">
-              <img src={logo3} alt="sd logo"  style={{width:"100px"}} />
+              <img src={logo3} alt="sd logo"  style={{width:"150px"}} />
             </div>
             <div className="logo2">
               <img src={ieLogo} alt="ie logo" style={{width:"100px"}} />
@@ -229,7 +229,7 @@ const DownloadPage = () => {
                 <img src={sdLogo} alt="sd logo" style={{width:"100px"}}/>
               </div>
               <div className="logo3" >
-                <img src={logo3} alt="sd logo" style={{width:"100px"}}/>
+                <img src={logo3} alt="sd logo" style={{width:"150px"}}/>
               </div>
               <div className="logo2">
                 <img src={ieLogo} alt="ie logo" style={{width:"100px"}}/>

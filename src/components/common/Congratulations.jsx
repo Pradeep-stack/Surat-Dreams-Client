@@ -69,7 +69,7 @@ const CongratulationsPage = ({ details }) => {
             <img src={Logo1} alt="Logo1" style={{width:"100px"}} />
           </div>
           <div className="logo3">
-            <img src={Logo3} alt="Logo1" style={{width:"100px"}} />
+            <img src={Logo3} alt="Logo1" style={{width:"150px"}} />
           </div>
           <div className="logo2">
             <img src={Logo2} alt="Logo2" style={{width:"100px"}} />
