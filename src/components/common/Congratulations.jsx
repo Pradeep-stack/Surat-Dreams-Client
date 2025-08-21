@@ -68,6 +68,9 @@ const CongratulationsPage = ({ details }) => {
           <div className="logo1">
             <img src={Logo1} alt="Logo1" style={{width:"100px"}} />
           </div>
+          <div className="logo3">
+            <img src={Logo3} alt="Logo1" style={{width:"100px"}} />
+          </div>
           <div className="logo2">
             <img src={Logo2} alt="Logo2" style={{width:"100px"}} />
           </div>
@@ -85,10 +88,9 @@ const CongratulationsPage = ({ details }) => {
         <div className="jackpot" ref={jackpotRef}></div>
 
         <div className="stall-no mt-20">
-          {`We're excited to have you onboard for the "International Ethnic Expo" organized by "SURAT DREAMS". `}
+          {`Thrilled to welcome you to the next edition of JJ TEXCON! `}
           <br />
-          Get ready to showcase your collection, connect with top buyers, and
-          grow your business.
+        A platform to showcase your collection, connect with top buyers & scale your business.
         </div>
 
         <div className="event">

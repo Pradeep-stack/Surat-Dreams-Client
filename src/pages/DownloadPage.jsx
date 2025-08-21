@@ -8,6 +8,7 @@ import { imgBaseUrl } from "../config";
 import { whatsAppApiSend } from "../api/user";
 import sdLogo from "../assets/images/sd-logo.png";
 import ieLogo from "../assets/images/ie-logo.png";
+import logo3 from "../assets/images/logo3.png";
 import entryCard from "../assets/images/entry-card.png";
 const DownloadPage = () => {
   const [id, setId] = useState("");
@@ -168,6 +169,9 @@ const DownloadPage = () => {
         <div className="header">
           <div className="logo1">
             <img src={sdLogo} style={{width:"100px"}}/>
+          </div>
+          <div className="logo3">
+            <img src={logo3} style={{width:"100px"}}/>
           </div>
           <div className="logo2">
             <img src={ieLogo}  style={{width:"100px"}}/>

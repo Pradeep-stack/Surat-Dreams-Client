@@ -10,6 +10,7 @@ import { userValidation } from "../utils/userValidation";
 import "../assets/styles/newStall.css";
 import sdLogo from "../assets/images/sd-logo.png";
 import ieLogo from "../assets/images/ie-logo.png";
+import logo3 from "../assets/images/logo3.png"
 import registrationImg from "../assets/images/registration.png";
 
 const Registration = () => {
@@ -164,6 +165,9 @@ const Registration = () => {
         <div className="header">
           <div className="logo1">
             <img src={sdLogo} style={{width:"100px"}}/>
+          </div>
+           <div className="logo3">
+            <img src={logo3} style={{width:"100px"}}/>
           </div>
           <div className="logo2">
             <img src={ieLogo} style={{width:"100px"}}/>
